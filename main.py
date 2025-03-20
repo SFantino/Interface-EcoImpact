@@ -21,7 +21,8 @@ st.markdown("""
         .navbar {
             position: fixed;
             top: 0;
-            right: 0; /* Aligner à droite */
+            left: 0;
+            width: 100%; /* Occupe toute la largeur */
             background-color: #D9D9D9;
             padding: 15px 20px; /* Espacement */
             text-align: right; /* Aligner le texte à droite */
