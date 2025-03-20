@@ -29,7 +29,7 @@ st.markdown("""
         }
         /* Style pour le fond d'écran */
         .stApp {
-            background-image: url('https://via.placeholder.com/1920x1080'); /* Remplacez par le lien de votre image */
+            background-image: url('Fond_accueil.png');
             background-size: cover;
             background-position: center;
         }
