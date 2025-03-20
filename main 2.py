@@ -56,22 +56,17 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Style CSS pour positionner l'image à droite
-st.markdown("""
-    <style>
-        /* Style pour le conteneur de l'image */
-        .image-container {
-            float: right; /* Aligner à droite */
-            margin-left: 20px; /* Espace à gauche de l'image */
-            margin-bottom: 20px; /* Espace en bas de l'image */
-        }
-    </style>
-""", unsafe_allow_html=True)
+# Créer deux colonnes
+col1, col2 = st.columns([3, 1])  # La première colonne est plus large pour le texte, la deuxième pour l'image
 
-# Afficher l'image à droite
-st.markdown('<div class="image-container">', unsafe_allow_html=True)
-st.image("Logo.jpg", width=300)  # Remplacez "Logo.jpg" par le nom de votre fichier
-st.markdown('</div>', unsafe_allow_html=True)
+# Afficher le contenu dans la première colonne (à gauche)
+with col1:
+    st.title("Bienvenue sur EcoImpact")
+    st.write("Ceci est la page d'accueil de notre projet.")
+
+# Afficher l'image dans la deuxième colonne (à droite)
+with col2:
+    st.image("Logo.jpg", width=200)  # Ajustez la largeur si nécessaire
 
 # Contenu de la page (texte d'accueil)
 st.markdown('<div class="content">', unsafe_allow_html=True)
