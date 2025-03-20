@@ -48,8 +48,8 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Gestion des pages
-page = st.experimental_get_query_params().get("page", ["home"])[0]
+# Gestion des pages avec st.query_params
+page = st.query_params.get("page", ["home"])[0]
 
 if page == "home":
     st.title("Bienvenue sur EcoImpact")
