@@ -73,8 +73,7 @@ with col2:
             }
         </style>
     """, unsafe_allow_html=True)
-    st.image("Logo.jpg", width=300, use_column_width=False, output_format="auto", clamp=False, channels="RGB", format="JPEG", caption=None)  # Augmentez la taille de l'image
-
+    st.image("Logo.jpg", width=300)  # Ajustez la largeur si nécessaire
 
 # Contenu de la page (texte d'accueil)
 st.markdown('<div class="content">', unsafe_allow_html=True)
