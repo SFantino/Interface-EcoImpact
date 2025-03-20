@@ -61,7 +61,7 @@ st.markdown("""
     <style>
         /* Style pour le conteneur de l'image */
         .image-container {
-            float: left; /* Aligner à gauche */
+            float: right; /* Aligner à droite */
             margin-right: 20px; /* Espace à droite de l'image */
             margin-bottom: 20px; /* Espace en bas de l'image */
         }
