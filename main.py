@@ -8,12 +8,29 @@ st.markdown("""
     <style>
         /* Style pour le fond d'écran */
         .stApp {
-            background-color: #F3F3F1; /* Couleur de fond */
+            background-color: #F3F3F1; /* Couleur de fond de secours */
+            position: relative;
+            z-index: 1;
+        }
+        .stApp::before {
+            content: "";
+            background-image: url('Fond_accueil.png');
+            background-size: cover; /* Couvre toute la page */
+            background-position: center; /* Centre l'image */
+            background-repeat: no-repeat; /* Empêche la répétition */
+            background-attachment: fixed; /* Fixe l'image pendant le défilement */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place l'image derrière le contenu */
+            opacity: 1; /* Assure que l'image est visible */
         }
         /* Style pour le contenu */
         .content {
             position: relative;
-            z-index: 1; /* Place le contenu au-dessus du fond */
+            z-index: 1; /* Place le contenu au-dessus de l'image ou du fond */
             padding-top: 80px; /* Espace pour le bandeau */
             color: black; /* Couleur du texte */
         }
