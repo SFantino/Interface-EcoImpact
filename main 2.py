@@ -59,10 +59,6 @@ st.markdown("""
 # Créer deux colonnes
 col1, col2 = st.columns([3, 1])  # La première colonne est plus large pour le texte, la deuxième pour l'image
 
-# Afficher le contenu dans la première colonne (à gauche)
-with col1:
-    st.title("Bienvenue sur EcoImpact")
-    st.write("Ceci est la page d'accueil de notre projet.")
 
 # Afficher l'image dans la deuxième colonne (à droite)
 with col2:
@@ -90,5 +86,27 @@ elif page == "methodologie":
 elif page == "ressources":
     st.title("Ressources")
     st.write("Cette page contient des ressources utiles pour notre projet.")
+
+# Style CSS pour le titre en bas de la page
+st.markdown("""
+    <style>
+        /* Style pour le titre en bas de la page */
+        .bottom-title {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: black; /* Couleur du texte en noir */
+            font-size: 36px;
+            font-weight: bold;
+            padding-bottom: 20px; /* Espace en bas */
+            z-index: 1000; /* Assure que le titre est au-dessus de l'image */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Afficher le titre en bas de la page
+st.markdown('<div class="bottom-title">Bienvenue sur EcoImpact</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
