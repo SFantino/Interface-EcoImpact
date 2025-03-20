@@ -68,9 +68,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Afficher le logo à droite
+# Afficher l'image à gauche
 st.markdown('<div class="image-container">', unsafe_allow_html=True)
-st.image("Logo.jpg", width=300)
+st.image("Logo.jpg", width=300)  # Remplacez "image.jpeg" par le nom de votre fichier
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Contenu de la page (texte d'accueil)
