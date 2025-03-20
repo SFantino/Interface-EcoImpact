@@ -39,6 +39,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Testez l'image
+try:
+    st.image("Fond_accueil.png", use_column_width=True)
+except FileNotFoundError:
+    st.error("L'image 'Fond_accueil.png' n'a pas été trouvée. Vérifiez le chemin.")
+
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
