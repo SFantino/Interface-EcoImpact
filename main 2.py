@@ -56,9 +56,21 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# Style CSS pour positionner l'image à gauche
+st.markdown("""
+    <style>
+        /* Style pour le conteneur de l'image */
+        .image-container {
+            float: left; /* Aligner à gauche */
+            margin-right: 20px; /* Espace à droite de l'image */
+            margin-bottom: 20px; /* Espace en bas de l'image */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Afficher le logo à droite
 st.markdown('<div class="image-container">', unsafe_allow_html=True)
-st.image("Logo.jpg", width=300)  # Remplacez "image.jpeg" par le nom de votre fichier
+st.image("Logo.jpg", width=300)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Contenu de la page (texte d'accueil)
