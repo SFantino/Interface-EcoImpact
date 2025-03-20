@@ -44,7 +44,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Afficher l'image en haut à gauche avec st.image
-st.image("Fond1.jpg")
+st.image("Fond1.jpg", use_container_width=True)
 
 
 # Bandeau de navigation à droite
