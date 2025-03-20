@@ -66,7 +66,15 @@ with col1:
 
 # Afficher l'image dans la deuxième colonne (à droite)
 with col2:
-    st.image("Logo.jpg", width=200)  # Ajustez la largeur si nécessaire
+    st.markdown("""
+        <style>
+            .custom-image {
+                margin-top: 50px; /* Déplace l'image plus bas */
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    st.image("Logo.jpg", width=300, use_column_width=False, output_format="auto", clamp=False, channels="RGB", format="JPEG", caption=None)  # Augmentez la taille de l'image
+
 
 # Contenu de la page (texte d'accueil)
 st.markdown('<div class="content">', unsafe_allow_html=True)
