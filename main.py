@@ -14,6 +14,10 @@ st.markdown("""
             background-repeat: no-repeat; /* Empêche la répétition */
             background-attachment: fixed; /* Fixe l'image pendant le défilement */
         }
+        /* Désactiver le fond noir par défaut de Streamlit */
+        .stApp > div {
+            background-color: transparent !important;
+        }
         /* Style pour le bandeau */
         .navbar {
             position: fixed;
