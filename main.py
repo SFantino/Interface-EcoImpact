@@ -1,17 +1,62 @@
 import streamlit as st
-from home import main as home_page
-from methodologie import main as methodologie_page
-from ressources import main as ressources_page
-from analyse_cycle_vie import main as analyse_cycle_vie_page
 
-# Gestion des routes
+# Configuration de la page
+st.set_page_config(page_title="EcoImpact", layout="wide")
+
+# Style CSS pour le bandeau, les liens et le fond d'écran
+st.markdown("""
+    <style>
+        /* Style pour le bandeau */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: transparent;
+            padding: 15px 0;
+            text-align: center;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 25px;
+        }
+        .navbar a:hover {
+            color: #4CAF50;
+        }
+        /* Style pour le fond d'écran */
+        .stApp {
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Remplacez par le lien de votre image */
+            background-size: cover;
+            background-position: center;
+        }
+        /* Masquer le footer et le header par défaut de Streamlit */
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# Bandeau de navigation
+st.markdown("""
+    <div class="navbar">
+        <a href="/">Accueil</a>
+        <a href="/methodologie">Méthodologie</a>
+        <a href="/ressources">Ressources</a>
+    </div>
+""", unsafe_allow_html=True)
+
+# Gestion des pages
 page = st.experimental_get_query_params().get("page", ["home"])[0]
 
 if page == "home":
-    home_page()
+    st.title("Bienvenue sur EcoImpact")
+    st.write("Ceci est la page d'accueil de notre projet.")
 elif page == "methodologie":
-    methodologie_page()
+    st.title("Méthodologie")
+    st.write("Cette page présente la méthodologie utilisée dans notre projet.")
 elif page == "ressources":
-    ressources_page()
-elif page == "analyse_cycle_vie":
-    analyse_cycle_vie_page()
+    st.title("Ressources")
+    st.write("Cette page contient des ressources utiles pour notre projet.")
