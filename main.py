@@ -8,7 +8,7 @@ st.markdown("""
     <style>
         /* Style pour le fond d'écran */
         .stApp {
-            background-color: #F3F3F1; /* Couleur de fond de secours */
+            background-color: #F3F3F1;
         }
         /* Style pour le contenu */
         .content {
@@ -44,10 +44,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Afficher l'image en haut à gauche avec st.image
-try:
-    st.image("fond Eco impact.png", use_container_width=True)
-except FileNotFoundError:
-    st.warning("L'image 'Fond_accueil.png' n'a pas été trouvée. Utilisation de la couleur de fond #F3F3F1.")
+st.image("Fond1.jpeg")
+
 
 # Bandeau de navigation à droite
 st.markdown("""
