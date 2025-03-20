@@ -17,17 +17,46 @@ st.markdown("""
             padding-top: 80px; /* Espace pour le bandeau */
             color: black; /* Couleur du texte */
         }
+        /* Style pour le bandeau */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0; /* Aligner à droite */
+            background-color: transparent;
+            padding: 15px 20px; /* Espacement */
+            text-align: right; /* Aligner le texte à droite */
+            z-index: 1000; /* Assure que le bandeau est au-dessus de l'image */
+        }
+        .navbar a {
+            color: black; /* Couleur du texte en noir */
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 15px; /* Espace entre les liens */
+        }
+        .navbar a:hover {
+            color: #4CAF50; /* Couleur au survol */
+        }
         /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
-# Afficher l'image en fond d'écran avec st.image
+# Afficher l'image en haut à gauche avec st.image
 try:
-    st.image("Fond_accueil.png", use_column_width=True)
+    st.image("fond Eco impact.png", use_container_width=True)
 except FileNotFoundError:
     st.warning("L'image 'Fond_accueil.png' n'a pas été trouvée. Utilisation de la couleur de fond #F3F3F1.")
+
+# Bandeau de navigation à droite
+st.markdown("""
+    <div class="navbar">
+        <a href="/">Accueil</a>
+        <a href="/methodologie">Méthodologie</a>
+        <a href="/ressources">Ressources</a>
+    </div>
+""", unsafe_allow_html=True)
 
 # Contenu de la page (texte d'accueil)
 st.markdown('<div class="content">', unsafe_allow_html=True)
