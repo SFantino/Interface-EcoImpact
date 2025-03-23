@@ -87,6 +87,7 @@ elif page == "ressources":
     st.title("Ressources")
     st.write("Cette page contient des ressources utiles pour notre projet.")
 
+
 # Style CSS pour le bandeau en bas de la page
 st.markdown("""
     <style>
@@ -98,9 +99,9 @@ st.markdown("""
             width: 100%;
             background-color: #23A95C; /* Couleur du bandeau */
             padding: 10px 20px; /* Espacement interne */
-            display: flex; /* Aligner les éléments horizontalement */
-            justify-content: space-between; /* Espacer les éléments */
-            align-items: center; /* Centrer verticalement */
+            display: flex;
+            justify-content: space-between; /* Espace les éléments à gauche et à droite */
+            align-items: center; /* Centre verticalement */
             z-index: 1000; /* Assure que le bandeau est au-dessus de l'image */
         }
         .footer-banner a {
@@ -114,6 +115,7 @@ st.markdown("""
         }
         .footer-banner img {
             height: 40px; /* Hauteur de l'image */
+            margin-left: auto; /* Pousse l'image à droite */
         }
     </style>
 """, unsafe_allow_html=True)
@@ -122,8 +124,6 @@ st.markdown("""
 st.markdown("""
     <div class="footer-banner">
         <a href="/a_propos">À propos</a>
+        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
-
-# Afficher l'image avec st.image
-st.image("unilasalle_beauvais_logo.jpg", width=100)  # Ajustez la largeur si nécessaire
