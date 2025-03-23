@@ -113,10 +113,6 @@ st.markdown("""
         .footer-banner a:hover {
             color: #F3F3F1; /* Couleur au survol */
         }
-        .footer-banner img {
-            height: 40px; /* Hauteur de l'image */
-            margin-left: auto; /* Pousse l'image à droite */
-        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -124,6 +120,12 @@ st.markdown("""
 st.markdown("""
     <div class="footer-banner">
         <a href="/a_propos">À propos</a>
-        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
+
+# Utiliser st.columns pour aligner l'image à droite
+col1, col2 = st.columns([1, 1])  # Deux colonnes de largeur égale
+
+# Afficher l'image dans la deuxième colonne (à droite)
+with col2:
+    st.image("unilasalle_beauvais_logo.jpg", width=100)  # Ajustez la largeur si nécessaire
