@@ -97,8 +97,10 @@ st.markdown("""
             left: 0;
             width: 100%;
             background-color: #23A95C; /* Couleur du bandeau */
-            padding: 10px 0; /* Espacement interne */
-            text-align: center; /* Centrer le texte */
+            padding: 10px 20px; /* Espacement interne */
+            display: flex; /* Aligner les éléments horizontalement */
+            justify-content: space-between; /* Espacer les éléments */
+            align-items: center; /* Centrer verticalement */
             z-index: 1000; /* Assure que le bandeau est au-dessus de l'image */
         }
         .footer-banner a {
@@ -110,12 +112,16 @@ st.markdown("""
         .footer-banner a:hover {
             color: #F3F3F1; /* Couleur au survol */
         }
+        .footer-banner img {
+            height: 40px; /* Hauteur de l'image */
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# Afficher le bandeau en bas de la page avec le lien "À propos"
+# Afficher le bandeau en bas de la page avec "À propos" à gauche et l'image à droite
 st.markdown("""
     <div class="footer-banner">
         <a href="/a_propos">À propos</a>
+        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
