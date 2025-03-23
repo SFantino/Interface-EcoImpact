@@ -78,8 +78,25 @@ st.markdown('<div class="content">', unsafe_allow_html=True)
 page = st.query_params.get("page", ["home"])[0]
 
 if page == "home":
+    # Style CSS pour le texte de la page d'accueil
+    st.markdown("""
+        <style>
+            /* Style pour le texte de la page d'accueil */
+            .welcome-text {
+                color: black; /* Couleur du texte en noir */
+                text-align: right; /* Aligner le texte à droite */
+                font-size: 24px; /* Taille de la police */
+                margin-right: 20px; /* Marge à droite pour décaler le texte */
+            }
+        </style>
+    """, unsafe_allow_html=True)
+    
+    # Contenu de la page d'accueil
+    st.markdown('<div class="welcome-text">', unsafe_allow_html=True)
     st.title("Bienvenue sur EcoImpact")
     st.write("Ceci est la page d'accueil de notre projet.")
+    st.markdown('</div>', unsafe_allow_html=True)
+
 elif page == "methodologie":
     st.title("Méthodologie")
     st.write("Cette page présente la méthodologie utilisée dans notre projet.")
