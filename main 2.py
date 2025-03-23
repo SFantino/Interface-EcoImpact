@@ -87,26 +87,35 @@ elif page == "ressources":
     st.title("Ressources")
     st.write("Cette page contient des ressources utiles pour notre projet.")
 
-# Style CSS pour le titre en bas de la page
+# Style CSS pour le bandeau en bas de la page
 st.markdown("""
     <style>
-        /* Style pour le titre en bas de la page */
-        .bottom-title {
+        /* Style pour le bandeau en bas de la page */
+        .footer-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            text-align: center;
-            color: black; /* Couleur du texte en noir */
-            font-size: 36px;
+            background-color: #23A95C; /* Couleur du bandeau */
+            padding: 10px 0; /* Espacement interne */
+            text-align: center; /* Centrer le texte */
+            z-index: 1000; /* Assure que le bandeau est au-dessus de l'image */
+        }
+        .footer-banner a {
+            color: white; /* Couleur du texte en blanc */
+            text-decoration: none; /* Supprimer le soulignement */
+            font-size: 20px;
             font-weight: bold;
-            padding-bottom: 20px; /* Espace en bas */
-            z-index: 1000; /* Assure que le titre est au-dessus de l'image */
+        }
+        .footer-banner a:hover {
+            color: #F3F3F1; /* Couleur au survol */
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Afficher le titre en bas de la page
-st.markdown('<div class="bottom-title">Bienvenue sur EcoImpact</div>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+# Afficher le bandeau en bas de la page avec le lien "À propos"
+st.markdown("""
+    <div class="footer-banner">
+        <a href="/a_propos">À propos</a>
+    </div>
+""", unsafe_allow_html=True)
