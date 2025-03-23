@@ -92,10 +92,12 @@ if page == "home":
     """, unsafe_allow_html=True)
     
     # Contenu de la page d'accueil
-    st.markdown('<div class="welcome-text">', unsafe_allow_html=True)
-    st.title("Bienvenue sur EcoImpact")
-    st.write("Ceci est la page d'accueil de notre projet.")
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("""
+        <div class="welcome-text">
+            <h1>Bienvenue sur EcoImpact</h1>
+            <p>Ceci est la page d'accueil de notre projet.</p>
+        </div>
+    """, unsafe_allow_html=True)
 
 elif page == "methodologie":
     st.title("Méthodologie")
