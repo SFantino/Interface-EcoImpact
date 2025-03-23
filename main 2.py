@@ -118,10 +118,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Exemple si l'image est dans un dossier "images"
+# Afficher le bandeau en bas de la page avec "À propos" à gauche et l'image à droite
 st.markdown("""
     <div class="footer-banner">
         <a href="/a_propos">À propos</a>
-        <img src="images/unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
+
+# Afficher l'image avec st.image
+st.image("unilasalle_beauvais_logo.jpg", width=100)  # Ajustez la largeur si nécessaire
