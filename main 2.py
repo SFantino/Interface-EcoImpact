@@ -8,13 +8,12 @@ st.markdown("""
     <style>
         /* Style pour le fond d'écran */
         .stApp {
-            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / auto 200px;
-            /* Décomposé :
-               - #F3F3F1 : couleur de fond
-               - url(...) : image
-               - no-repeat : pas de répétition
-               - left top : position en haut à gauche
-               - / auto 200px : taille (largeur auto, hauteur 200px) 
+            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 40% auto;
+            min-height: 100vh;
+        }
+        /* Pour décaler le contenu sous l'image */
+        .content {
+            padding-top: 30vh;
         }
         /* Style pour le contenu */
         .content {
