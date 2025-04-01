@@ -9,7 +9,7 @@ st.markdown("""
         /* Style pour le fond d'écran */
         .stApp {
             background-image: url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover; /* Couvre toute la page */
+            background-size: 50% auto;  /* Couvre toute la page */
             background-position: center; /* Centre l'image */
             background-repeat: no-repeat; /* Empêche la répétition */
             background-attachment: fixed; /* Fixe l'image pendant le défilement */
