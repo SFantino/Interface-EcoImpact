@@ -45,6 +45,35 @@ st.markdown("""
         /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
+
+        .calculator-banner {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .calculator-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .start-button {
+            background-color: #23A95C;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .start-button:hover {
+            background-color: #1e8c4f;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -54,6 +83,13 @@ st.markdown("""
         <a href="/">Accueil</a>
         <a href="/methodologie">Méthodologie</a>
         <a href="/ressources">Ressources</a>
+    </div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+    <div class="calculator-banner">
+        <div class="calculator-title">Tester le calculateur</div>
+        <button class="start-button">Start</button>
     </div>
 """, unsafe_allow_html=True)
 
