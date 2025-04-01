@@ -86,6 +86,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <div class="calculator-banner">
+        <div class="calculator-title">Tester le calculateur</div>
+        <button class="start-button">Start</button>
+    </div>
+""", unsafe_allow_html=True)
+
 # Créer deux colonnes
 col1, col2 = st.columns([3, 1])  # La première colonne est plus large pour le texte, la deuxième pour l'image
 
@@ -166,13 +173,6 @@ st.markdown("""
             margin-left: auto; /* Pousse l'image à droite */
         }
     </style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-    <div class="calculator-banner">
-        <div class="calculator-title">Tester le calculateur</div>
-        <button class="start-button">Start</button>
-    </div>
 """, unsafe_allow_html=True)
 
 # Afficher le bandeau en bas de la page avec "À propos" à gauche et l'image à droite
