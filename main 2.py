@@ -46,12 +46,12 @@ st.markdown("""
         footer {visibility: hidden;}
         header {visibility: hidden;}
 
-        .calculator-banner {
+       .calculator-banner {
             background-color: white;
             padding: 25px;
             border-radius: 10px;
-            width: 80%;
-            margin: 20px auto;
+            width: 100%; /* Prend toute la largeur */
+            margin: 40px 0; /* Marge verticale seulement */
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
@@ -74,6 +74,9 @@ st.markdown("""
         .start-button:hover {
             background-color: #1e8c4f;
         }
+        .welcome-container {
+            margin-bottom: 0; /* Supprime l'espace sous le titre */
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -87,9 +90,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-    <div class="calculator-banner">
-        <div class="calculator-title">Tester le calculateur</div>
-        <button class="start-button">Start</button>
+    <div class="welcome-container">
+        <div class="welcome-text">
+            <h1>Bienvenue sur EcoImpact</h1>
+            <p>Ceci est la page d'accueil de notre projet.</p>
+        </div>
+        
+        <div class="calculator-banner">
+            <div class="calculator-title">Tester le calculateur</div>
+            <button class="start-button">Start</button>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
