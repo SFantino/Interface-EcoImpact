@@ -90,7 +90,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-    <div class="welcome-container">
+    <div class="content">
         <div class="welcome-text">
             <h1>Bienvenue sur EcoImpact</h1>
             <p>Ceci est la page d'accueil de notre projet.</p>
@@ -103,6 +103,17 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+        .welcome-text {
+            margin-bottom: 30px;
+        }
+        .calculator-banner {
+            margin-top: 20px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # Créer deux colonnes
 col1, col2 = st.columns([3, 1])  # La première colonne est plus large pour le texte, la deuxième pour l'image
 
@@ -112,7 +123,7 @@ with col2:
     st.markdown("""
         <style>
             .custom-image {
-                margin-top: 50px; /* Déplace l'image plus bas */
+                margin-top: 0; /* Déplace l'image plus bas */
             }
         </style>
     """, unsafe_allow_html=True)
