@@ -121,10 +121,10 @@ st.markdown("""
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="#" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self">Calculateur</a>
-        <a href="/Ressources" target="_self">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
+        <a href="/" target="_self">Accueil</a>
+        <a href="Calculateur" target="_self">Calculateur</a>
+        <a href="Ressources" target="_self">Ressources</a>
+        <a href="Methodologie" target="_self">Méthodologie</a>
     </div>
 """, unsafe_allow_html=True)
 
@@ -165,3 +165,22 @@ st.markdown("""
         <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
+
+# Ajoutez ceci juste avant le footer
+st.components.v1.html("""
+<script>
+// Force le rechargement des pages Streamlit
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.navbar a');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (this.getAttribute('href') !== '#') {
+                setTimeout(function() {
+                    window.location.href = window.location.href.split('?')[0] + '?page=' + e.target.getAttribute('href');
+                }, 100);
+            }
+        });
+    });
+});
+</script>
+""")
