@@ -171,8 +171,8 @@ st.markdown("""
 
 # Calculator Banner en bas de page
 st.markdown("""
-    <div style="padding-bottom: 100px;">  <!-- Espace pour le footer -->
-        <div class="calculator-banner" style="margin: 40px auto; width: 80%;">
+    <div style="padding-bottom: 100px;">
+        <div class="calculator-banner" style="margin: 40px auto;">
             <div class="calculator-title">Tester le calculateur</div>
             <button class="start-button">Start</button>
         </div>
