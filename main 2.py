@@ -1,7 +1,16 @@
 import streamlit as st
+from streamlit.runtime.scriptrunner import RerunData, RerunException
+from streamlit.source_util import get_pages
 
 # Configuration de la page
 st.set_page_config(page_title="EcoImpact", layout="wide")
+
+# Fonction pour recharger les pages
+def rerun_page(page_name):
+    pages = get_pages("")
+    for key, page in pages.items():
+        if page_name.lower() in page["page_name"].lower():
+            raise RerunException(RerunData(page_script_hash=page["page_script_hash"]))
 
 # Style CSS pour le fond d'écran et le contenu
 st.markdown("""
@@ -115,18 +124,39 @@ st.markdown("""
         /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
+
+        .nav-button {
+            background: transparent;
+            border: none;
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 15px;
+            cursor: pointer;
+        }
+        .nav-button:hover {
+            color: #4CAF50;
+        }
     </style>
 """, unsafe_allow_html=True)
 
 # Bandeau de navigation
-st.markdown("""
-    <div class="navbar">
-        <a href="/" target="_self">Accueil</a>
-        <a href="Calculateur" target="_self">Calculateur</a>
-        <a href="Ressources" target="_self">Ressources</a>
-        <a href="Methodologie" target="_self">Méthodologie</a>
-    </div>
-""", unsafe_allow_html=True)
+cols = st.columns([4,1,1,1,1])
+with cols[0]:
+    st.write("")  # Espacement
+with cols[1]:
+    if st.button("Accueil", key="btn_accueil", help="Retour à la page d'accueil"):
+        rerun_page("main")
+with cols[2]:
+    if st.button("Calculateur", key="btn_calculateur"):
+        rerun_page("Calculateur")
+with cols[3]:
+    if st.button("Ressources", key="btn_ressources"):
+        rerun_page("Ressources")
+with cols[4]:
+    if st.button("Méthodologie", key="btn_methodologie"):
+        rerun_page("Methodologie")
+
 
 # Début de la zone de contenu (qui passera derrière la navbar au scroll)
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
@@ -158,24 +188,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Ajoutez ceci juste avant le footer
-st.components.v1.html("""
-<script>
-// Force le rechargement des pages Streamlit
-document.addEventListener('DOMContentLoaded', function() {
-    const links = document.querySelectorAll('.navbar a');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            if (this.getAttribute('href') !== '#') {
-                setTimeout(function() {
-                    window.location.href = window.location.href.split('?')[0] + '?page=' + e.target.getAttribute('href');
-                }, 100);
-            }
-        });
-    });
-});
-</script>
-""")
 
 # Footer
 st.markdown("""
