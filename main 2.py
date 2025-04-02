@@ -121,10 +121,10 @@ st.markdown("""
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="/">Accueil</a>
-        <a href="/calculateur">Calculateur</a>
-        <a href="/ressources">Ressources</a>
-        <a href="/methodologie">Méthodologie</a>
+        <a href="#" target="_self">Accueil</a>
+        <a href="/Calculateur" target="_self">Calculateur</a>
+        <a href="/Ressources" target="_self">Ressources</a>
+        <a href="/Methodologie" target="_self">Méthodologie</a>
     </div>
 """, unsafe_allow_html=True)
 
@@ -138,22 +138,12 @@ col1, col2 = st.columns([3, 1])
 with col2:
     st.image("Logo.jpg", width=300)
 
-# Contenu de la page
-page = st.query_params.get("page", ["home"])[0]
-
-if page == "home":
-    st.markdown("""
-        <div class="welcome-text">
-            <h1>Bienvenue sur EcoImpact</h1>
-            <p>Ceci est la page d'accueil de notre projet.</p>
-        </div>
-    """, unsafe_allow_html=True)
-elif page == "methodologie":
-    st.title("Méthodologie")
-    st.write("Cette page présente la méthodologie utilisée dans notre projet.")
-elif page == "ressources":
-    st.title("Ressources")
-    st.write("Cette page contient des ressources utiles pour notre projet.")
+st.markdown("""
+    <div class="welcome-text">
+        <h1>Bienvenue sur EcoImpact</h1>
+        <p>Ceci est la page d'accueil de notre projet.</p>
+    </div>
+""", unsafe_allow_html=True)
 
 # Fin de la zone de contenu principale
 st.markdown('</div>', unsafe_allow_html=True)
