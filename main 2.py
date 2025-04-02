@@ -1,136 +1,117 @@
 import streamlit as st
 
-# Configuration de la page
+# Configuration de base
 st.set_page_config(page_title="EcoImpact", layout="wide")
 
-# Style CSS avec effets de parallaxe
+# Style CSS minimal et efficace
 st.markdown("""
     <style>
-        /* Navbar fixe */
+        /* Fond d'écran fixe */
+        .stApp {
+            background: 
+                #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') 
+                no-repeat left top / 65% auto;
+            min-height: 100vh;
+        }
+        
+        /* Barre de navigation fixe */
         .navbar {
             position: fixed;
             top: 0;
             right: 0;
             left: 0;
-            background-color: white;
+            background: white;
             padding: 15px 20px;
             text-align: right;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             height: 60px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        /* Conteneur du fond avec effet parallaxe */
-        .parallax-container {
+        /* Logo positionné sous la navbar */
+        .logo-fixed {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 65%;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        /* Image de fond avec mouvement */
-        .parallax-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120%;
-            background: url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / cover;
-        }
-        
-        /* Logo avec mouvement parallaxe */
-        .parallax-logo {
-            position: fixed;
-            top: 80px;
+            top: 70px;  /* 60px (navbar) + 10px marge */
             left: 20px;
-            width: 300px;
             z-index: 999;
-            transition: transform 0.5s ease-out;
+            width: 300px;
         }
         
-        /* Fond principal */
-        .stApp {
-            background-color: #F3F3F1;
-            min-height: 100vh;
-        }
-        
-        /* Contenu */
-        .content {
-            padding-top: 80px;
+        /* Contenu principal */
+        .main-content {
+            padding-top: 120px;  /* Espace pour navbar + logo */
             position: relative;
             z-index: 1;
         }
         
         /* Footer fixe */
-        .footer-banner {
+        .footer {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #23A95C;
+            background: #23A95C;
+            color: white;
             padding: 10px 20px;
             z-index: 1001;
         }
+        
+        /* Cacher les éléments par défaut */
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
     </style>
-    
-    <!-- Structure HTML pour les effets -->
-    <div class="parallax-container">
-        <div class="parallax-bg" id="parallax-bg"></div>
-    </div>
-    <img class="parallax-logo" id="parallax-logo" src="Logo.jpg">
 """, unsafe_allow_html=True)
 
-# Script pour les effets de mouvement
+# Structure HTML de base
 st.markdown("""
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bg = document.getElementById('parallax-bg');
-            const logo = document.getElementById('parallax-logo');
-            const startPos = 100; // Délai avant l'effet
-            
-            window.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-                
-                // Mouvement de l'image de fond (parallaxe)
-                if (scrollY > startPos) {
-                    const bgOffset = (scrollY - startPos) * 0.5;
-                    bg.style.transform = `translateY(-${bgOffset}px)`;
-                    
-                    // Mouvement plus rapide pour le logo
-                    const logoOffset = (scrollY - startPos) * 0.8;
-                    logo.style.transform = `translateY(-${logoOffset}px)`;
-                    logo.style.opacity = 1 - (scrollY - startPos) / 300;
-                } else {
-                    bg.style.transform = 'translateY(0)';
-                    logo.style.transform = 'translateY(0)';
-                    logo.style.opacity = 1;
-                }
-            });
-        });
-    </script>
-""", unsafe_allow_html=True)
-
-# Barre de navigation
-st.markdown("""
+    <!-- Barre de navigation -->
     <div class="navbar">
         <a href="/">Accueil</a>
         <a href="/methodologie">Méthodologie</a>
         <a href="/ressources">Ressources</a>
     </div>
+    
+    <!-- Logo -->
+    <img class="logo-fixed" src="Logo.jpg" alt="Logo EcoImpact">
 """, unsafe_allow_html=True)
 
-# Contenu principal
-st.markdown('<div class="content">', unsafe_allow_html=True)
+# Zone de contenu principal
+st.markdown('<div class="main-content">', unsafe_allow_html=True)
 
-# ... Votre contenu existant ...
+# --- VOTRE CONTENU ICI ---
+st.markdown("""
+    <div style="text-align: right; padding-right: 20px;">
+        <h1>Bienvenue sur EcoImpact</h1>
+        <p>Votre plateforme d'analyse environnementale</p>
+    </div>
+""", unsafe_allow_html=True)
+
+# Bannière calculateur
+st.markdown("""
+    <div style="padding: 25px; background: white; border-radius: 8px; margin: 20px 0;">
+        <h3 style="text-align: center;">Tester le calculateur</h3>
+        <div style="text-align: center;">
+            <button style="
+                background: #23A95C;
+                color: white;
+                border: none;
+                padding: 10px 25px;
+                border-radius: 25px;
+                font-size: 16px;
+                cursor: pointer;
+            ">Commencer</button>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
+# --- FIN DE VOTRE CONTENU ---
 
 # Footer
 st.markdown("""
-    <div class="footer-banner">
-        <a href="/a_propos">À propos</a>
-        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
+    <div class="footer">
+        <span>À propos</span>
+        <img src="unilasalle_beauvais_logo.jpg" style="height: 40px; float: right;">
     </div>
 """, unsafe_allow_html=True)
+
+# Fermeture de la div main-content
+st.markdown('</div>', unsafe_allow_html=True)
