@@ -6,13 +6,10 @@ st.set_page_config(page_title="EcoImpact", layout="wide")
 # Style CSS complet
 st.markdown("""
     <style>
-        /* Style pour le fond d'écran */
         .stApp {
             background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
             min-height: 100vh;
         }
-        
-        /* Style pour le bandeau de navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -34,23 +31,17 @@ st.markdown("""
         .navbar a:hover {
             color: #4CAF50;
         }
-        
-        /* Zone de contenu principale */
         .content-behind {
             position: relative;
             z-index: 0;
             margin-top: 70px;
         }
-        
-        /* Style pour le texte de la page d'accueil */
         .welcome-text {
             color: black;
             text-align: right;
             font-size: 24px;
             margin-right: 20px;
         }
-        
-        /* Style pour la bannière du calculateur */
         .calculator-banner {
             background-color: white;
             padding: 25px;
@@ -84,8 +75,6 @@ st.markdown("""
         .start-button:hover {
             background-color: #1e8c4f;
         }
-        
-        /* Style pour le bandeau en bas de page */
         .footer-banner {
             position: fixed;
             bottom: 0;
@@ -111,8 +100,6 @@ st.markdown("""
             height: 40px;
             margin-left: auto;
         }
-        
-        /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
     </style>
@@ -121,7 +108,7 @@ st.markdown("""
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="#" target="_self">Accueil</a>
+        <a href="/" target="_self" style="color: #4CAF50; font-weight: bolder;">Accueil</a>
         <a href="/Calculateur" target="_self">Calculateur</a>
         <a href="/Ressources" target="_self">Ressources</a>
         <a href="/Methodologie" target="_self">Méthodologie</a>
@@ -131,18 +118,14 @@ st.markdown("""
 # Contenu de la page d'accueil
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 
-# Création des colonnes
 col1, col2 = st.columns([3, 1])
-
-# Logo dans la colonne de droite
 with col2:
     st.image("Logo.jpg", width=300)
 
-# Texte de bienvenue
 st.markdown("""
     <div class="welcome-text">
         <h1>Bienvenue sur EcoImpact</h1>
-        <p>Ceci est la page d'accueil de notre projet.</p>
+        <p>Découvrez votre impact environnemental avec notre calculateur personnalisé.</p>
     </div>
 """, unsafe_allow_html=True)
 
