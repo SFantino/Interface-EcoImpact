@@ -1,16 +1,7 @@
 import streamlit as st
-from streamlit.runtime.scriptrunner import RerunData, RerunException
-from streamlit.source_util import get_pages
 
 # Configuration de la page
 st.set_page_config(page_title="EcoImpact", layout="wide")
-
-# Fonction pour recharger les pages
-def rerun_page(page_name):
-    pages = get_pages("")
-    for key, page in pages.items():
-        if page_name.lower() in page["page_name"].lower():
-            raise RerunException(RerunData(page_script_hash=page["page_script_hash"]))
 
 # Style CSS pour le fond d'écran et le contenu
 st.markdown("""
@@ -124,7 +115,6 @@ st.markdown("""
         /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
-
         .nav-button {
             background: transparent;
             border: none;
@@ -133,6 +123,7 @@ st.markdown("""
             font-weight: bold;
             margin: 0 15px;
             cursor: pointer;
+            font-family: inherit;
         }
         .nav-button:hover {
             color: #4CAF50;
@@ -140,23 +131,20 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Bandeau de navigation
-cols = st.columns([4,1,1,1,1])
-with cols[0]:
-    st.write("")  # Espacement
-with cols[1]:
-    if st.button("Accueil", key="btn_accueil", help="Retour à la page d'accueil"):
-        rerun_page("main")
-with cols[2]:
-    if st.button("Calculateur", key="btn_calculateur"):
-        rerun_page("Calculateur")
-with cols[3]:
-    if st.button("Ressources", key="btn_ressources"):
-        rerun_page("Ressources")
-with cols[4]:
-    if st.button("Méthodologie", key="btn_methodologie"):
-        rerun_page("Methodologie")
-
+# Navigation avec boutons
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    if st.button("Accueil"):
+        st.switch_page("main.py")
+with col2:
+    if st.button("Calculateur"):
+        st.switch_page("pages/Calculateur.py")
+with col3:
+    if st.button("Ressources"):
+        st.switch_page("pages/Ressources.py")
+with col4:
+    if st.button("Méthodologie"):
+        st.switch_page("pages/Methodologie.py")
 
 # Début de la zone de contenu (qui passera derrière la navbar au scroll)
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
