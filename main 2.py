@@ -18,12 +18,11 @@ st.markdown("""
             top: 0;
             right: 0;
             left: 0;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: transparent;
             padding: 15px 20px;
             text-align: right;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
+            box-shadow: none;
         }
         .navbar a {
             color: black;
@@ -34,9 +33,6 @@ st.markdown("""
         }
         .navbar a:hover {
             color: #4CAF50;
-            background-color: rgba(255, 255, 255, 0.2)
-            border-radius: 4px;
-            padding: 2px 8px;
         }
         
         /* Zone de contenu principale */
@@ -126,8 +122,9 @@ st.markdown("""
 st.markdown("""
     <div class="navbar">
         <a href="/">Accueil</a>
-        <a href="/methodologie">Méthodologie</a>
+        <a href="/calculateur">Calculateur</a>
         <a href="/ressources">Ressources</a>
+        <a href="/methodologie">Méthodologie</a>
     </div>
 """, unsafe_allow_html=True)
 
