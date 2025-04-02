@@ -23,7 +23,17 @@ st.markdown("""
             text-align: right;
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: 60px; /* Hauteur fixe pour la navbar */
         }
+        
+        /* Positionnement de l'image */
+        .logo-container {
+            position: absolute;
+            top: 80px; /* Décalage sous la navbar */
+            left: 20px;
+            z-index: 999;
+        }
+        
         .navbar a {
             color: black;
             text-decoration: none;
@@ -134,8 +144,11 @@ st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 col1, col2 = st.columns([3, 1])
 
 # Logo dans la colonne de droite
-with col2:
-    st.image("Logo.jpg", width=300)
+st.markdown("""
+    <div class="logo-container">
+        <img src="Logo.jpg" width="300">
+    </div>
+""", unsafe_allow_html=True)
 
 # Contenu de la page
 page = st.query_params.get("page", ["home"])[0]
