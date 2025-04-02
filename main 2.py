@@ -121,22 +121,38 @@ st.markdown("""
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="#" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self">Calculateur</a>
-        <a href="/Ressources" target="_self">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
+        <a href="#" onclick="navigateTo('accueil')" style="cursor:pointer">Accueil</a>
+        <a href="#" onclick="navigateTo('calculateur')" style="cursor:pointer">Calculateur</a>
+        <a href="#" onclick="navigateTo('ressources')" style="cursor:pointer">Ressources</a>
+        <a href="#" onclick="navigateTo('methodologie')" style="cursor:pointer">Méthodologie</a>
     </div>
+    
+    <script>
+    function navigateTo(page) {
+        window.location.search = '?page=' + page;
+    }
+    </script>
 """, unsafe_allow_html=True)
 
-# Contenu de la page d'accueil
-st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+# Gestion de la navigation AVEC st.query_params
+params = st.query_params
+current_page = params.get("page", ["accueil"])[0]
 
-# Création des colonnes
-col1, col2 = st.columns([3, 1])
-
-# Logo dans la colonne de droite
-with col2:
-    st.image("Logo.jpg", width=300)
+if current_page != "accueil":
+    # Force le rechargement pour Streamlit Cloud
+    st.markdown(f"""
+    <script>
+        setTimeout(function() {{
+            window.location.href = '/{current_page}';
+        }}, 100);
+    </script>
+    """, unsafe_allow_html=True)
+else:
+    # [Contenu de votre page d'accueil existant...]
+    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+    col1, col2 = st.columns([3, 1])
+    with col2:
+        st.image("Logo.jpg", width=300)
 
 # Texte de bienvenue
 st.markdown("""
