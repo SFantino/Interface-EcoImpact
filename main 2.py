@@ -158,14 +158,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Footer
-st.markdown("""
-    <div class="footer-banner">
-        <a href="/a_propos">À propos</a>
-        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
-    </div>
-""", unsafe_allow_html=True)
-
 # Ajoutez ceci juste avant le footer
 st.components.v1.html("""
 <script>
@@ -184,3 +176,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 """)
+
+# Footer
+st.markdown("""
+    <div class="footer-banner">
+        <a href="/a_propos">À propos</a>
+        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
+    </div>
+""", unsafe_allow_html=True)
+
