@@ -8,10 +8,13 @@ st.markdown("""
     <style>
         /* Style pour le fond d'écran */
         .stApp {
-            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
+           background: 
+                linear-gradient(to bottom, rgba(243, 243, 241, 1) 0%, rgba(243, 243, 241, 0.7) 50%, rgba(243, 243, 241, 1) 100%),
+                url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
             min-height: 100vh;
+            transition: background-position 0.5s ease;
         }
-        
+                
         /* Style pour le bandeau de navigation */
         .navbar {
             position: fixed;
@@ -125,6 +128,26 @@ st.markdown("""
         footer {visibility: hidden;}
         header {visibility: hidden;}
     </style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<script>
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        const maxScroll = 500; // Disparaît complètement après 500px de scroll
+        const bgElement = document.querySelector('.stApp');
+        
+        // Ajuste l'opacité et la position du fond
+        const opacity = 1 - Math.min(scrollY / maxScroll, 1);
+        const bgPosition = scrollY * 0.5; // Défile plus lentement que la page
+        
+        bgElement.style.backgroundPosition = `left ${bgPosition}px top`;
+        bgElement.style.backgroundImage = `
+            linear-gradient(to bottom, rgba(243, 243, 241, 1) 0%, rgba(243, 243, 241, ${opacity}) 50%, rgba(243, 243, 241, 1) 100%),
+            url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+        `;
+    });
+</script>
 """, unsafe_allow_html=True)
 
 # Bandeau de navigation
