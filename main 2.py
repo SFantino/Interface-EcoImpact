@@ -18,7 +18,7 @@ st.markdown("""
             top: 0;
             right: 0;
             left: 0;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 15px 20px;
             text-align: right;
             z-index: 1000;
@@ -34,6 +34,9 @@ st.markdown("""
         }
         .navbar a:hover {
             color: #4CAF50;
+            background-color: rgba(255, 255, 255, 0.2)
+            border-radius: 4px;
+            padding: 2px 8px;
         }
         
         /* Zone de contenu principale */
