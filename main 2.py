@@ -3,10 +3,16 @@ import streamlit as st
 # Configuration de la page
 st.set_page_config(page_title="EcoImpact", layout="wide")
 
-# Style CSS avec effet de fond disparaissant
+# Style CSS pour le fond d'écran et le contenu
 st.markdown("""
     <style>
-        /* Navbar fixe */
+        /* Style pour le fond d'écran */
+        .stApp {
+            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
+            min-height: 100vh;
+        }
+        
+        /* Style pour le bandeau de navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -17,7 +23,6 @@ st.markdown("""
             text-align: right;
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            height: 60px;
         }
         .navbar a {
             color: black;
@@ -29,42 +34,58 @@ st.markdown("""
         .navbar a:hover {
             color: #4CAF50;
         }
-
-        /* Conteneur pour l'image de fond */
-        .background-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 65%;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
+        
+        /* Zone de contenu principale */
+        .content-behind {
+            position: relative;
+            z-index: 0;
+            margin-top: 70px;
         }
         
-        /* Image de fond avec transition d'opacité */
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / cover;
-            transition: opacity 0.8s ease;
-        }
-
-        /* Fond principal */
-        .stApp {
-            background-color: #F3F3F1 !important;
-            min-height: 100vh;
-        }
-
-        /* Contenu */
-        .content {
-            padding-top: 80px;
+        /* Style pour le texte de la page d'accueil */
+        .welcome-text {
             color: black;
+            text-align: right;
+            font-size: 24px;
+            margin-right: 20px;
         }
-
-        /* Footer */
+        
+        /* Style pour la bannière du calculateur */
+        .calculator-banner {
+            background-color: white;
+            padding: 25px;
+            border-radius: 0;
+            width: 100vw;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+        .calculator-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .start-button {
+            background-color: #23A95C;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .start-button:hover {
+            background-color: #1e8c4f;
+        }
+        
+        /* Style pour le bandeau en bas de page */
         .footer-banner {
             position: fixed;
             bottom: 0;
@@ -77,42 +98,27 @@ st.markdown("""
             align-items: center;
             z-index: 1001;
         }
+        .footer-banner a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .footer-banner a:hover {
+            color: #F3F3F1;
+        }
+        .footer-banner img {
+            height: 40px;
+            margin-left: auto;
+        }
         
-        /* Masquer les éléments par défaut de Streamlit */
+        /* Masquer le footer et le header par défaut de Streamlit */
         footer {visibility: hidden;}
         header {visibility: hidden;}
     </style>
-
-    <!-- Structure HTML pour l'image de fond -->
-    <div class="background-container">
-        <div class="background-image" id="bg-image"></div>
-    </div>
 """, unsafe_allow_html=True)
 
-# Script pour l'effet de disparition
-st.markdown("""
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bgImage = document.getElementById('bg-image');
-            const fadeStart = 100;  // Commence à disparaître après 100px
-            const fadeLength = 300; // Disparaît complètement après 300px
-            
-            window.addEventListener('scroll', function() {
-                const scrollPos = window.scrollY;
-                let opacity = 1;
-                
-                if (scrollPos > fadeStart) {
-                    opacity = 1 - (scrollPos - fadeStart) / fadeLength;
-                    opacity = Math.max(0, opacity);
-                }
-                
-                bgImage.style.opacity = opacity;
-            });
-        });
-    </script>
-""", unsafe_allow_html=True)
-
-# Barre de navigation
+# Bandeau de navigation
 st.markdown("""
     <div class="navbar">
         <a href="/">Accueil</a>
@@ -121,10 +127,45 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Contenu principal
-st.markdown('<div class="content">', unsafe_allow_html=True)
+# Début de la zone de contenu (qui passera derrière la navbar au scroll)
+st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 
-# ... Votre contenu existant ici ...
+# Création des colonnes
+col1, col2 = st.columns([3, 1])
+
+# Logo dans la colonne de droite
+with col2:
+    st.image("Logo.jpg", width=300)
+
+# Contenu de la page
+page = st.query_params.get("page", ["home"])[0]
+
+if page == "home":
+    st.markdown("""
+        <div class="welcome-text">
+            <h1>Bienvenue sur EcoImpact</h1>
+            <p>Ceci est la page d'accueil de notre projet.</p>
+        </div>
+    """, unsafe_allow_html=True)
+elif page == "methodologie":
+    st.title("Méthodologie")
+    st.write("Cette page présente la méthodologie utilisée dans notre projet.")
+elif page == "ressources":
+    st.title("Ressources")
+    st.write("Cette page contient des ressources utiles pour notre projet.")
+
+# Fin de la zone de contenu principale
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Calculator Banner
+st.markdown("""
+    <div style="padding-bottom: 100px;">
+        <div class="calculator-banner">
+            <div class="calculator-title">Tester le calculateur</div>
+            <button class="start-button">Start</button>
+        </div>
+    </div>
+""", unsafe_allow_html=True)
 
 # Footer
 st.markdown("""
