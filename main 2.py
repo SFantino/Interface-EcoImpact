@@ -1,24 +1,9 @@
 import streamlit as st
-from streamlit.components.v1 import html
 
 # Configuration de la page
 st.set_page_config(page_title="EcoImpact", layout="wide")
 
-# Injection JavaScript pour la navigation
-html("""
-<script>
-function navigate(page) {
-    if (page === 'accueil') {
-        window.location.pathname = '/';
-    } else {
-        window.location.pathname = '/' + page;
-    }
-    return false;
-}
-</script>
-""")
-
-# Style CSS complet (identique à votre version)
+# Style CSS complet
 st.markdown("""
     <style>
         /* Style pour le fond d'écran */
@@ -133,13 +118,13 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Bandeau de navigation MODIFIÉ (version fonctionnelle)
+# Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="#" onclick="return navigate('accueil')">Accueil</a>
-        <a href="#" onclick="return navigate('Calculateur')">Calculateur</a>
-        <a href="#" onclick="return navigate('Ressources')">Ressources</a>
-        <a href="#" onclick="return navigate('Methodologie')">Méthodologie</a>
+        <a href="#" target="_self">Accueil</a>
+        <a href="/Calculateur" target="_self">Calculateur</a>
+        <a href="/Ressources" target="_self">Ressources</a>
+        <a href="/Methodologie" target="_self">Méthodologie</a>
     </div>
 """, unsafe_allow_html=True)
 
@@ -161,22 +146,22 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Bannière calculateur (version fonctionnelle)
+# Bannière calculateur
 st.markdown("""
     <div style="padding-bottom: 100px;">
         <div class="calculator-banner">
             <div class="calculator-title">Tester le calculateur</div>
-            <a href="#" onclick="return navigate('Calculateur')">
+            <a href="/Calculateur" target="_self">
                 <button class="start-button">Start</button>
             </a>
         </div>
     </div>
 """, unsafe_allow_html=True)
 
-# Footer (version fonctionnelle)
+# Footer
 st.markdown("""
     <div class="footer-banner">
-        <a href="#" onclick="return navigate('A_propos')">À propos</a>
+        <a href="/A_propos" target="_self">À propos</a>
         <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
