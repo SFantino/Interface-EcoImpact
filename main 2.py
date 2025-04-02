@@ -121,37 +121,42 @@ st.markdown("""
 # Bandeau de navigation
 st.markdown("""
     <div class="navbar">
-        <a href="#" onclick="window.location.href='/?page=accueil'" style="cursor:pointer">Accueil</a>
-        <a href="#" onclick="window.location.href='/?page=calculateur'" style="cursor:pointer">Calculateur</a>
-        <a href="#" onclick="window.location.href='/?page=ressources'" style="cursor:pointer">Ressources</a>
-        <a href="#" onclick="window.location.href='/?page=methodologie'" style="cursor:pointer">Méthodologie</a>
+        <a href="#" target="_self">Accueil</a>
+        <a href="/Calculateur" target="_self">Calculateur</a>
+        <a href="/Ressources" target="_self">Ressources</a>
+        <a href="/Methodologie" target="_self">Méthodologie</a>
     </div>
 """, unsafe_allow_html=True)
 
-# Gestion de la navigation
-query_params = st.experimental_get_query_params()
-current_page = query_params.get("page", ["accueil"])[0]
+# Contenu de la page d'accueil
+st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 
-if current_page == "accueil":
-    # [Conservez tout le contenu actuel de votre page d'accueil...]
-    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
-    col1, col2 = st.columns([3, 1])
-    with col2:
-        st.image("Logo.jpg", width=300)
-    
-    st.markdown("""
-        <div class="welcome-text">
-            <h1>Bienvenue sur EcoImpact</h1>
-            <p>Ceci est la page d'accueil de notre projet.</p>
+# Création des colonnes
+col1, col2 = st.columns([3, 1])
+
+# Logo dans la colonne de droite
+with col2:
+    st.image("Logo.jpg", width=300)
+
+# Texte de bienvenue
+st.markdown("""
+    <div class="welcome-text">
+        <h1>Bienvenue sur EcoImpact</h1>
+        <p>Ceci est la page d'accueil de notre projet.</p>
+    </div>
+""", unsafe_allow_html=True)
+
+# Bannière calculateur
+st.markdown("""
+    <div style="padding-bottom: 100px;">
+        <div class="calculator-banner">
+            <div class="calculator-title">Tester le calculateur</div>
+            <a href="/Calculateur" target="_self">
+                <button class="start-button">Start</button>
+            </a>
         </div>
-    """, unsafe_allow_html=True)
-
-elif current_page == "calculateur":
-    st.switch_page("pages/1_Calculateur.py")
-elif current_page == "ressources":
-    st.switch_page("pages/2_Ressources.py")
-elif current_page == "methodologie":
-    st.switch_page("pages/3_Methodologie.py")
+    </div>
+""", unsafe_allow_html=True)
 
 # Footer
 st.markdown("""
@@ -160,3 +165,4 @@ st.markdown("""
         <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
+
