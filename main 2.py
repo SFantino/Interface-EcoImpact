@@ -49,11 +49,16 @@ st.markdown("""
         .calculator-banner {
             background-color: white;
             padding: 25px;
-            border-radius: 10px;
-            width: 100%;
+            border-radius: 0;  /* Enlevez les coins arrondis pour un vrai rectangle */
+            width: 100vw;      /* 100% de la viewport width */
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
         }
         .calculator-title {
             font-size: 24px;
@@ -172,7 +177,7 @@ st.markdown("""
 # Calculator Banner en bas de page
 st.markdown("""
     <div style="padding-bottom: 100px;">
-        <div class="calculator-banner" style="margin: 40px auto;">
+        <div class="calculator-banner">
             <div class="calculator-title">Tester le calculateur</div>
             <button class="start-button">Start</button>
         </div>
