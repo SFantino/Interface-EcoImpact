@@ -8,47 +8,51 @@ st.set_page_config(
     initial_sidebar_state="collapsed"  # <- Important
 )
 
-# ========== CSS (COPIER-COLLER DU MAIN.PY) ==========
+# ========== CSS (identique à main.py) ==========
 st.markdown("""
     <style>
-        section[data-testid="stSidebar"] {
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100% !important;
-            height: 70px !important;
-            background: transparent;
+            width: 100%;
+            height: 70px;
+            background-color: #F3F3F1 !important;
             padding: 15px 20px;
             z-index: 1000;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            box-shadow: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .stSidebar a {
+        .navbar a {
             color: black !important;
             text-decoration: none;
             font-size: 20px !important;
             font-weight: bold !important;
             margin: 0 15px !important;
         }
-        .stSidebar a:hover {
+        .navbar a:hover {
             color: #4CAF50 !important;
         }
-        /* ... (Tout le reste du CSS de main.py) ... */
+        .stApp {
+            margin-top: 70px !important;
+            background-color: #F3F3F1;
+            min-height: calc(100vh - 70px);
+        }
+        /* ... (autres styles si nécessaire) ... */
     </style>
 """, unsafe_allow_html=True)
 
 # ========== NAVBAR (identique à main.py) ==========
-with st.sidebar:
-    st.markdown("""
-        <div class="stSidebar">
-            <a href="/" target="_self">Accueil</a>
-            <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
-        </div>
-    """, unsafe_allow_html=True)
+st.markdown("""
+    <div class="navbar">
+        <a href="/" target="_self">Accueil</a>
+        <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
+        <a href="/Ressources" target="_self">Ressources</a>
+        <a href="/Methodologie" target="_self">Méthodologie</a>
+    </div>
+""", unsafe_allow_html=True)
 
 
 # ========== CONTENU PRINCIPAL ==========
