@@ -7,10 +7,33 @@ st.set_page_config(
     page_icon="📊"
 )
 
-# ========== CSS IDENTIQUE À MAIN.PY ==========
-# [Même CSS que dans Calculateur.py]
+# CSS minimal
+st.markdown("""
+    <style>
+        .stApp { background-color: #F3F3F1; }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            background-color: transparent;
+            padding: 15px 20px;
+            text-align: right;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+        .navbar a:hover { color: #4CAF50; }
+        .content-behind { margin-top: 70px; }
+    </style>
+""", unsafe_allow_html=True)
 
-# ========== BARRE DE NAVIGATION ==========
+# Barre de navigation
 st.markdown("""
     <div class="navbar">
         <a href="/" target="_self">Accueil</a>
@@ -18,71 +41,11 @@ st.markdown("""
         <a href="/Ressources" target="_self">Ressources</a>
         <a href="/Methodologie" target="_self" style="color: #4CAF50; font-weight: bolder;">Méthodologie</a>
     </div>
+    <div class="content-behind">
 """, unsafe_allow_html=True)
 
-# ========== CONTENU PRINCIPAL ==========
-st.markdown('<div class="content-behind">', unsafe_allow_html=True)
-
-# Titre et introduction
+# Contenu
 st.title("📊 Méthodologie Scientifique")
-st.markdown("""
-    <div style="margin-bottom: 30px;">
-        Découvrez les fondements scientifiques de notre calculateur d'impact environnemental.
-    </div>
-""", unsafe_allow_html=True)
+st.write("Contenu de votre méthodologie ici...")
 
-# Conteneur du contenu
-st.markdown('<div class="calculator-container">', unsafe_allow_html=True)
-
-# Sections de méthodologie
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader("🔍 Sources de données")
-    st.markdown("""
-    - **Base Carbone® ADEME**: Référence française
-    - **Données INSEE**: Statistiques nationales
-    - **Études scientifiques**: Publications peer-reviewed
-    - **Données sectorielles**: Rapports d'entreprises
-    """)
-
-with col2:
-    st.subheader("🧪 Méthodes de calcul")
-    st.markdown("""
-    - Approche cycle de vie (ACV)
-    - Facteurs d'émission standardisés
-    - Méthodologie GHG Protocol
-    - Calculs en équivalent CO2
-    """)
-
-# Section détaillée
-st.subheader("📝 Détail des calculs")
-with st.expander("Voir la méthodologie complète"):
-    st.markdown("""
-    ### Formule générale:
-    ```
-    Emission = Activité × Facteur d'émission × Coefficient
-    ```
-    
-    ### Exemple pour le transport:
-    ```python
-    def calcul_transport(km, type_vehicule):
-        facteurs = {
-            "Voiture": 0.12,
-            "Bus": 0.06,
-            "Train": 0.02
-        }
-        return km * facteurs[type_vehicule]
-    ```
-    
-    ### Coefficients utilisés:
-    | Catégorie | Coefficient |
-    |-----------|------------|
-    | Transport | 0.12 kg/km |
-    | Électricité | 0.45 kg/kWh |
-    """)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== FOOTER ==========
-# [Identique au footer de Calculateur.py]
+st.markdown("</div>", unsafe_allow_html=True)
