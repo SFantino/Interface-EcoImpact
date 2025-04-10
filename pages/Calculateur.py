@@ -2,102 +2,54 @@ import streamlit as st
 
 # Configuration de la page
 st.set_page_config(
-    page_title="Calculateur | EcoImpact", 
+    page_title="Calculateur | EcoImpact",
     layout="wide",
-    page_icon="🧮"
+    page_icon="🧮",
+    initial_sidebar_state="collapsed"  # <- Important
 )
 
-# ========== CSS IDENTIQUE À MAIN.PY ==========
+# ========== CSS (COPIER-COLLER DU MAIN.PY) ==========
 st.markdown("""
     <style>
-        /* Style pour le fond d'écran */
-        .stApp {
-            background: #F3F3F1;
-            min-height: 100vh;
-        }
-        
-        /* Style pour le bandeau de navigation */
-        .navbar {
+        section[data-testid="stSidebar"] {
             position: fixed;
             top: 0;
-            right: 0;
             left: 0;
-            background-color: transparent;
+            width: 100% !important;
+            height: 70px !important;
+            background: transparent;
             padding: 15px 20px;
-            text-align: right;
             z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
             box-shadow: none;
         }
-        .navbar a {
-            color: black;
+        .stSidebar a {
+            color: black !important;
             text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0 15px;
+            font-size: 20px !important;
+            font-weight: bold !important;
+            margin: 0 15px !important;
         }
-        .navbar a:hover {
-            color: #4CAF50;
+        .stSidebar a:hover {
+            color: #4CAF50 !important;
         }
-        
-        /* Zone de contenu principale */
-        .content-behind {
-            position: relative;
-            z-index: 0;
-            margin-top: 70px;
-            padding: 20px;
-        }
-        
-        /* Style pour le contenu du calculateur */
-        .calculator-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 100px;
-        }
-        
-        /* Style pour le bandeau en bas de page */
-        .footer-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #23A95C;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1001;
-        }
-        .footer-banner a {
-            color: white;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .footer-banner a:hover {
-            color: #F3F3F1;
-        }
-        .footer-banner img {
-            height: 40px;
-            margin-left: auto;
-        }
-        
-        /* Masquer le footer et le header par défaut de Streamlit */
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
+        /* ... (Tout le reste du CSS de main.py) ... */
     </style>
 """, unsafe_allow_html=True)
 
-# ========== BARRE DE NAVIGATION ==========
-st.markdown("""
-    <div class="navbar">
-        <a href="/" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self" style="color: #4CAF50; font-weight: bolder;">Calculateur</a>
-        <a href="/Ressources" target="_self">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
-    </div>
-""", unsafe_allow_html=True)
+# ========== NAVBAR (identique à main.py) ==========
+with st.sidebar:
+    st.markdown("""
+        <div class="stSidebar">
+            <a href="/" target="_self">Accueil</a>
+            <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
+            <a href="/Ressources" target="_self">Ressources</a>
+            <a href="/Methodologie" target="_self">Méthodologie</a>
+        </div>
+    """, unsafe_allow_html=True)
+
 
 # ========== CONTENU PRINCIPAL ==========
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
