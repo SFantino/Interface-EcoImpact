@@ -103,9 +103,9 @@ st.markdown("""
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 
 # Titre et description
-st.title("🧮 Calculateur d'Impact Écologique")
 st.markdown("""
-    <div style="margin-bottom: 30px;">
+    <h1 style='color: black;'>🧮 Calculateur d'Impact Écologique</h1>
+    <div style="margin-bottom: 30px; color: black;">
         Calculez votre empreinte environnementale en fonction de vos activités quotidiennes.
     </div>
 """, unsafe_allow_html=True)
