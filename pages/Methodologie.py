@@ -39,6 +39,10 @@ st.markdown("""
             margin-top: 70px;
         }
         header {visibility: hidden;}
+        /* Ajout pour forcer les titres en noir */
+        h1 {
+            color: black !important;
+        }
     </style>
 """, unsafe_allow_html=True)
 
