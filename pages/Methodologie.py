@@ -1,16 +1,19 @@
 import streamlit as st
 
-# Configuration de la page
+# Configuration
 st.set_page_config(
-    page_title="Méthodologie | EcoImpact", 
+    page_title="Méthodologie | EcoImpact",
     layout="wide",
     page_icon="📊"
 )
 
-# CSS minimal
+# ========== CSS COPIÉ DE MAIN.PY ==========
 st.markdown("""
     <style>
-        .stApp { background-color: #F3F3F1; }
+        .stApp {
+            background-color: #F3F3F1;
+            min-height: 100vh;
+        }
         .navbar {
             position: fixed;
             top: 0;
@@ -20,6 +23,7 @@ st.markdown("""
             padding: 15px 20px;
             text-align: right;
             z-index: 1000;
+            box-shadow: none;
         }
         .navbar a {
             color: black;
@@ -28,12 +32,17 @@ st.markdown("""
             font-weight: bold;
             margin: 0 15px;
         }
-        .navbar a:hover { color: #4CAF50; }
-        .content-behind { margin-top: 70px; }
+        .navbar a:hover {
+            color: #4CAF50;
+        }
+        .content-behind {
+            margin-top: 70px;
+        }
+        header {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
-# Barre de navigation
+# ========== BARRE DE NAVIGATION IDENTIQUE À MAIN.PY ==========
 st.markdown("""
     <div class="navbar">
         <a href="/" target="_self">Accueil</a>
@@ -46,6 +55,6 @@ st.markdown("""
 
 # Contenu
 st.title("📊 Méthodologie Scientifique")
-st.write("Contenu de votre méthodologie ici...")
+# Votre contenu ici...
 
 st.markdown("</div>", unsafe_allow_html=True)
