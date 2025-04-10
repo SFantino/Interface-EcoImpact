@@ -11,38 +11,35 @@ st.set_page_config(
 # ========== CSS MODIFIÉ ==========
 st.markdown("""
     <style>
-        /* Transforme le sidebar Streamlit en navbar horizontale */
-        section[data-testid="stSidebar"] {
+        /* Navbar horizontale fixe */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100% !important;
-            height: 70px !important;
-            background: transparent;
+            width: 100%;
+            height: 70px;
+            background-color: #F3F3F1 !important;
             padding: 15px 20px;
             z-index: 1000;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            box-shadow: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         /* Style des liens de la navbar */
-        .stSidebar a {
+        .navbar a {
             color: black !important;
             text-decoration: none;
             font-size: 20px !important;
             font-weight: bold !important;
             margin: 0 15px !important;
         }
-        .stSidebar a:hover {
+        .navbar a:hover {
             color: #4CAF50 !important;
         }
         
-        /* Cache le bouton de toggle du sidebar */
-        button[title="Toggle sidebar"] { display: none !important; }
-        
-        /* Fond d'écran */
+        /* Espace pour la navbar fixe */
         .stApp {
             margin-top: 70px !important;
             background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
@@ -50,7 +47,7 @@ st.markdown("""
         }
         
         /* Cache l'ancienne navbar */
-        .navbar { display: none !important; }
+        section[data-testid="stSidebar"] { display: none !important; }
         
         /* Styles existants conservés */
         .content-behind {
@@ -127,15 +124,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ========== NAVBAR NATIVE STREAMLIT ==========
-with st.sidebar:
-    st.markdown("""
-        <div class="stSidebar">
-            <a href="/" target="_self">Accueil</a>
-            <a href="/Calculateur" target="_self">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
-        </div>
-    """, unsafe_allow_html=True)
+st.markdown("""
+    <div class="navbar">
+        <a href="/" target="_self">Accueil</a>
+        <a href="/Calculateur" target="_self">Calculateur</a>
+        <a href="/Ressources" target="_self">Ressources</a>
+        <a href="/Methodologie" target="_self">Méthodologie</a>
+    </div>
+""", unsafe_allow_html=True)
 
 # ========== CONTENU PRINCIPAL ==========
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
