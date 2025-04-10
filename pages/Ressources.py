@@ -39,6 +39,8 @@ st.markdown("""
             margin-top: 70px;
         }
         header {visibility: hidden;}
+        h1 {
+            color: black !important;
     </style>
 """, unsafe_allow_html=True)
 
