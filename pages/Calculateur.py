@@ -1,68 +1,54 @@
 import streamlit as st
 
-# Configuration de la page
+# Configuration
 st.set_page_config(
     page_title="Calculateur | EcoImpact",
     layout="wide",
     page_icon="🧮",
-    initial_sidebar_state="collapsed"  # <- Important
+    initial_sidebar_state="collapsed"
 )
 
-# ========== CSS (identique à main.py) ==========
+# ========== MÊME CSS QUE MAIN.PY ==========
 st.markdown("""
     <style>
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            background-color: #F3F3F1 !important;
-            padding: 15px 20px;
-            z-index: 1000;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .navbar a {
-            color: black !important;
-            text-decoration: none;
-            font-size: 20px !important;
-            font-weight: bold !important;
-            margin: 0 15px !important;
-        }
-        .navbar a:hover {
-            color: #4CAF50 !important;
-        }
-        .stApp {
-            margin-top: 70px !important;
-            background-color: #F3F3F1;
-            min-height: calc(100vh - 70px);
-        }
-        /* ... (autres styles si nécessaire) ... */
+        /* [Coller ici tout le CSS de main.py] */
     </style>
 """, unsafe_allow_html=True)
 
-# ========== NAVBAR (identique à main.py) ==========
-st.markdown("""
-    <div class="navbar">
-        <a href="/" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
-        <a href="/Ressources" target="_self">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
-    </div>
-""", unsafe_allow_html=True)
+# ========== NAVBAR DYNAMIQUE (identique à main.py) ==========
+current_page = st.experimental_get_query_params().get("page", ["home"])[0]
 
+nav_items = {
+    "home": "Accueil",
+    "Calculateur": "Calculateur",
+    "Ressources": "Ressources",
+    "Methodologie": "Méthodologie"
+}
 
-# ========== CONTENU PRINCIPAL ==========
+nav_links = []
+for page, name in nav_items.items():
+    if page == current_page:
+        nav_links.append(f'<a href="?page={page}" class="active" target="_self">{name}</a>')
+    else:
+        nav_links.append(f'<a href="?page={page}" target="_self">{name}</a>')
+
+st.markdown(
+    f'<div class="main-nav">{"".join(nav_links)}</div>', 
+    unsafe_allow_html=True
+)
+
+# ========== CONTENU SPÉCIFIQUE À LA PAGE ==========
 st.markdown('<div class="content-behind">', unsafe_allow_html=True)
 
-# Titre et description
+# Contenu spécifique au calculateur
+st.title("🧮 Calculateur d'Impact Écologique")
+# ... [votre contenu spécifique]
+
+# ========== FOOTER (identique à main.py) ==========
 st.markdown("""
-    <h1 style='color: black;'>🧮 Calculateur d'Impact Écologique</h1>
-    <div style="margin-bottom: 30px; color: black;">
-        Calculez votre empreinte environnementale en fonction de vos activités quotidiennes.
+    <div class="footer-banner">
+        <a href="/A_propos" target="_self">À propos</a>
+        <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
     </div>
 """, unsafe_allow_html=True)
 
