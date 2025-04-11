@@ -1,4 +1,6 @@
 import streamlit as st
+import pandas as pd
+import plotly.express as px
 
 # ========== CONFIGURATION DE LA PAGE ==========
 st.set_page_config(
@@ -8,11 +10,10 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ========== STYLE CSS (identique à main.py) ==========
+# ========== STYLE CSS ==========
 def load_css():
     st.markdown("""
         <style>
-            /* Navbar principale */
             .navbar {
                 position: fixed;
                 top: 0;
@@ -27,7 +28,6 @@ def load_css():
                 align-items: center;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
-            
             .navbar a {
                 color: black !important;
                 text-decoration: none;
@@ -35,26 +35,19 @@ def load_css():
                 font-weight: bold !important;
                 margin: 0 15px !important;
             }
-            
             .navbar a:hover {
                 color: #4CAF50 !important;
             }
-            
-            /* Mise en page principale */
             .stApp {
                 margin-top: 70px !important;
                 background: #F3F3F1;
                 min-height: calc(100vh - 70px);
             }
-            
-            /* Contenu */
             .content-behind {
                 position: relative;
                 z-index: 0;
                 padding: 20px;
             }
-            
-            /* Styles spécifiques au calculateur */
             .calculator-container {
                 background-color: white;
                 padding: 30px;
@@ -62,8 +55,6 @@ def load_css():
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 margin-bottom: 100px;
             }
-            
-            /* Footer */
             .footer-banner {
                 position: fixed;
                 bottom: 0;
@@ -76,27 +67,20 @@ def load_css():
                 align-items: center;
                 z-index: 1001;
             }
-            
             .footer-banner a {
                 color: white;
                 text-decoration: none;
                 font-size: 20px;
                 font-weight: bold;
             }
-            
             .footer-banner a:hover {
                 color: #F3F3F1;
             }
-            
             .footer-banner img {
                 height: 40px;
                 margin-left: auto;
             }
-            
-            /* Masquer éléments par défaut */
-            section[data-testid="stSidebar"],
-            footer,
-            header {
+            section[data-testid="stSidebar"], footer, header {
                 display: none !important;
             }
         </style>
@@ -121,21 +105,70 @@ def create_footer():
         </div>
     """, unsafe_allow_html=True)
 
-# ========== CONTENU SPÉCIFIQUE AU CALCULATEUR ==========
-def calculator_content():
-    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
-    
-    st.markdown("<h1 style='color:#000000;'>🧮 Calculateur d'Impact Écologique</h1>", unsafe_allow_html=True)
-    
-    # Conteneur du formulaire
-    st.markdown('<div class="calculator-container">', unsafe_allow_html=True)
-    
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== STRUCTURE PRINCIPALE ==========
+# ========== INITIALISATION ==========
 load_css()
 create_navbar()
-calculator_content()
+st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+st.markdown("<h1 style='color:#000000;'>🧮 Calculateur d'Impact Écologique</h1>", unsafe_allow_html=True)
+st.markdown('<div class="calculator-container">', unsafe_allow_html=True)
+
+# ========== CALCULATEUR ==========
+# Charger les données
+@st.cache_data
+
+def load_data():
+    df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
+    df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
+    df_synthese = pd.read_csv("agribalyse-31-synthese.csv", delimiter=',', dtype=str)
+    return df, df_ingredients, df_synthese
+
+df, df_ingredients, df_synthese = load_data()
+
+# Nettoyage
+for dataframe in [df, df_ingredients, df_synthese]:
+    dataframe.columns = dataframe.columns.str.strip()
+
+unites_indicateurs = { ... }  # À compléter avec le même dictionnaire que précédemment
+
+if "panier" not in st.session_state:
+    st.session_state.panier = []
+
+# Ajout produit
+if "ajouter_produit" not in st.session_state:
+    st.session_state.ajouter_produit = True
+
+if st.session_state.ajouter_produit:
+    search_query = st.text_input("Recherchez un produit par nom")
+    if search_query:
+        produits_trouves = df_ingredients[df_ingredients["Nom Français"].str.contains(search_query, case=False, na=False)]
+        if not produits_trouves.empty:
+            produit_selectionne = st.selectbox("Sélectionnez un produit", produits_trouves["Nom Français"].unique())
+            code_ciqual = produits_trouves[produits_trouves["Nom Français"] == produit_selectionne]["Ciqual  code"].values[0]
+            st.success(f"Produit sélectionné : {produit_selectionne} (Code CIQUAL : {code_ciqual})")
+            if st.button("Ajouter au panier"):
+                st.session_state.panier.append({"nom": produit_selectionne, "code_ciqual": code_ciqual})
+                st.session_state.ajouter_produit = False
+                st.rerun()
+
+if st.button("Ajouter un autre produit"):
+    st.session_state.ajouter_produit = True
+    st.rerun()
+
+# Panier
+st.subheader("📦 Votre panier")
+if st.session_state.panier:
+    for index, item in enumerate(st.session_state.panier):
+        col1, col2 = st.columns([4, 1])
+        col1.write(f"🔹 {item['nom']}")
+        if col2.button("❌", key=f"remove_{index}"):
+            del st.session_state.panier[index]
+            st.rerun()
+else:
+    st.info("Votre panier est vide.")
+
+# Calcul indicateurs
+...  # Intégrer ici les fonctions de calcul et d'affichage existantes
+
+st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 create_footer()
