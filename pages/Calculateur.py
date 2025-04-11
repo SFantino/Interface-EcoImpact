@@ -1,138 +1,7 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
-# ========== CONFIGURATION ========== 
-st.set_page_config(
-    page_title="Calculateur | EcoImpact",
-    layout="wide",
-    page_icon="🌱",
-    initial_sidebar_state="collapsed"
-)
-
-# ========== STYLE CSS ========== 
-def load_css():
-    st.markdown("""
-        <style>
-            /* Navbar */
-            .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 70px;
-                background-color: #333333 !important;
-                padding: 15px 20px;
-                z-index: 1000;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-
-            .navbar a {
-                color: #F3F3F1 !important;
-                text-decoration: none;
-                font-size: 20px !important;
-                font-weight: bold !important;
-                margin: 0 15px !important;
-            }
-
-            .navbar a:hover {
-                color: #4CAF50 !important;
-            }
-
-            /* Application background */
-            .stApp {
-                margin-top: 70px !important;
-                background-color: #F3F3F1;
-                min-height: calc(100vh - 70px);
-                color: #333333 !important;
-            }
-
-            /* Content styling */
-            .content-behind {
-                padding: 20px 40px;
-            }
-
-            h1, h2, h3 {
-                color: #333333 !important;
-            }
-
-            .resource-card {
-                background: #FFFFFF;
-                border-radius: 10px;
-                padding: 20px;
-                margin-bottom: 20px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                color: #333333 !important;
-            }
-
-            section[data-testid="stSidebar"],
-            footer,
-            header {
-                display: none !important;
-            }
-
-            /* Text input */
-            .stTextInput input {
-                background-color: #FFFFFF !important;
-                color: #333333 !important;
-                border-radius: 5px !important;
-            }
-
-            /* Button "Ajouter un autre produit" */
-            .stButton button {
-                background-color: #4CAF50 !important;
-                color: #FFFFFF !important;
-                border-radius: 5px !important;
-                border: 1px solid #4CAF50 !important;
-            }
-
-            .stButton button:hover {
-                background-color: #388E3C !important;
-            }
-
-            /* Selectbox for similar products */
-            .stSelectbox, .stMultiSelect, .stSelect {
-                background-color: #FFFFFF !important;
-                color: #333333 !important;
-            }
-
-            /* Success and Warning text */
-            .stSuccess, .stWarning {
-                color: #333333 !important;
-            }
-            
-            /* Table and dataframe styling */
-            .stDataFrame {
-                color: #333333 !important;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-# ========== COMPOSANTS ========== 
-def create_navbar():
-    st.markdown("""
-        <div class="navbar">
-            <a href="/" target="_self">Accueil</a>
-            <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
-        </div>
-    """, unsafe_allow_html=True)
-
-def create_footer():
-    st.markdown("""
-        <div class="footer-banner">
-            <a href="/A_propos" target="_self">À propos</a>
-            <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
-        </div>
-    """, unsafe_allow_html=True)
-
-# ========== CALCULATEUR ========== 
-def calculateur_content():
-    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
-    
 # Charger les bases de données
 df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
 df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
@@ -229,4 +98,75 @@ else:
 # Calcul et affichage des indicateurs environnementaux du panier
 indicateurs_totaux, details_produits = calculer_indicateurs_panier()
 
-if indicateurs_totaux is not
+if indicateurs_totaux is not None:
+    st.subheader("📊 Indicateurs environnementaux du panier")
+
+    df_indicateurs = pd.DataFrame({
+        "Impact environnemental": indicateurs_totaux.index,
+        "Valeur totale": indicateurs_totaux.values,
+        "Unité": [unites_indicateurs.get(indicateur, "N/A") for indicateur in indicateurs_totaux.index]
+    })
+
+    st.dataframe(df_indicateurs.set_index("Impact environnemental"))
+
+    selected_row = st.selectbox(
+        "Sélectionnez un indicateur pour voir la contribution des aliments",
+        df_indicateurs["Impact environnemental"]
+    )
+
+    if selected_row:
+        contribution = details_produits[selected_row]
+        contribution = contribution / contribution.sum() * 100
+        contribution = contribution.sort_values(ascending=False)
+
+        noms_produits = [item["nom"] for item in st.session_state.panier]
+        fig = px.bar(
+            x=noms_produits,
+            y=contribution.values,
+            labels={'x': 'Produit', 'y': 'Contribution (%)'},
+            title=f"Contribution des produits pour {selected_row}"
+        )
+        st.plotly_chart(fig)
+
+# Exploration des détails d'un produit du panier
+if st.session_state.panier:
+    st.subheader("🔍 Explorer un produit du panier")
+    produit_choisi = st.selectbox("Sélectionnez un produit", [item["nom"] for item in st.session_state.panier])
+
+    if produit_choisi:
+        code_ciqual_choisi = next(item["code_ciqual"] for item in st.session_state.panier if item["nom"] == produit_choisi)
+        
+        etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
+        etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
+
+        # Affichage des données du produit
+        st.subheader("Données du produit")
+        result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
+        if not result.empty:
+            colonnes_etape = [col for col in df.columns if etape_selectionnee in col]
+            if colonnes_etape:
+                st.write(result[colonnes_etape].T.dropna())
+            else:
+                st.warning(f"Aucune donnée pour l'étape '{etape_selectionnee}'.")
+        else:
+            st.warning("Aucune donnée trouvée pour ce produit.")
+
+        # Exploration des ingrédients
+        ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
+
+        if ingredients_dispo:
+            st.subheader("Sélection des ingrédients")
+            ingredient_selectionne = st.radio("Choisissez un ingrédient", ingredients_dispo, key="ingredient_produit")
+
+            impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
+            if not impact_ingredient.empty:
+                colonnes_impact = impact_ingredient.columns[6:24]
+                impact_values = impact_ingredient[colonnes_impact].T
+                impact_values.columns = [ingredient_selectionne]
+                impact_values.insert(0, "Impact environnemental", impact_values.index)
+                st.write(impact_values.reset_index(drop=True))
+            else:
+                st.warning(f"Aucun impact trouvé pour '{ingredient_selectionne}'.")
+
+        else:
+            st.warning("Aucun ingrédient disponible pour ce produit.")
