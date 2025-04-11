@@ -87,6 +87,21 @@ def load_css():
             .stButton button:hover {
                 background-color: #D1D1D1 !important;
             }
+            /* Barre de sélection pour produits similaires (fond #E8E8E8, texte noir) */
+            .stSelectbox, .stMultiSelect, .stSelect {
+                background-color: #E8E8E8 !important;
+                color: black !important;
+            }
+
+            /* Texte "Produit sélectionné" (texte noir) */
+            .stSuccess {
+                color: black !important;
+            }
+
+            /* Texte "Votre panier est vide" (texte noir) */
+            .stWarning {
+                color: black !important;
+            }
         </style>
     """, unsafe_allow_html=True)
 
