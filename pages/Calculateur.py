@@ -130,37 +130,6 @@ def calculator_content():
     # Conteneur du formulaire
     st.markdown('<div class="calculator-container">', unsafe_allow_html=True)
     
-    with st.form("calcul_form"):
-        col1, col2 = st.columns(2)
-        with col1:
-            type_activite = st.selectbox(
-                "Type d'activité",
-                ["Transport", "Énergie", "Alimentation", "Logement", "Numérique"],
-                help="Sélectionnez le domaine d'activité à évaluer"
-            )
-        with col2:
-            quantite = st.number_input(
-                "Quantité", 
-                min_value=0, 
-                step=1,
-                help="Quantité associée à cette activité (km, kWh, kg, etc.)"
-            )
-        
-        # Bouton de calcul
-        if st.form_submit_button("Calculer l'impact", help="Cliquez pour calculer votre impact environnemental"):
-            # Ici vous pourriez ajouter votre logique de calcul
-            st.success(f"Calcul pour {quantite} unités de {type_activite}")
-            # Affichage des résultats
-            with st.expander("📊 Voir les résultats détaillés"):
-                st.write("""
-                **Détail des émissions:**
-                - CO2: XX kg
-                - Equivalent carbone: XX kg
-                - Comparaison: XX arbres nécessaires pour compenser
-                """)
-                
-                # Graphique exemple (à remplacer par vos données)
-                st.bar_chart({"Transport": [quantite*0.2], "Moyenne nationale": [quantite*0.15]})
     
     st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
