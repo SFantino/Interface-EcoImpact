@@ -95,27 +95,6 @@ def methodo_content():
     
     st.markdown("<h1 style='color:#000000;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
     
-    # Section 1
-    with st.container():
-        st.markdown('<div class="methodo-card">', unsafe_allow_html=True)
-        st.header("🔍 Sources des Données")
-        st.markdown("""
-            - **Base Carbone®** de l'ADEME (version 2023)
-            - **GHG Protocol** pour les scopes 1, 2 et 3
-            - **IPCC** facteurs d'émission 2021
-        """)
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Section 2
-    with st.container():
-        st.markdown('<div class="methodo-card">', unsafe_allow_html=True)
-        st.header("🧮 Algorithmes de Calcul")
-        st.markdown("""
-            - Modèle **input-output** pour les activités économiques
-            - **Approche moyenne** pour les particuliers
-            - **Facteurs spécifiques** par secteur d'activité
-        """)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
