@@ -62,11 +62,27 @@ def load_css():
                 margin-bottom: 20px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
-            
-            section[data-testid="stSidebar"],
-            footer,
-            header {
-                display: none !important;
+
+            /* Modifications pour le calculateur */
+            .stButton>button {
+                background-color: #E8E8E8; /* Fond gris clair des boutons */
+                color: black;  /* Texte en noir */
+            }
+            .stSelectbox, .stTextInput, .stMultiselect, .stRadio>div, .stCheckbox>div, .stSlider>div {
+                background-color: #E8E8E8; /* Fond gris clair des éléments de sélection */
+                color: black;  /* Texte en noir */
+            }
+            .stTable, .stDataFrame {
+                background-color: #E8E8E8; /* Fond gris clair des tables */
+            }
+            .stTextInput>input {
+                color: black;  /* Texte des champs de saisie en noir */
+            }
+            .stMarkdown, .stTitle {
+                color: black;  /* Texte en noir dans les titres et descriptions */
+            }
+            .stSelectbox>div, .stTextInput>div {
+                background-color: #E8E8E8; /* Fond gris clair dans les entrées de texte */
             }
         </style>
     """, unsafe_allow_html=True)
@@ -189,6 +205,7 @@ if total_impacts is not None:
     st.subheader("🔍 Détails des impacts environnementaux")
     st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
     st.write(impacts_detail)
+
 # ========== STRUCTURE ========== 
 load_css()
 create_navbar()
