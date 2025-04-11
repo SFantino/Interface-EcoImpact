@@ -120,6 +120,11 @@ def load_css():
             .text {
                 color: black !important; /* Texte principal en noir */
             }
+            
+            /* Ajuster la couleur des widgets */
+            .stSelectbox, .stRadio, .stTextInput, .stButton {
+                color: black; /* Texte des widgets en noir */
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -230,7 +235,7 @@ if st.session_state.panier:
         etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
         etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
 
-        # Affichage des données du produit
+        # Affichage des données du produit sous forme de tableau
         st.subheader("Données du produit")
         result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
         if not result.empty:
@@ -242,7 +247,7 @@ if st.session_state.panier:
         else:
             st.warning("Aucune donnée trouvée pour ce produit.")
 
-        # Exploration des ingrédients
+        # Exploration des ingrédients sous forme de tableau
         ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
 
         if ingredients_dispo:
@@ -253,4 +258,4 @@ if st.session_state.panier:
             if not impact_ingredient.empty:
                 colonnes_impact = impact_ingredient.columns[6:24]
                 impact_values = impact_ingredient[colonnes_impact].values[0]
-                st.write(dict(zip(colonnes_impact, impact_values)))
+                st.write(pd.DataFrame(impact_values, columns=colonnes_impact).T)
