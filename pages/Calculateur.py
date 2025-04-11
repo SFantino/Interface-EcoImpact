@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # ========== CONFIGURATION ========== 
 st.set_page_config(
@@ -93,43 +94,137 @@ def create_footer():
 def calculateur_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.markdown("<h1 style='color:#000000;'>🌱 Calculateur d'Impact Environnemental</h1>", unsafe_allow_html=True)
-    
-    # Formulaire pour le calculateur
-    st.markdown("### Entrez les données de votre produit")
-    
-    # Inputs
-    produit_nom = st.text_input("Nom du produit")
-    categorie = st.selectbox("Catégorie du produit", ["Alimentaire", "Cosmétique", "Autre"])
-    poids = st.number_input("Poids du produit (en kg)", min_value=0.01, value=0.1)
-    production_energie = st.number_input("Énergie nécessaire à la production (en kWh)", min_value=0.01, value=1.0)
-    transport_km = st.number_input("Distance de transport (en km)", min_value=1, value=100)
-    transport_emissions = st.number_input("Émissions de CO2 par km (en g CO2)", min_value=0.1, value=100.0)
-    
-    # Calcul
-    if st.button("Calculer l'impact environnemental"):
-        # Calcul des émissions de CO2 pour le produit
-        impact_energie = production_energie * 0.5  # Coefficient arbitraire pour l'impact énergie
-        impact_transport = transport_km * transport_emissions / 1000  # CO2 total du transport (en kg)
-        impact_total = impact_energie + impact_transport
-        
-        # Affichage du résultat
-        st.write(f"**Impact environnemental total pour {produit_nom}** : {impact_total:.2f} kg CO2")
-        
-        # Afficher un message basé sur l'impact
-        if impact_total < 1:
-            st.success(f"Le produit {produit_nom} a un impact environnemental faible.")
-        elif impact_total < 5:
-            st.warning(f"Le produit {produit_nom} a un impact environnemental modéré.")
-        else:
-            st.error(f"Le produit {produit_nom} a un impact environnemental élevé.")
-    
-    st.markdown("</div>", unsafe_allow_html=True)
+    # Colonnes pour logo + texte
+    col1, col2 = st.columns([3, 1])
+    with col2:
+        st.image("Logo.jpg", width=300)
+
+    # Texte de bienvenue
+    st.markdown("""
+        <div class="welcome-text">
+            <h1>Bienvenue sur EcoImpact - Calculateur</h1>
+            <p>Découvrez votre impact environnemental avec notre outil de calcul.</p>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Bannière calculateur
+    st.markdown("""
+        <div style="padding-bottom: 100px;">
+            <div class="calculator-banner">
+                <div class="calculator-title">Tester le calculateur</div>
+                <a href="/Calculateur" target="_self">
+                    <button class="start-button">Start</button>
+                </a>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # Charger les bases de données
+    df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
+    df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
+    df_synthese = pd.read_csv("agribalyse-31-synthese.csv", delimiter=',', dtype=str)
+
+    # Normaliser les noms de colonnes
+    df.columns = df.columns.str.strip()
+    df_ingredients.columns = df_ingredients.columns.str.strip()
+    df_synthese.columns = df_synthese.columns.str.strip()
+
+    # Dictionnaire des unités par indicateur
+    unites_indicateurs = {
+        "Changement climatique": "kg CO2 eq",
+        "Particules fines": "disease incidence",
+        "Épuisement des ressources en eau": "m3 world eq",
+        "Épuisement des ressources énergétiques": "MJ",
+        "Usage des terres": "point",
+        "Épuisement des ressources - minéraux": "kg Sb eq",
+        "Appauvrissement de la couche d’ozone": "kg CFC-11 eq",
+        "Acidification": "mol H+ eq",
+        "Radiation ionisante, effet sur la santé": "kBq U235 eq",
+        "Formation photochimique d’ozone": "kg NMVOC eq",
+        "Eutrophisation, terrestre": "mol N eq",
+        "Eutrophisation, marine": "kg N eq",
+        "Eutrophisation, eau douce": "kg P eq",
+        "Ecotoxicité d'eau douce": "CTUe",
+        "Effets toxicologiques sur la santé humaine - non-cancérogènes": "CTUh",
+        "Effets toxicologiques sur la santé humaine - cancérogènes": "CTUh",
+    }
+
+    # Initialiser le panier
+    if "panier" not in st.session_state:
+        st.session_state.panier = []
+
+    # Fonction pour calculer les indicateurs du panier
+    def calculer_indicateurs_panier():
+        if not st.session_state.panier:
+            return None, None
+
+        codes_ciqual = [item["code_ciqual"] for item in st.session_state.panier]
+        produits_synthese = df_synthese[df_synthese["Code CIQUAL"].astype(str).isin(map(str, codes_ciqual))]
+
+        if produits_synthese.empty:
+            return None, None
+
+        colonnes_impact = produits_synthese.columns[12:32]  
+        produits_synthese[colonnes_impact] = produits_synthese[colonnes_impact].astype(float)
+
+        total_impacts = produits_synthese.groupby("Code CIQUAL")[colonnes_impact].sum()
+        total_somme = total_impacts.sum()
+
+        return total_somme, total_impacts
+
+    # Interface Streamlit
+    st.title("Analyse des produits agro-alimentaires")
+
+    # Ajout d'un produit
+    if "ajouter_produit" not in st.session_state:
+        st.session_state.ajouter_produit = True
+
+    if st.session_state.ajouter_produit:
+        search_query = st.text_input("Recherchez un produit par nom")
+
+        if search_query:
+            produits_trouves = df_ingredients[df_ingredients["Nom Français"].str.contains(search_query, case=False, na=False)]
+            
+            if not produits_trouves.empty:
+                produit_selectionne = st.selectbox("Sélectionnez un produit", produits_trouves["Nom Français"].unique())
+
+                code_ciqual = produits_trouves[produits_trouves["Nom Français"] == produit_selectionne]["Ciqual  code"].values[0]
+                st.success(f"Produit sélectionné : {produit_selectionne} (Code CIQUAL : {code_ciqual})")
+
+                if st.button("Ajouter au panier"):
+                    st.session_state.panier.append({"nom": produit_selectionne, "code_ciqual": code_ciqual})
+                    st.session_state.ajouter_produit = False
+                    st.rerun()
+
+    if st.button("Ajouter un autre produit"):
+        st.session_state.ajouter_produit = True
+        st.rerun()
+
+    # Affichage du panier
+    st.subheader("📦 Votre panier")
+    if st.session_state.panier:
+        for index, item in enumerate(st.session_state.panier):
+            st.markdown(f"- {item['nom']}")
+    else:
+        st.warning("Votre panier est vide.")
+
+    # Calcul des impacts environnementaux
+    total_impacts, impacts_detail = calculer_indicateurs_panier()
+    if total_impacts is not None:
+        st.subheader("🔍 Détails des impacts environnementaux")
+        st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
+        st.write(impacts_detail)
+
+    # Bannière de pied de page
+    st.markdown("""
+        <div class="footer-banner">
+            <div>© 2025 EcoImpact</div>
+            <div><a href="https://www.linkedin.com">LinkedIn</a></div>
+        </div>
+    """, unsafe_allow_html=True)
 
 # ========== STRUCTURE ========== 
 load_css()
 create_navbar()
 calculateur_content()
 create_footer()
-
-
