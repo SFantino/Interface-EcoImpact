@@ -2,114 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# Charge le CSS personnalisé
-def load_css():
-    st.markdown("""
-        <style>
-            /* Navbar */
-            .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 70px;
-                background-color: #FFFFFF !important;
-                padding: 15px 20px;
-                z-index: 1000;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-
-            .navbar a {
-                color: #333333 !important;
-                text-decoration: none;
-                font-size: 20px !important;
-                font-weight: bold !important;
-                margin: 0 15px !important;
-            }
-
-            .navbar a:hover {
-                color: #4CAF50 !important;
-            }
-
-            .stApp {
-                margin-top: 70px !important;
-                background-color: #F9F9F9;
-                min-height: calc(100vh - 70px);
-                color: #333333 !important;
-            }
-
-            .content-behind {
-                padding: 20px 40px;
-            }
-
-            h1, h2, h3 {
-                color: #333333 !important;
-            }
-
-            .resource-card {
-                background: #FFFFFF;
-                border-radius: 10px;
-                padding: 20px;
-                margin-bottom: 20px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                color: #333333 !important;
-            }
-
-            section[data-testid="stSidebar"],
-            footer,
-            header {
-                display: none !important;
-            }
-
-            /* Barre de saisie */
-            .stTextInput input {
-                background-color: #FFFFFF !important;
-                color: #333333 !important;
-                border-radius: 5px !important;
-                border: 1px solid #D1D1D1 !important;
-            }
-
-            /* Bouton "Ajouter un autre produit" */
-            .stButton button {
-                background-color: #FFFFFF !important;
-                color: #333333 !important;
-                border-radius: 5px !important;
-                border: 1px solid #D1D1D1 !important;
-            }
-
-            /* Hover effect for button */
-            .stButton button:hover {
-                background-color: #F1F1F1 !important;
-            }
-
-            /* Barre de sélection pour produits similaires */
-            .stSelectbox, .stMultiSelect, .stSelect {
-                background-color: #FFFFFF !important;
-                color: #333333 !important;
-            }
-
-            /* Texte "Produit sélectionné" */
-            .stSuccess {
-                color: #333333 !important;
-            }
-
-            /* Texte "Votre panier est vide" */
-            .stWarning {
-                color: #333333 !important;
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-# Chargement du CSS
-load_css()
-
-# Logique Streamlit ici
-st.title("Mon Application Streamlit")
-# Ajoutez ici le reste de votre interface utilisateur
-
 # Charger les bases de données
 df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
 df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
@@ -163,7 +55,91 @@ def calculer_indicateurs_panier():
 
     return total_somme, total_impacts
 
-# Interface Streamlit
+# ========== STYLE CSS ========== 
+def load_css():
+    st.markdown("""
+        <style>
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background-color: #4CAF50;
+                padding: 15px 20px;
+                z-index: 1000;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .navbar a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                font-weight: bold;
+                margin: 0 15px;
+            }
+            
+            .navbar a:hover {
+                color: #f1f1f1;
+            }
+            
+            .stApp {
+                margin-top: 70px;
+                background-color: #F4F6F9;
+                min-height: calc(100vh - 70px);
+            }
+            
+            .content-behind {
+                padding: 20px 40px;
+            }
+            
+            h1, h2, h3 {
+                color: #333333;
+            }
+            
+            .methodo-card {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            section[data-testid="stSidebar"],
+            footer,
+            header {
+                display: none !important;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+# ========== NAVBAR ========== 
+def create_navbar():
+    st.markdown("""
+        <div class="navbar">
+            <a href="/" target="_self">Accueil</a>
+            <a href="/Calculateur" target="_self">Calculateur</a>
+            <a href="/Ressources" target="_self">Ressources</a>
+            <a href="/Methodologie" target="_self" style="color: #f1f1f1;">Méthodologie</a>
+        </div>
+    """, unsafe_allow_html=True)
+
+# ========== CONTENU PRINCIPAL ========== 
+def methodo_content():
+    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+    
+    st.markdown("<h1 style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== STRUCTURE PAGE ========== 
+load_css()
+create_navbar()
+
+# ========== AFFICHAGE INTERFACE STREAMLIT ========== 
 st.title("Analyse des produits agro-alimentaires")
 
 # Ajout d'un produit
@@ -269,12 +245,6 @@ if st.session_state.panier:
             impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
             if not impact_ingredient.empty:
                 colonnes_impact = impact_ingredient.columns[6:24]
-                impact_values = impact_ingredient[colonnes_impact].T
-                impact_values.columns = [ingredient_selectionne]
-                impact_values.insert(0, "Impact environnemental", impact_values.index)
-                st.write(impact_values.reset_index(drop=True))
-            else:
-                st.warning(f"Aucun impact trouvé pour '{ingredient_selectionne}'.")
+                impact_values = impact_ingredient[colonnes_impact].values[0]
+                st.write(dict(zip(colonnes_impact, impact_values)))
 
-        else:
-            st.warning("Aucun ingrédient disponible pour ce produit.")
