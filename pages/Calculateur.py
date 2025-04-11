@@ -65,7 +65,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #4CAF50;
+                background-color: #333333;
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -113,6 +113,10 @@ def load_css():
             header {
                 display: none !important;
             }
+
+            .text {
+                color: black !important;
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -131,7 +135,7 @@ def create_navbar():
 def methodo_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.markdown("<h1 style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='text' style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -247,4 +251,3 @@ if st.session_state.panier:
                 colonnes_impact = impact_ingredient.columns[6:24]
                 impact_values = impact_ingredient[colonnes_impact].values[0]
                 st.write(dict(zip(colonnes_impact, impact_values)))
-
