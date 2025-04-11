@@ -65,7 +65,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #333333;
+                background-color: #F3F3F1; /* Couleur de fond du bandeau */
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -75,7 +75,7 @@ def load_css():
             }
             
             .navbar a {
-                color: white;
+                color: black; /* Texte en noir */
                 text-decoration: none;
                 font-size: 20px;
                 font-weight: bold;
@@ -83,21 +83,23 @@ def load_css():
             }
             
             .navbar a:hover {
-                color: #f1f1f1;
+                color: #333333; /* Lien en gris foncé au survol */
             }
             
             .stApp {
                 margin-top: 70px;
                 background-color: #F4F6F9;
                 min-height: calc(100vh - 70px);
+                color: black; /* Texte global en noir */
             }
             
             .content-behind {
                 padding: 20px 40px;
+                color: black; /* Texte en noir dans la section */
             }
             
             h1, h2, h3 {
-                color: #333333;
+                color: black; /* Titres en noir */
             }
             
             .methodo-card {
@@ -106,6 +108,7 @@ def load_css():
                 padding: 20px;
                 margin-bottom: 20px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                color: black; /* Texte en noir dans les cartes */
             }
             
             section[data-testid="stSidebar"],
@@ -115,7 +118,20 @@ def load_css():
             }
 
             .text {
-                color: black !important;
+                color: black !important; /* Texte principal en noir */
+            }
+            
+            /* Ajuster la couleur des widgets */
+            .stSelectbox, .stRadio, .stTextInput, .stButton {
+                color: black; /* Texte des widgets en noir */
+            }
+
+            .stRadio label, .stSelectbox label {
+                color: black !important; /* Texte des labels des widgets en noir */
+            }
+
+            .stMarkdown {
+                color: black !important; /* Texte dans st.markdown en noir */
             }
         </style>
     """, unsafe_allow_html=True)
@@ -135,7 +151,7 @@ def create_navbar():
 def methodo_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.markdown("<h1 class='text' style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='text' style='color:black;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -224,31 +240,11 @@ if st.session_state.panier:
     if produit_choisi:
         code_ciqual_choisi = next(item["code_ciqual"] for item in st.session_state.panier if item["nom"] == produit_choisi)
         
+        # Choix de l'étape du cycle de vie
         etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
         etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
 
-        # Affichage des données du produit
+        # Affichage des données du produit sous forme de tableau
         st.subheader("Données du produit")
-        result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
-        if not result.empty:
-            colonnes_etape = [col for col in df.columns if etape_selectionnee in col]
-            if colonnes_etape:
-                st.write(result[colonnes_etape].T.dropna())
-            else:
-                st.warning(f"Aucune donnée pour l'étape '{etape_selectionnee}'.")
-        else:
-            st.warning("Aucune donnée trouvée pour ce produit.")
-
-        # Exploration des ingrédients
-        ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
-
-        if ingredients_dispo:
-            st.subheader("Sélection des ingrédients")
-            ingredient_selectionne = st.radio("Choisissez un ingrédient", ingredients_dispo, key="ingredient_produit")
-
-            impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
-            if not impact_ingredient.empty:
-                colonnes_impact = impact_ingredient.columns[6:24]
-                impact_values = impact_ingredient[colonnes_impact].values[0]
-                st.write(dict(zip(colonnes_impact, impact_values)))
-
+        result = df[df['Code CIQUAL'] == code_ciqual_choisi]
+        st.dataframe(result)
