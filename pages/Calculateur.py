@@ -65,7 +65,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #333333;
+                background-color: #F3F3F1;  /* Changer la couleur du bandeau */
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -75,7 +75,7 @@ def load_css():
             }
             
             .navbar a {
-                color: white;
+                color: black;  /* Changer la couleur des mots en noir */
                 text-decoration: none;
                 font-size: 20px;
                 font-weight: bold;
