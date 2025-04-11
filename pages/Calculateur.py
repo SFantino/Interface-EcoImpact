@@ -65,7 +65,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #004b6d;  /* Changer ici la couleur de fond de la navbar */
+                background-color: #333333;
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -75,7 +75,7 @@ def load_css():
             }
             
             .navbar a {
-                color: white;  /* Couleur du texte des liens */
+                color: white;
                 text-decoration: none;
                 font-size: 20px;
                 font-weight: bold;
@@ -83,12 +83,12 @@ def load_css():
             }
             
             .navbar a:hover {
-                color: #f1f1f1;  /* Changer la couleur du texte lors du survol */
+                color: #f1f1f1;
             }
             
             .stApp {
                 margin-top: 70px;
-                background-color: #f5f7fa;  /* Couleur de fond de l'application */
+                background-color: #F4F6F9;
                 min-height: calc(100vh - 70px);
             }
             
@@ -97,7 +97,7 @@ def load_css():
             }
             
             h1, h2, h3 {
-                color: #2c3e50;  /* Changer la couleur des titres */
+                color: #333333;
             }
             
             .methodo-card {
@@ -115,29 +115,7 @@ def load_css():
             }
 
             .text {
-                color: #333333 !important;  /* Couleur du texte */
-            }
-
-            .stButton > button {
-                background-color: #004b6d;  /* Changer la couleur de fond des boutons */
-                color: white;  /* Changer la couleur du texte des boutons */
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-            }
-
-            .stButton > button:hover {
-                background-color: #0177d4;  /* Changer la couleur de fond lors du survol des boutons */
-            }
-
-            .stSelectbox > div {
-                background-color: #ffffff;  /* Changer la couleur de fond des selectbox */
-                border: 1px solid #ddd;
-                border-radius: 5px;
-            }
-
-            .stSelectbox > div:hover {
-                border-color: #004b6d;  /* Changer la couleur du border lors du survol */
+                color: black !important;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -220,11 +198,57 @@ if indicateurs_totaux is not None:
     st.dataframe(df_indicateurs.set_index("Impact environnemental"))
 
     selected_row = st.selectbox(
-        "Sélectionnez un indicateur pour voir la contribution des produits",
-        indicateurs_totaux.index
+        "Sélectionnez un indicateur pour voir la contribution des aliments",
+        df_indicateurs["Impact environnemental"]
     )
 
     if selected_row:
-        detail_impact = details_produits[selected_row]
-        st.subheader(f"Contribution des produits pour {selected_row}")
-        st.dataframe(detail_impact)
+        contribution = details_produits[selected_row]
+        contribution = contribution / contribution.sum() * 100
+        contribution = contribution.sort_values(ascending=False)
+
+        noms_produits = [item["nom"] for item in st.session_state.panier]
+        fig = px.bar(
+            x=noms_produits,
+            y=contribution.values,
+            labels={'x': 'Produit', 'y': 'Contribution (%)'},
+            title=f"Contribution des produits pour {selected_row}"
+        )
+        st.plotly_chart(fig)
+
+# Exploration des détails d'un produit du panier
+if st.session_state.panier:
+    st.subheader("🔍 Explorer un produit du panier")
+    produit_choisi = st.selectbox("Sélectionnez un produit", [item["nom"] for item in st.session_state.panier])
+
+    if produit_choisi:
+        code_ciqual_choisi = next(item["code_ciqual"] for item in st.session_state.panier if item["nom"] == produit_choisi)
+        
+        etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
+        etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
+
+        # Affichage des données du produit
+        st.subheader("Données du produit")
+        result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
+        if not result.empty:
+            colonnes_etape = [col for col in df.columns if etape_selectionnee in col]
+            if colonnes_etape:
+                st.write(result[colonnes_etape].T.dropna())
+            else:
+                st.warning(f"Aucune donnée pour l'étape '{etape_selectionnee}'.")
+        else:
+            st.warning("Aucune donnée trouvée pour ce produit.")
+
+        # Exploration des ingrédients
+        ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
+
+        if ingredients_dispo:
+            st.subheader("Sélection des ingrédients")
+            ingredient_selectionne = st.radio("Choisissez un ingrédient", ingredients_dispo, key="ingredient_produit")
+
+            impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
+            if not impact_ingredient.empty:
+                colonnes_impact = impact_ingredient.columns[6:24]
+                impact_values = impact_ingredient[colonnes_impact].values[0]
+                st.write(dict(zip(colonnes_impact, impact_values)))
+
