@@ -125,7 +125,7 @@ def create_footer():
 def calculator_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.title("🧮 Calculateur d'Impact Écologique")
+    st.markdown("<h1 style='color:#000000;'>🧮 Calculateur d'Impact Écologique</h1>", unsafe_allow_html=True)
     
     # Conteneur du formulaire
     st.markdown('<div class="calculator-container">', unsafe_allow_html=True)
