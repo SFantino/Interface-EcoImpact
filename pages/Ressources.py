@@ -1,62 +1,125 @@
 import streamlit as st
 
-# Configuration
+# ========== CONFIGURATION ==========
 st.set_page_config(
     page_title="Ressources | EcoImpact",
     layout="wide",
-    page_icon="📚"
+    page_icon="📚",
+    initial_sidebar_state="collapsed"
 )
 
-# ========== MÊME CSS QUE METHODOLOGIE.PY ==========
-st.markdown("""
-    <style>
-        .stApp {
-            background-color: #F3F3F1;
-            min-height: 100vh;
-        }
-        .navbar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            background-color: transparent;
-            padding: 15px 20px;
-            text-align: right;
-            z-index: 1000;
-            box-shadow: none;
-        }
-        .navbar a {
-            color: black;
-            text-decoration: none;
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0 15px;
-        }
-        .navbar a:hover {
-            color: #4CAF50;
-        }
-        .content-behind {
-            margin-top: 70px;
-        }
-        header {visibility: hidden;}
-        h1 {
-            color: black !important;
-    </style>
-""", unsafe_allow_html=True)
+# ========== STYLE CSS ==========
+def load_css():
+    st.markdown("""
+        <style>
+            /* Navbar identique à main.py */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background-color: #F3F3F1 !important;
+                padding: 15px 20px;
+                z-index: 1000;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .navbar a {
+                color: black !important;
+                text-decoration: none;
+                font-size: 20px !important;
+                font-weight: bold !important;
+                margin: 0 15px !important;
+            }
+            
+            .navbar a:hover {
+                color: #4CAF50 !important;
+            }
+            
+            .stApp {
+                margin-top: 70px !important;
+                background-color: #F3F3F1;
+                min-height: calc(100vh - 70px);
+            }
+            
+            .content-behind {
+                padding: 20px 40px;
+            }
+            
+            h1, h2, h3 {
+                color: #000000 !important;
+            }
+            
+            .resource-card {
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            section[data-testid="stSidebar"],
+            footer,
+            header {
+                display: none !important;
+            }
+        </style>
+    """, unsafe_allow_html=True)
 
-# ========== BARRE DE NAVIGATION IDENTIQUE ==========
-st.markdown("""
-    <div class="navbar">
-        <a href="/" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self">Calculateur</a>
-        <a href="/Ressources" target="_self" style="color: #4CAF50; font-weight: bolder;">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
-    </div>
-    <div class="content-behind">
-""", unsafe_allow_html=True)
+# ========== COMPOSANTS ==========
+def create_navbar():
+    st.markdown("""
+        <div class="navbar">
+            <a href="/" target="_self">Accueil</a>
+            <a href="/Calculateur" target="_self">Calculateur</a>
+            <a href="/Ressources" target="_self" style="color: #4CAF50 !important;">Ressources</a>
+            <a href="/Methodologie" target="_self">Méthodologie</a>
+        </div>
+    """, unsafe_allow_html=True)
 
-# Contenu
-st.title("📚 Ressources Utiles")
-# Votre contenu ici...
+def create_footer():
+    st.markdown("""
+        <div class="footer-banner">
+            <a href="/A_propos" target="_self">À propos</a>
+            <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
+        </div>
+    """, unsafe_allow_html=True)
 
-st.markdown("</div>", unsafe_allow_html=True)
+# ========== CONTENU ==========
+def ressources_content():
+    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+    
+    st.markdown("<h1 style='color:#000000;'>📚 Ressources Utiles</h1>", unsafe_allow_html=True)
+    
+    # Section 1
+    with st.container():
+        st.markdown('<div class="resource-card">', unsafe_allow_html=True)
+        st.header("📖 Guides Pratiques")
+        st.markdown("""
+            - [Guide ADEME sur l'empreinte carbone](https://www.ademe.fr)
+            - [Calculateur officiel Carbone 4](https://www.carbone4.com)
+            - [Méthodologie GHG Protocol](https://ghgprotocol.org)
+        """)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Section 2
+    with st.container():
+        st.markdown('<div class="resource-card">', unsafe_allow_html=True)
+        st.header("🎓 Formations")
+        st.markdown("""
+            - [MOOC Transition Énergétique](https://www.mooc-transition-energetique.com)
+            - [Formation ACV par l'INSA](https://www.insa.fr)
+        """)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== STRUCTURE ==========
+load_css()
+create_navbar()
+ressources_content()
+create_footer()
