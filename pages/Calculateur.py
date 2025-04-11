@@ -213,18 +213,86 @@ if st.button("Ajouter un autre produit"):
 st.subheader("📦 Votre panier")
 if st.session_state.panier:
     for index, item in enumerate(st.session_state.panier):
-        st.markdown(f"- {item['nom']}")
+        col1, col2 = st.columns([4, 1])
+        col1.write(f"🔹 {item['nom']}")
+        if col2.button("❌", key=f"remove_{index}"):
+            del st.session_state.panier[index]
+            st.rerun()
 else:
-    st.warning("Votre panier est vide.")
+    st.info("Votre panier est vide.")
 
-# Calcul des impacts environnementaux
-total_impacts, impacts_detail = calculer_indicateurs_panier()
-if total_impacts is not None:
-    st.subheader("🔍 Détails des impacts environnementaux")
-    st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
-    st.write(impacts_detail)
-# ========== STRUCTURE ========== 
-load_css()
-create_navbar()
-calculateur_content()
-create_footer()
+# Calcul et affichage des indicateurs environnementaux du panier
+indicateurs_totaux, details_produits = calculer_indicateurs_panier()
+
+if indicateurs_totaux is not None:
+    st.subheader("📊 Indicateurs environnementaux du panier")
+
+    df_indicateurs = pd.DataFrame({
+        "Impact environnemental": indicateurs_totaux.index,
+        "Valeur totale": indicateurs_totaux.values,
+        "Unité": [unites_indicateurs.get(indicateur, "N/A") for indicateur in indicateurs_totaux.index]
+    })
+
+    st.dataframe(df_indicateurs.set_index("Impact environnemental"))
+
+    selected_row = st.selectbox(
+        "Sélectionnez un indicateur pour voir la contribution des aliments",
+        df_indicateurs["Impact environnemental"]
+    )
+
+    if selected_row:
+        contribution = details_produits[selected_row]
+        contribution = contribution / contribution.sum() * 100
+        contribution = contribution.sort_values(ascending=False)
+
+        noms_produits = [item["nom"] for item in st.session_state.panier]
+        fig = px.bar(
+            x=noms_produits,
+            y=contribution.values,
+            labels={'x': 'Produit', 'y': 'Contribution (%)'},
+            title=f"Contribution des produits pour {selected_row}"
+        )
+        st.plotly_chart(fig)
+
+# Exploration des détails d'un produit du panier
+if st.session_state.panier:
+    st.subheader("🔍 Explorer un produit du panier")
+    produit_choisi = st.selectbox("Sélectionnez un produit", [item["nom"] for item in st.session_state.panier])
+
+    if produit_choisi:
+        code_ciqual_choisi = next(item["code_ciqual"] for item in st.session_state.panier if item["nom"] == produit_choisi)
+        
+        etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
+        etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
+
+        # Affichage des données du produit
+        st.subheader("Données du produit")
+        result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
+        if not result.empty:
+            colonnes_etape = [col for col in df.columns if etape_selectionnee in col]
+            if colonnes_etape:
+                st.write(result[colonnes_etape].T.dropna())
+            else:
+                st.warning(f"Aucune donnée pour l'étape '{etape_selectionnee}'.")
+        else:
+            st.warning("Aucune donnée trouvée pour ce produit.")
+
+        # Exploration des ingrédients
+        ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
+
+        if ingredients_dispo:
+            st.subheader("Sélection des ingrédients")
+            ingredient_selectionne = st.radio("Choisissez un ingrédient", ingredients_dispo, key="ingredient_produit")
+
+            impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
+            if not impact_ingredient.empty:
+                colonnes_impact = impact_ingredient.columns[6:24]
+                impact_values = impact_ingredient[colonnes_impact].T
+                impact_values.columns = [ingredient_selectionne]
+                impact_values.insert(0, "Impact environnemental", impact_values.index)
+                st.write(impact_values.reset_index(drop=True))
+            else:
+                st.warning(f"Aucun impact trouvé pour '{ingredient_selectionne}'.")
+
+        else:
+            st.warning("Aucun ingrédient disponible pour ce produit.")
