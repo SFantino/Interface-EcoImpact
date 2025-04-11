@@ -95,18 +95,6 @@ def calculateur_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
 
-    # Bannière calculateur
-    st.markdown("""
-        <div style="padding-bottom: 100px;">
-            <div class="calculator-banner">
-                <div class="calculator-title">Tester le calculateur</div>
-                <a href="/Calculateur" target="_self">
-                    <button class="start-button">Start</button>
-                </a>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
-
     # Charger les bases de données
     df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
     df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
