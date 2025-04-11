@@ -125,6 +125,14 @@ def load_css():
             .stSelectbox, .stRadio, .stTextInput, .stButton {
                 color: black; /* Texte des widgets en noir */
             }
+
+            .stRadio label, .stSelectbox label {
+                color: black !important; /* Texte des labels des widgets en noir */
+            }
+
+            .stMarkdown {
+                color: black !important; /* Texte dans st.markdown en noir */
+            }
         </style>
     """, unsafe_allow_html=True)
 
@@ -237,25 +245,4 @@ if st.session_state.panier:
 
         # Affichage des données du produit sous forme de tableau
         st.subheader("Données du produit")
-        result = df[df['Code CIQUAL'].astype(str) == str(code_ciqual_choisi)]
-        if not result.empty:
-            colonnes_etape = [col for col in df.columns if etape_selectionnee in col]
-            if colonnes_etape:
-                st.write(result[colonnes_etape].T.dropna())
-            else:
-                st.warning(f"Aucune donnée pour l'étape '{etape_selectionnee}'.")
-        else:
-            st.warning("Aucune donnée trouvée pour ce produit.")
-
-        # Exploration des ingrédients sous forme de tableau
-        ingredients_dispo = df_ingredients[df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)]['Ingredients'].dropna().unique().tolist()
-
-        if ingredients_dispo:
-            st.subheader("Sélection des ingrédients")
-            ingredient_selectionne = st.radio("Choisissez un ingrédient", ingredients_dispo, key="ingredient_produit")
-
-            impact_ingredient = df_ingredients[(df_ingredients['Ciqual  code'].astype(str) == str(code_ciqual_choisi)) & (df_ingredients['Ingredients'] == ingredient_selectionne)]
-            if not impact_ingredient.empty:
-                colonnes_impact = impact_ingredient.columns[6:24]
-                impact_values = impact_ingredient[colonnes_impact].values[0]
-                st.write(pd.DataFrame(impact_values, columns=colonnes_impact).T)
+        result = df[df['Code
