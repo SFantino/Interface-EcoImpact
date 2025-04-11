@@ -2,6 +2,114 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# Charge le CSS personnalisé
+def load_css():
+    st.markdown("""
+        <style>
+            /* Navbar */
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background-color: #FFFFFF !important;
+                padding: 15px 20px;
+                z-index: 1000;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .navbar a {
+                color: #333333 !important;
+                text-decoration: none;
+                font-size: 20px !important;
+                font-weight: bold !important;
+                margin: 0 15px !important;
+            }
+
+            .navbar a:hover {
+                color: #4CAF50 !important;
+            }
+
+            .stApp {
+                margin-top: 70px !important;
+                background-color: #F9F9F9;
+                min-height: calc(100vh - 70px);
+                color: #333333 !important;
+            }
+
+            .content-behind {
+                padding: 20px 40px;
+            }
+
+            h1, h2, h3 {
+                color: #333333 !important;
+            }
+
+            .resource-card {
+                background: #FFFFFF;
+                border-radius: 10px;
+                padding: 20px;
+                margin-bottom: 20px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                color: #333333 !important;
+            }
+
+            section[data-testid="stSidebar"],
+            footer,
+            header {
+                display: none !important;
+            }
+
+            /* Barre de saisie */
+            .stTextInput input {
+                background-color: #FFFFFF !important;
+                color: #333333 !important;
+                border-radius: 5px !important;
+                border: 1px solid #D1D1D1 !important;
+            }
+
+            /* Bouton "Ajouter un autre produit" */
+            .stButton button {
+                background-color: #FFFFFF !important;
+                color: #333333 !important;
+                border-radius: 5px !important;
+                border: 1px solid #D1D1D1 !important;
+            }
+
+            /* Hover effect for button */
+            .stButton button:hover {
+                background-color: #F1F1F1 !important;
+            }
+
+            /* Barre de sélection pour produits similaires */
+            .stSelectbox, .stMultiSelect, .stSelect {
+                background-color: #FFFFFF !important;
+                color: #333333 !important;
+            }
+
+            /* Texte "Produit sélectionné" */
+            .stSuccess {
+                color: #333333 !important;
+            }
+
+            /* Texte "Votre panier est vide" */
+            .stWarning {
+                color: #333333 !important;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+# Chargement du CSS
+load_css()
+
+# Logique Streamlit ici
+st.title("Mon Application Streamlit")
+# Ajoutez ici le reste de votre interface utilisateur
+
 # Charger les bases de données
 df = pd.read_csv("agribalyse-31-detail-par-etape.csv", delimiter=',', dtype=str)
 df_ingredients = pd.read_csv("Agribalyse_Detail ingredient.csv", delimiter=',', dtype=str)
