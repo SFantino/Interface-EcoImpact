@@ -13,7 +13,7 @@ st.set_page_config(
 def load_css():
     st.markdown("""
         <style>
-            /* Navbar identique à main.py */
+            /* Navbar inchangée */
             .navbar {
                 position: fixed;
                 top: 0;
@@ -28,7 +28,7 @@ def load_css():
                 align-items: center;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
-            
+
             .navbar a {
                 color: black !important;
                 text-decoration: none;
@@ -36,25 +36,25 @@ def load_css():
                 font-weight: bold !important;
                 margin: 0 15px !important;
             }
-            
+
             .navbar a:hover {
                 color: #4CAF50 !important;
             }
-            
+
             .stApp {
                 margin-top: 70px !important;
                 background-color: #F3F3F1;
                 min-height: calc(100vh - 70px);
             }
-            
+
             .content-behind {
                 padding: 20px 40px;
             }
-            
+
             h1, h2, h3 {
                 color: #000000 !important;
             }
-            
+
             .resource-card {
                 background: white;
                 border-radius: 10px;
@@ -63,26 +63,10 @@ def load_css():
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
 
-            /* Modifications pour le calculateur */
-            .stButton>button {
-                background-color: #E8E8E8; /* Fond gris clair des boutons */
-                color: black;  /* Texte en noir */
-            }
-            .stSelectbox, .stTextInput, .stMultiselect, .stRadio>div, .stCheckbox>div, .stSlider>div {
-                background-color: #E8E8E8; /* Fond gris clair des éléments de sélection */
-                color: black;  /* Texte en noir */
-            }
-            .stTable, .stDataFrame {
-                background-color: #E8E8E8; /* Fond gris clair des tables */
-            }
-            .stTextInput>input {
-                color: black;  /* Texte des champs de saisie en noir */
-            }
-            .stMarkdown, .stTitle {
-                color: black;  /* Texte en noir dans les titres et descriptions */
-            }
-            .stSelectbox>div, .stTextInput>div {
-                background-color: #E8E8E8; /* Fond gris clair dans les entrées de texte */
+            section[data-testid="stSidebar"],
+            footer,
+            header {
+                display: none !important;
             }
         </style>
     """, unsafe_allow_html=True)
@@ -205,7 +189,6 @@ if total_impacts is not None:
     st.subheader("🔍 Détails des impacts environnementaux")
     st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
     st.write(impacts_detail)
-
 # ========== STRUCTURE ========== 
 load_css()
 create_navbar()
