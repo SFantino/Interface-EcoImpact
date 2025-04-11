@@ -90,6 +90,32 @@ def create_footer():
         </div>
     """, unsafe_allow_html=True)
 
+def load_css():
+    st.markdown("""
+        <style>
+            /* Barre de saisie */
+            .stTextInput input {
+                background-color: #E8E8E8 !important;
+                color: black !important;
+                border-radius: 5px !important;
+            }
+
+            /* Bouton "Ajouter un autre produit" */
+            .stButton button {
+                background-color: #E8E8E8 !important;
+                color: black !important;
+                border-radius: 5px !important;
+                border: 1px solid #D1D1D1 !important;
+            }
+
+            /* Hover effect for button */
+            .stButton button:hover {
+                background-color: #D1D1D1 !important;
+            }
+        </style>
+    """, unsafe_allow_html=True)
+
+
 # ========== CALCULATEUR ========== 
 def calculateur_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
