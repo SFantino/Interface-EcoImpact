@@ -95,26 +95,6 @@ def ressources_content():
     
     st.markdown("<h1 style='color:#000000;'>📚 Ressources Utiles</h1>", unsafe_allow_html=True)
     
-    # Section 1
-    with st.container():
-        st.markdown('<div class="resource-card">', unsafe_allow_html=True)
-        st.header("📖 Guides Pratiques")
-        st.markdown("""
-            - [Guide ADEME sur l'empreinte carbone](https://www.ademe.fr)
-            - [Calculateur officiel Carbone 4](https://www.carbone4.com)
-            - [Méthodologie GHG Protocol](https://ghgprotocol.org)
-        """)
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Section 2
-    with st.container():
-        st.markdown('<div class="resource-card">', unsafe_allow_html=True)
-        st.header("🎓 Formations")
-        st.markdown("""
-            - [MOOC Transition Énergétique](https://www.mooc-transition-energetique.com)
-            - [Formation ACV par l'INSA](https://www.insa.fr)
-        """)
-        st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
