@@ -65,7 +65,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #F3F3F1; /* Couleur de fond du bandeau */
+                background-color: #004b6d;  /* Changer ici la couleur de fond de la navbar */
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -75,7 +75,7 @@ def load_css():
             }
             
             .navbar a {
-                color: black; /* Texte en noir */
+                color: white;  /* Couleur du texte des liens */
                 text-decoration: none;
                 font-size: 20px;
                 font-weight: bold;
@@ -83,23 +83,21 @@ def load_css():
             }
             
             .navbar a:hover {
-                color: #333333; /* Lien en gris foncé au survol */
+                color: #f1f1f1;  /* Changer la couleur du texte lors du survol */
             }
             
             .stApp {
                 margin-top: 70px;
-                background-color: #F4F6F9;
+                background-color: #f5f7fa;  /* Couleur de fond de l'application */
                 min-height: calc(100vh - 70px);
-                color: black; /* Texte global en noir */
             }
             
             .content-behind {
                 padding: 20px 40px;
-                color: black; /* Texte en noir dans la section */
             }
             
             h1, h2, h3 {
-                color: black; /* Titres en noir */
+                color: #2c3e50;  /* Changer la couleur des titres */
             }
             
             .methodo-card {
@@ -108,7 +106,6 @@ def load_css():
                 padding: 20px;
                 margin-bottom: 20px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                color: black; /* Texte en noir dans les cartes */
             }
             
             section[data-testid="stSidebar"],
@@ -118,20 +115,29 @@ def load_css():
             }
 
             .text {
-                color: black !important; /* Texte principal en noir */
-            }
-            
-            /* Ajuster la couleur des widgets */
-            .stSelectbox, .stRadio, .stTextInput, .stButton {
-                color: black; /* Texte des widgets en noir */
+                color: #333333 !important;  /* Couleur du texte */
             }
 
-            .stRadio label, .stSelectbox label {
-                color: black !important; /* Texte des labels des widgets en noir */
+            .stButton > button {
+                background-color: #004b6d;  /* Changer la couleur de fond des boutons */
+                color: white;  /* Changer la couleur du texte des boutons */
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
             }
 
-            .stMarkdown {
-                color: black !important; /* Texte dans st.markdown en noir */
+            .stButton > button:hover {
+                background-color: #0177d4;  /* Changer la couleur de fond lors du survol des boutons */
+            }
+
+            .stSelectbox > div {
+                background-color: #ffffff;  /* Changer la couleur de fond des selectbox */
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .stSelectbox > div:hover {
+                border-color: #004b6d;  /* Changer la couleur du border lors du survol */
             }
         </style>
     """, unsafe_allow_html=True)
@@ -151,7 +157,7 @@ def create_navbar():
 def methodo_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.markdown("<h1 class='text' style='color:black;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='text' style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -214,37 +220,11 @@ if indicateurs_totaux is not None:
     st.dataframe(df_indicateurs.set_index("Impact environnemental"))
 
     selected_row = st.selectbox(
-        "Sélectionnez un indicateur pour voir la contribution des aliments",
-        df_indicateurs["Impact environnemental"]
+        "Sélectionnez un indicateur pour voir la contribution des produits",
+        indicateurs_totaux.index
     )
 
     if selected_row:
-        contribution = details_produits[selected_row]
-        contribution = contribution / contribution.sum() * 100
-        contribution = contribution.sort_values(ascending=False)
-
-        noms_produits = [item["nom"] for item in st.session_state.panier]
-        fig = px.bar(
-            x=noms_produits,
-            y=contribution.values,
-            labels={'x': 'Produit', 'y': 'Contribution (%)'},
-            title=f"Contribution des produits pour {selected_row}"
-        )
-        st.plotly_chart(fig)
-
-# Exploration des détails d'un produit du panier
-if st.session_state.panier:
-    st.subheader("🔍 Explorer un produit du panier")
-    produit_choisi = st.selectbox("Sélectionnez un produit", [item["nom"] for item in st.session_state.panier])
-
-    if produit_choisi:
-        code_ciqual_choisi = next(item["code_ciqual"] for item in st.session_state.panier if item["nom"] == produit_choisi)
-        
-        # Choix de l'étape du cycle de vie
-        etapes = ["Agriculture", "Transformation", "Emballage", "Transport", "Supermarché et distribution", "Consommation"]
-        etape_selectionnee = st.radio("Choisissez une étape du cycle de vie", etapes, key="etape_produit")
-
-        # Affichage des données du produit sous forme de tableau
-        st.subheader("Données du produit")
-        result = df[df['Code CIQUAL'] == code_ciqual_choisi]
-        st.dataframe(result)
+        detail_impact = details_produits[selected_row]
+        st.subheader(f"Contribution des produits pour {selected_row}")
+        st.dataframe(detail_impact)
