@@ -94,18 +94,6 @@ def create_footer():
 def calculateur_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    # Colonnes pour logo + texte
-    col1, col2 = st.columns([3, 1])
-    with col2:
-        st.image("Logo.jpg", width=300)
-
-    # Texte de bienvenue
-    st.markdown("""
-        <div class="welcome-text">
-            <h1>Bienvenue sur EcoImpact - Calculateur</h1>
-            <p>Découvrez votre impact environnemental avec notre outil de calcul.</p>
-        </div>
-    """, unsafe_allow_html=True)
 
     # Bannière calculateur
     st.markdown("""
@@ -215,13 +203,6 @@ def calculateur_content():
         st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
         st.write(impacts_detail)
 
-    # Bannière de pied de page
-    st.markdown("""
-        <div class="footer-banner">
-            <div>© 2025 EcoImpact</div>
-            <div><a href="https://www.linkedin.com">LinkedIn</a></div>
-        </div>
-    """, unsafe_allow_html=True)
 
 # ========== STRUCTURE ========== 
 load_css()
