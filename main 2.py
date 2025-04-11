@@ -248,4 +248,23 @@ if st.button("Ajouter un autre produit"):
 st.subheader("📦 Votre panier")
 if st.session_state.panier:
     for index, item in enumerate(st.session_state.panier):
+        st.markdown(f"- {item['nom']}")
+else:
+    st.warning("Votre panier est vide.")
+
+# Calcul des impacts environnementaux
+total_impacts, impacts_detail = calculer_indicateurs_panier()
+if total_impacts is not None:
+    st.subheader("🔍 Détails des impacts environnementaux")
+    st.write("Les impacts environnementaux totaux pour le panier sont :", total_impacts)
+    st.write(impacts_detail)
+
+# Bannière de pied de page
+st.markdown("""
+    <div class="footer-banner">
+        <div>© 2025 EcoImpact</div>
+        <div><a href="https://www.linkedin.com">LinkedIn</a></div>
+    </div>
+""", unsafe_allow_html=True)
+
        
