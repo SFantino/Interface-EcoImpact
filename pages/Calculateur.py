@@ -68,32 +68,7 @@ def load_css():
             header {
                 display: none !important;
             }
-        </style>
-    """, unsafe_allow_html=True)
-
-# ========== COMPOSANTS ========== 
-def create_navbar():
-    st.markdown("""
-        <div class="navbar">
-            <a href="/" target="_self">Accueil</a>
-            <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
-        </div>
-    """, unsafe_allow_html=True)
-
-def create_footer():
-    st.markdown("""
-        <div class="footer-banner">
-            <a href="/A_propos" target="_self">À propos</a>
-            <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
-        </div>
-    """, unsafe_allow_html=True)
-
-def load_css():
-    st.markdown("""
-        <style>
-            /* Barre de saisie */
+                        /* Barre de saisie */
             .stTextInput input {
                 background-color: #E8E8E8 !important;
                 color: black !important;
@@ -115,6 +90,24 @@ def load_css():
         </style>
     """, unsafe_allow_html=True)
 
+# ========== COMPOSANTS ========== 
+def create_navbar():
+    st.markdown("""
+        <div class="navbar">
+            <a href="/" target="_self">Accueil</a>
+            <a href="/Calculateur" target="_self" style="color: #4CAF50 !important;">Calculateur</a>
+            <a href="/Ressources" target="_self">Ressources</a>
+            <a href="/Methodologie" target="_self">Méthodologie</a>
+        </div>
+    """, unsafe_allow_html=True)
+
+def create_footer():
+    st.markdown("""
+        <div class="footer-banner">
+            <a href="/A_propos" target="_self">À propos</a>
+            <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
+        </div>
+    """, unsafe_allow_html=True)
 
 # ========== CALCULATEUR ========== 
 def calculateur_content():
