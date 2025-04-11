@@ -245,4 +245,5 @@ if st.session_state.panier:
 
         # Affichage des données du produit sous forme de tableau
         st.subheader("Données du produit")
-        result = df[df['Code
+        result = df[df['Code CIQUAL'] == code_ciqual_choisi]
+        st.dataframe(result)
