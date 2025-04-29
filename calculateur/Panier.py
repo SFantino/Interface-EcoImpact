@@ -1,32 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-# Ajouter du CSS pour personnaliser les couleurs de texte (en noir)
-st.markdown("""
-    <style>
-        /* Changer la couleur du texte dans les champs de saisie (text_input) */
-        .stTextInput input {
-            color: black !important;
-            background-color: #FFFFFF !important;  /* Fond blanc pour éviter conflit de visibilité */
-        }
-
-        /* Changer la couleur du texte dans le label du selectbox */
-        .stSelectbox div {
-            color: black !important;
-        }
-
-        /* Changer la couleur du texte des titres et autres textes */
-        .stMarkdown, .stText {
-            color: black !important;
-        }
-
-        /* Optionnel : Changer la couleur du texte des boutons pour plus de lisibilité */
-        .stButton button {
-            color: black !important;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 def gerer_panier():
     # Charger la base de données
     df_synthese_finale = pd.read_csv("Synthese_finale.csv")
