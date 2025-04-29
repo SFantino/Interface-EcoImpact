@@ -2,17 +2,14 @@ import streamlit as st
 import pandas as pd
 
 def gerer_panier():
-    # Charger la base de données
     df_synthese_finale = pd.read_csv("Synthese_finale.csv")
 
-    # Initialiser le panier
     if "panier" not in st.session_state:
         st.session_state.panier = []
 
     if "dernier_produit_selectionne" not in st.session_state:
         st.session_state.dernier_produit_selectionne = None
 
-    # CSS personnalisé
     st.markdown("""
         <style>
         .stTextInput input {
@@ -22,7 +19,7 @@ def gerer_panier():
         .stTextInput label {
             color: black !important;
         }
-        .stSelectbox div[role="combobox"] {
+        div[data-baseweb="select"] * {
             color: black !important;
             background-color: white !important;
         }
@@ -31,7 +28,6 @@ def gerer_panier():
 
     st.title("🛍️ Gestion du Panier")
 
-    # Recherche produit
     search_query = st.text_input("🔍 Recherchez un produit par nom")
 
     if search_query:
@@ -40,9 +36,8 @@ def gerer_panier():
         if not produits_trouves.empty:
             liste_produits = [""] + list(produits_trouves["Nom du Produit en Français"].unique())
 
-            # Affichage manuel du label
-            st.markdown('<span style="color:black; font-weight:bold;">📌 Sélectionnez un produit :</span>', unsafe_allow_html=True)
-            produit_selectionne = st.selectbox("", liste_produits)
+            st.markdown("#### 📌 Sélectionnez un produit :", unsafe_allow_html=True)
+            produit_selectionne = st.selectbox(label="", options=liste_produits)
 
             if produit_selectionne and produit_selectionne != "":
                 code_ciqual = df_synthese_finale[df_synthese_finale["Nom du Produit en Français"] == produit_selectionne]["Code CIQUAL"].values[0]
