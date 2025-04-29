@@ -1,102 +1,53 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
-# Dictionnaire des unités correspondantes à chaque variable environnementale
-unites_variables = {
-    'Changement climatique': 'kg CO2 eq/kg',
-    'Appauvrissement de la couche d\'ozone': 'kg CVC11 eq/kg',
-    'Rayonnements ionisants': 'kBq U-235 eq/kg',
-    'Formation photochimique d\'ozone': 'kg NMVOC eq/kg',
-    'Particules fines': 'disease inc./kg',
-    'Effets toxicologiques sur la santé humaine : substances non-cancérogènes': 'kg Sb eq/kg',
-    'Effets toxicologiques sur la santé humaine : substances cancérogènes': 'kg Sb eq/kg',
-    'Acidification terrestre et eaux douces': 'mol H+ eq/kgt',
-    'Eutrophisation eaux douces': 'kg P eq/kg',
-    'Eutrophisation marine': 'kg N eq/kg',
-    'Eutrophisation terrestre': 'mol N eq/kg',
-    'Écotoxicité pour écosystèmes aquatiques d\'eau douce': 'CTUe/kg',
-    'Utilisation du sol': 'Pt/kg',
-    'Épuisement des ressources eau': 'm3 depriv./kg',
-    'Épuisement des ressources énergétiques': 'MJ/kg',
-    'Épuisement des ressources minéraux': 'kg Sb eq/kg',
-    'Changement climatique - émissions biogéniques': 'kg CO2 eq/kg',
-    'Changement climatique - émissions fossiles': 'kg CO2 eq/kg',
-    'Changement climatique - émissions liées au changement d\'affectation des sols': 'kg CO2 eq/kg'
-}
-
-# Fonction principale pour gérer et afficher les variables environnementales
-def variables():
+def gerer_panier():
     # Charger la base de données
-    df_synthese = pd.read_csv("agribalyse-31-synthese.csv", delimiter=',', dtype=str)
+    df_synthese_finale = pd.read_csv("Synthese_finale.csv")
 
-    # Vérifier si le panier existe dans le session_state
+    # Initialiser le panier
     if "panier" not in st.session_state:
         st.session_state.panier = []
 
-    # Vérifier si le panier est vide
-    if not st.session_state.panier:
-        st.warning("Votre panier est vide. Ajoutez des produits pour voir les indicateurs environnementaux.")
-        return
+    # Initialiser la sélection précédente pour éviter les ajouts multiples
+    if "dernier_produit_selectionne" not in st.session_state:
+        st.session_state.dernier_produit_selectionne = None
 
     # Afficher le titre
-    st.title("📊 Suivi des Indicateurs Environnementaux du Panier")
+    st.title("🛍️ Gestion du Panier")
 
-    # Sélectionner une variable environnementale à afficher
-    selected_variable = st.selectbox(
-        "🔍 Choisissez une variable environnementale à afficher",
-        list(unites_variables.keys())
-    )
+    # Barre de recherche + Liste déroulante
+    search_query = st.text_input("🔍 Recherchez un produit par nom")
 
-    # Extraire les codes CIQUAL des produits dans le panier
-    codes_ciqual = [item["code_ciqual"] for item in st.session_state.panier]
-    
-    # Filtrer les produits dans la BDD par les codes CIQUAL du panier
-    produits_synthese = df_synthese[df_synthese["Code CIQUAL"].astype(str).isin(map(str, codes_ciqual))]
+    # Logique de recherche et ajout au panier
+    if search_query:
+        produits_trouves = df_synthese_finale[df_synthese_finale["Nom du Produit en Français"].str.contains(search_query, case=False, na=False)]
 
-    # Vérifier si des produits ont été trouvés
-    if produits_synthese.empty:
-        st.warning("Aucun produit correspondant aux codes CIQUAL dans le panier.")
-        return
+        if not produits_trouves.empty:
+            produit_selectionne = st.selectbox("📌 Sélectionnez un produit :", [""] + list(produits_trouves["Nom du Produit en Français"].unique()))
 
-    # Vérifier si la variable environnementale a des valeurs manquantes
-    if selected_variable not in produits_synthese.columns:
-        st.warning(f"La variable environnementale {selected_variable} n'existe pas dans la base de données.")
-        return
+            # Ajouter au panier dès qu'un produit est sélectionné
+            if produit_selectionne and produit_selectionne != "":
+                code_ciqual = df_synthese_finale[df_synthese_finale["Nom du Produit en Français"] == produit_selectionne]["Code CIQUAL"].values[0]
+                
+                if not any(p["nom"] == produit_selectionne for p in st.session_state.panier):
+                    st.session_state.panier.append({"nom": produit_selectionne, "code_ciqual": code_ciqual})
+                    st.session_state.dernier_produit_selectionne = produit_selectionne
+                    st.success(f"✅ {produit_selectionne} ajouté au panier.")
+                    st.rerun()
+        else:
+            st.warning("❌ Aucun produit trouvé.")
 
-    # Convertir les valeurs de la colonne sélectionnée en float
-    produits_synthese[selected_variable] = pd.to_numeric(produits_synthese[selected_variable], errors='coerce')
+    # Affichage des produits dans le panier
+    st.subheader("📦 Votre panier")
+    if st.session_state.panier:
+        for index, item in enumerate(st.session_state.panier):
+            col1, col2 = st.columns([4, 1])
+            col1.write(f"🔹 **{item['nom']}**")
 
-    # Vérifier si la conversion a bien fonctionné
-    if produits_synthese[selected_variable].isnull().all():
-        st.warning(f"Aucune valeur valide trouvée pour {selected_variable}.")
-        return
-
-    # Calculer la somme des valeurs pour la variable sélectionnée dans le panier
-    somme_variable = produits_synthese[selected_variable].sum()
-
-    # Afficher la somme des valeurs pour la variable environnementale sélectionnée avec l'unité
-    # Affichage avec 10 décimales
-    if somme_variable > 0:
-        st.metric(label=f"Somme des {selected_variable}", value=f"{somme_variable:.10f} {unites_variables[selected_variable]}")
+            # Bouton pour supprimer un produit
+            if col2.button("❌", key=f"remove_{index}"):
+                st.session_state.panier.pop(index)
+                st.rerun()
     else:
-        st.warning(f"La somme des {selected_variable} est égale à 0. Cela peut être dû à des données manquantes ou incorrectes.")
-
-    # Calcul de la contribution de chaque produit à la somme totale
-    if somme_variable > 0:
-        produits_synthese['Contribution (%)'] = (produits_synthese[selected_variable] / somme_variable) * 100
-
-        # Trier les produits par contribution décroissante
-        produits_synthese = produits_synthese.sort_values(by='Contribution (%)', ascending=False)
-
-        # Affichage graphique de la contribution de chaque produit
-        noms_produits = [item["nom"] for item in st.session_state.panier]
-        contribution = produits_synthese['Contribution (%)']
-
-        fig = px.bar(
-            x=noms_produits,
-            y=contribution,
-            labels={'x': 'Produit', 'y': f'Contribution (%) de {selected_variable}'},
-            title=f"Contribution des produits pour {selected_variable}"
-        )
-        st.plotly_chart(fig)
+        st.info("🛒 Votre panier est vide.")
