@@ -4,6 +4,31 @@ import pandas as pd
 # Charger la base de données
 df_synthese_finale = pd.read_csv("Synthese_finale.csv")
 
+def obtenir_classe(score):
+    """
+    Fonction pour déterminer la classe en fonction du score.
+    """
+    if score < -0.4:
+        return "A+"
+    elif score < -0.2:
+        return "A-"
+    elif score < 0.05:
+        return "B+"
+    elif score < 0.45:
+        return "B-"
+    elif score < 1:
+        return "C+"
+    elif score < 2:
+        return "C-" 
+    elif score < 3.4:
+        return "D+"
+    elif score < 5:
+        return "D-"
+    elif score < 6:
+        return "E+"
+    else:
+        return "E-"
+
 def score_panier():
     """
     Cette fonction calcule :
@@ -16,7 +41,6 @@ def score_panier():
 
     # Vérifier si le panier contient des produits
     if "panier" not in st.session_state or not st.session_state.panier:
-        st.warning("Votre panier est vide.")
         return
 
     # Extraire les codes CIQUAL des produits du panier
@@ -39,13 +63,24 @@ def score_panier():
 
         # Calcul du score moyen des sous-groupes d'aliments
         scores_moyens_sous_groupes = df_synthese_finale.groupby("Sous-groupe d'aliment")["Score Statistique Standardisé"].mean()
-        score_moyen_sous_groupes = scores_moyens_sous_groupes[df_panier["Sous-groupe d'aliment"].unique()].mean()
+        
+        # Classement des sous-groupes
+        classes_sous_groupes = scores_moyens_sous_groupes.apply(obtenir_classe)
 
+        # Classement du panier en fonction du score
+        classe_panier = obtenir_classe(score_moyen_panier)
+
+        # Calcul du score moyen des sous-groupes pour les sous-groupes du panier
+        score_moyen_sous_groupes = scores_moyens_sous_groupes[df_panier["Sous-groupe d'aliment"].unique()].mean()
+        classe_moyenne = obtenir_classe(score_moyen_sous_groupes)
+        
         st.subheader("📊 Score moyen du panier (Statistique Standardisé) et Score moyen pour ces types d'aliments")
 
         # Affichage sur une jauge combinée
         st.write(f"Score moyen du panier : {score_moyen_panier:.2f} (Min: {score_min:.2f} - Max: {score_max:.2f})")
+        st.write(f"Classe du panier : {classe_panier}")
         st.write(f"Score moyen des sous-groupes : {score_moyen_sous_groupes:.2f}")
+        st.write(f"Classe des sous-groupes : {classe_moyenne}")
         st.progress((score_moyen_panier - score_min) / (score_max - score_min))  # Jauge pour le panier
         st.progress((score_moyen_sous_groupes - score_min) / (score_max - score_min))  # Jauge pour les sous-groupes
 
@@ -68,3 +103,23 @@ def score_panier():
         st.write(f"Score EF moyen des sous-groupes : {score_ef_moyen_sous_groupes:.2f}")
         st.progress((score_ef_moyen_panier - score_ef_min) / (score_ef_max - score_ef_min))  # Jauge pour le panier EF
         st.progress((score_ef_moyen_sous_groupes - score_ef_min) / (score_ef_max - score_ef_min))  # Jauge pour les sous-groupes EF
+
+
+    # --- Jauge 3 : Note panier et note moyenne pour ces types d'aliments ---
+    if "note_y" in df_synthese_finale.columns:
+   
+        # Calcul du score moyen du panier
+        note_moyen_panier = df_panier["note_y"].mean()
+
+        # Calcul du score moyen des sous-groupes d'aliments
+        note_moyens_sous_groupes = df_synthese_finale.groupby("Sous-groupe d'aliment")["note_y"].mean()
+        note_moyen_sous_groupes = note_moyens_sous_groupes[df_panier["Sous-groupe d'aliment"].unique()].mean()
+
+        st.subheader("📈 Note moyenne du panier et des sous-groupes")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.write(f"Note moyenne du panier : {note_moyen_panier:.2f}")
+        
+        with col2:
+            st.write(f"Note moyenne des sous-groupes : {note_moyen_sous_groupes:.2f}")
