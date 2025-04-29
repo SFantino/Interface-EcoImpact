@@ -4,10 +4,19 @@ from Score_panier import score_panier
 from Variables import variables
 from etapes_panier import etapes_panier
 
-# ========== CSS ========== 
+# ========== CONFIGURATION ==========
+st.set_page_config(
+    page_title="Méthodologie | EcoImpact",
+    layout="wide",
+    page_icon="📊",
+    initial_sidebar_state="collapsed"
+)
+
+# ========== STYLE CSS ==========
 def load_css():
     st.markdown("""
         <style>
+            /* Identique à ressources.py */
             .navbar {
                 position: fixed;
                 top: 0;
@@ -22,6 +31,7 @@ def load_css():
                 align-items: center;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
+            
             .navbar a {
                 color: black !important;
                 text-decoration: none;
@@ -29,27 +39,33 @@ def load_css():
                 font-weight: bold !important;
                 margin: 0 15px !important;
             }
+            
             .navbar a:hover {
                 color: #4CAF50 !important;
             }
+            
             .stApp {
                 margin-top: 70px !important;
                 background-color: #F3F3F1;
                 min-height: calc(100vh - 70px);
             }
+            
             .content-behind {
                 padding: 20px 40px;
             }
+            
             h1, h2, h3 {
                 color: #000000 !important;
             }
-            .resource-card {
+            
+            .methodo-card {
                 background: white;
                 border-radius: 10px;
                 padding: 20px;
                 margin-bottom: 20px;
                 box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
+            
             section[data-testid="stSidebar"],
             footer,
             header {
@@ -58,18 +74,17 @@ def load_css():
         </style>
     """, unsafe_allow_html=True)
 
-# ========== NAVBAR ==========
+# ========== COMPOSANTS ==========
 def create_navbar():
     st.markdown("""
         <div class="navbar">
             <a href="/" target="_self">Accueil</a>
             <a href="/Calculateur" target="_self">Calculateur</a>
-            <a href="/Ressources" target="_self" style="color: #4CAF50 !important;">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
+            <a href="/Ressources" target="_self">Ressources</a>
+            <a href="/Methodologie" target="_self" style="color: #4CAF50 !important;">Méthodologie</a>
         </div>
     """, unsafe_allow_html=True)
 
-# ========== FOOTER ==========
 def create_footer():
     st.markdown("""
         <div class="footer-banner">
@@ -78,6 +93,20 @@ def create_footer():
         </div>
     """, unsafe_allow_html=True)
 
+# ========== CONTENU ==========
+def methodo_content():
+    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+    
+    st.markdown("<h1 style='color:#000000;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+    
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== STRUCTURE ==========
+load_css()
+create_navbar()
+methodo_content()
+create_footer()
 # ========== CONTENU PRINCIPAL ==========
 # Appeler la fonction qui gère tout le panier
 gerer_panier()
