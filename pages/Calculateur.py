@@ -55,17 +55,18 @@ def calculer_indicateurs_panier():
 
     return total_somme, total_impacts
 
-# ========== STYLE CSS ========== 
+# ========== STYLE CSS ==========
 def load_css():
     st.markdown("""
         <style>
+            /* Navbar identique à main.py */
             .navbar {
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #F3F3F1;  /* Changer la couleur du bandeau */
+                background-color: #F3F3F1 !important;
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
@@ -75,20 +76,20 @@ def load_css():
             }
             
             .navbar a {
-                color: black;  /* Changer la couleur des mots en noir */
+                color: black !important;
                 text-decoration: none;
-                font-size: 20px;
-                font-weight: bold;
-                margin: 0 15px;
+                font-size: 20px !important;
+                font-weight: bold !important;
+                margin: 0 15px !important;
             }
             
             .navbar a:hover {
-                color: #f1f1f1;
+                color: #4CAF50 !important;
             }
             
             .stApp {
-                margin-top: 70px;
-                background-color: #F4F6F9;
+                margin-top: 70px !important;
+                background-color: #F3F3F1;
                 min-height: calc(100vh - 70px);
             }
             
@@ -97,10 +98,10 @@ def load_css():
             }
             
             h1, h2, h3 {
-                color: #333333;
+                color: #000000 !important;
             }
             
-            .methodo-card {
+            .resource-card {
                 background: white;
                 border-radius: 10px;
                 padding: 20px;
@@ -113,35 +114,42 @@ def load_css():
             header {
                 display: none !important;
             }
-
-            .text {
-                color: black !important;
-            }
         </style>
     """, unsafe_allow_html=True)
 
-# ========== NAVBAR ========== 
+# ========== COMPOSANTS ==========
 def create_navbar():
     st.markdown("""
         <div class="navbar">
             <a href="/" target="_self">Accueil</a>
             <a href="/Calculateur" target="_self">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self" style="color: #f1f1f1;">Méthodologie</a>
+            <a href="/Ressources" target="_self" style="color: #4CAF50 !important;">Ressources</a>
+            <a href="/Methodologie" target="_self">Méthodologie</a>
         </div>
     """, unsafe_allow_html=True)
 
-# ========== CONTENU PRINCIPAL ========== 
-def methodo_content():
+def create_footer():
+    st.markdown("""
+        <div class="footer-banner">
+            <a href="/A_propos" target="_self">À propos</a>
+            <img src="unilasalle_beauvais_logo.jpg" alt="Logo UniLaSalle Beauvais">
+        </div>
+    """, unsafe_allow_html=True)
+
+# ========== CONTENU ==========
+def ressources_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
-    st.markdown("<h1 class='text' style='color:#333333;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='color:#000000;'>📚 Ressources Utiles</h1>", unsafe_allow_html=True)
+    
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ========== STRUCTURE PAGE ========== 
+# ========== STRUCTURE ==========
 load_css()
 create_navbar()
+ressources_content()
+create_footer()
 
 # ========== AFFICHAGE INTERFACE STREAMLIT ========== 
 st.title("Analyse des produits agro-alimentaires")
