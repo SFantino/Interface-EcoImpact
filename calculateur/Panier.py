@@ -10,7 +10,7 @@ def gerer_panier():
     if "dernier_produit_selectionne" not in st.session_state:
         st.session_state.dernier_produit_selectionne = None
 
-    # Appliquer le style CSS pour changer la couleur du texte
+    # Appliquer le style CSS pour changer la couleur du texte et la couleur de fond
     st.markdown("""
         <style>
         .stTextInput input {
@@ -27,8 +27,16 @@ def gerer_panier():
             color: black !important;
             background-color: white !important;
         }
-        .stTextInput input:focus {
-            border-color: #000000 !important;  /* Optionnel : change la couleur de la bordure quand le champ est focus */
+        .stSelectbox div[role="listbox"] {
+            color: black !important;
+            background-color: white !important;
+        }
+        .stSelectbox div[role="option"] {
+            color: black !important;
+            background-color: white !important;
+        }
+        .stSelectbox div[role="option"]:hover {
+            background-color: #f0f0f0 !important; /* Option hover effect */
         }
         </style>
     """, unsafe_allow_html=True)
@@ -66,10 +74,4 @@ def gerer_panier():
     st.subheader("📦 Votre panier")
     if st.session_state.panier:
         for index, item in enumerate(st.session_state.panier):
-            col1, col2 = st.columns([4, 1])
-            col1.write(f"🔹 **{item['nom']}**")
-            if col2.button("❌", key=f"remove_{index}"):
-                st.session_state.panier.pop(index)
-                st.rerun()
-    else:
-        st.info("🛒 Votre panier est vide.")
+            col1, col2 =
