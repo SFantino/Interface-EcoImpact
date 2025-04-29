@@ -1,23 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-# Appliquer la configuration de la page en premier
-st.set_page_config(page_title="Gestion du Panier", layout="wide")
-
-st.markdown("""
-    <style>
-        /* Modifier la couleur du texte dans le champ de texte pour la recherche */
-        .stTextInput input {
-            color: black !important;  /* Texte noir */
-            background-color: #FFFFFF !important;  /* Fond blanc */
-        }
-
-        .stTextInput label {
-            color: black !important;  /* Texte du label en noir */
-        }
-    </style>
-""", unsafe_allow_html=True)
-
 def gerer_panier():
     # Charger la base de données
     df_synthese_finale = pd.read_csv("Synthese_finale.csv")
@@ -29,6 +12,19 @@ def gerer_panier():
     # Initialiser la sélection précédente pour éviter les ajouts multiples
     if "dernier_produit_selectionne" not in st.session_state:
         st.session_state.dernier_produit_selectionne = None
+
+    # Appliquer le style CSS pour changer la couleur du texte
+    st.markdown("""
+        <style>
+        .stTextInput input {
+            color: black !important;
+            background-color: white !important;
+        }
+        .stTextInput label {
+            color: black !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
     # Afficher le titre
     st.title("🛍️ Gestion du Panier")
