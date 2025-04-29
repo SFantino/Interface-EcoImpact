@@ -23,9 +23,6 @@ def gerer_panier():
         .stTextInput label {
             color: black !important;
         }
-        .stSelectbox label {
-            color: black !important;
-        }
         .stSelectbox div[role="combobox"] {
             color: black !important;
             background-color: white !important;
@@ -44,7 +41,8 @@ def gerer_panier():
         produits_trouves = df_synthese_finale[df_synthese_finale["Nom du Produit en Français"].str.contains(search_query, case=False, na=False)]
 
         if not produits_trouves.empty:
-            produit_selectionne = st.selectbox("📌 Sélectionnez un produit :", [""] + list(produits_trouves["Nom du Produit en Français"].unique()))
+            st.markdown('<span style="color:black; font-weight:bold;">📌 Sélectionnez un produit :</span>', unsafe_allow_html=True)
+            produit_selectionne = st.selectbox("", [""] + list(produits_trouves["Nom du Produit en Français"].unique()))
 
             # Ajouter au panier dès qu'un produit est sélectionné
             if produit_selectionne and produit_selectionne != "":
