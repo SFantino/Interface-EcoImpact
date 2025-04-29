@@ -7,21 +7,21 @@ st.markdown("""
         /* Changer la couleur du texte dans les champs de saisie (text_input) */
         .stTextInput input {
             color: black !important;
-            background-color: #F0F0F0 !important;
+            background-color: #FFFFFF !important;  /* Fond blanc pour éviter conflit de visibilité */
         }
 
-        /* Changer la couleur du texte dans les labels et menus déroulants (selectbox) */
+        /* Changer la couleur du texte dans le label du selectbox */
         .stSelectbox div {
             color: black !important;
         }
 
-        /* Changer la couleur du texte des titres (comme les 'Nom du Produit en Français') */
+        /* Changer la couleur du texte des titres et autres textes */
         .stMarkdown, .stText {
             color: black !important;
         }
 
-        /* S'assurer que les boutons et autres textes restent visibles */
-        .stButton button, .stMarkdown {
+        /* Optionnel : Changer la couleur du texte des boutons pour plus de lisibilité */
+        .stButton button {
             color: black !important;
         }
     </style>
