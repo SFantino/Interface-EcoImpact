@@ -79,16 +79,18 @@ def create_footer():
     """, unsafe_allow_html=True)
 
 # ========== CONTENU PRINCIPAL ==========
-def main():
-    load_css()
-    create_navbar()
-    gerer_panier()
-    if "panier" in st.session_state:
-        codes_ciqual = [int(p["code_ciqual"]) for p in st.session_state.panier]
-    score_panier()
-    variables()
-    etapes_panier()
-    create_footer()
+# Appeler la fonction qui gère tout le panier
+gerer_panier()
 
-if __name__ == "__main__":
-    main()
+# Affichage des codes CIQUAL dans le panier
+codes_ciqual = [int(produit["code_ciqual"]) for produit in st.session_state.panier]
+
+
+# Appeler la fonction pour calculer le score du panier
+score_panier()
+
+# Appeler la fonction pour afficher les variables environnementales
+variables()
+
+# Appeler la fonction pour afficher les comparaison des étapes pour le panier
+etapes_panier()
