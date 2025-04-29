@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 
+# Appliquer la configuration de la page en premier
+st.set_page_config(page_title="Gestion du Panier", layout="wide")
+
 st.markdown("""
     <style>
         /* Modifier la couleur du texte dans le champ de texte pour la recherche */
