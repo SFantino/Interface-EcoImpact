@@ -42,7 +42,7 @@ def gerer_panier():
 
         if not produits_trouves.empty:
             # Afficher un label personnalisé pour la sélection du produit
-            st.markdown("#### 📌 Sélectionnez un produit :", unsafe_allow_html=True)
+            st.markdown('<p style="color: black;">📌 Sélectionnez un produit :</p>', unsafe_allow_html=True)
 
             # Liste déroulante pour la sélection du produit
             produit_selectionne = st.selectbox("", [""] + list(produits_trouves["Nom du Produit en Français"].unique()))
@@ -70,3 +70,4 @@ def gerer_panier():
                 st.rerun()
     else:
         st.info("🛒 Votre panier est vide.")
+
