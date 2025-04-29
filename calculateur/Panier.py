@@ -1,6 +1,20 @@
 import streamlit as st
 import pandas as pd
 
+st.markdown("""
+    <style>
+        /* Modifier la couleur du texte dans le champ de texte pour la recherche */
+        .stTextInput input {
+            color: black !important;  /* Texte noir */
+            background-color: #FFFFFF !important;  /* Fond blanc */
+        }
+
+        .stTextInput label {
+            color: black !important;  /* Texte du label en noir */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 def gerer_panier():
     # Charger la base de données
     df_synthese_finale = pd.read_csv("Synthese_finale.csv")
