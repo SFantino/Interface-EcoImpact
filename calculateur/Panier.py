@@ -27,6 +27,9 @@ def gerer_panier():
             color: black !important;
             background-color: white !important;
         }
+        .stTextInput input:focus {
+            border-color: #000000 !important;  /* Optionnel : change la couleur de la bordure quand le champ est focus */
+        }
         </style>
     """, unsafe_allow_html=True)
 
@@ -70,4 +73,3 @@ def gerer_panier():
                 st.rerun()
     else:
         st.info("🛒 Votre panier est vide.")
-
