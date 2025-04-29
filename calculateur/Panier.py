@@ -14,24 +14,25 @@ def gerer_panier():
         st.session_state.dernier_produit_selectionne = None
 
     # Appliquer le style CSS pour changer la couleur du texte
-   st.markdown("""
-    <style>
-    .stTextInput input {
-        color: black !important;
-        background-color: white !important;
-    }
-    .stTextInput label {
-        color: black !important;
-    }
-    label[data-baseweb="select"] {
-        color: black !important;
-    }
-    .stSelectbox div[role="combobox"] {
-        color: black !important;
-        background-color: white !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+        .stTextInput input {
+            color: black !important;
+            background-color: white !important;
+        }
+        .stTextInput label {
+            color: black !important;
+        }
+        label[data-baseweb="select"] {
+            color: black !important;
+        }
+        .stSelectbox div[role="combobox"] {
+            color: black !important;
+            background-color: white !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     # Afficher le titre
     st.title("🛍️ Gestion du Panier")
 
