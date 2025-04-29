@@ -23,7 +23,7 @@ def gerer_panier():
         .stTextInput label {
             color: black !important;
         }
-        label[data-baseweb="select"] {
+        .stSelectbox label {
             color: black !important;
         }
         .stSelectbox div[role="combobox"] {
