@@ -1,8 +1,8 @@
 import streamlit as st
-from Panier import gerer_panier
-from Score_panier import score_panier
-from Variables import variables
-from etapes_panier import etapes_panier
+from calculateur.Panier import gerer_panier
+from calculateur.Score_panier import score_panier
+from calculateur.Variables import variables
+from calculateur.etapes_panier import etapes_panier
 
 # ========== CONFIGURATION ==========
 st.set_page_config(
