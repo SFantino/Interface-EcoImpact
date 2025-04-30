@@ -65,6 +65,8 @@ st.markdown("""
             margin-top: 70px !important;
             background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
             min-height: calc(100vh - 70px);
+            overflow: hidden;
+            position: relative;
         }
         
         /* Cache l'ancienne navbar */
@@ -95,7 +97,7 @@ st.markdown("""
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             position: absolute;
             top: 90px;
-            right: 0;
+            height: auto;
             z-index: 10;
         }
 
