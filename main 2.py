@@ -130,7 +130,7 @@ st.markdown("""
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1001;
+            z-index: 1;
         }
         .footer-banner a {
             color: white;
