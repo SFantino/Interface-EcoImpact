@@ -55,6 +55,11 @@ st.markdown("""
             position: relative;
             z-index: 0;
         }
+        
+         /* Style de survol des liens */
+        .navbar a:hover {
+            color: #4CAF50 !important;
+        }
 
         /* Sous-menu */
         .submenu {
@@ -79,7 +84,7 @@ st.markdown("""
         }
 
         /* Affichage du sous-menu au survol */
-        .navbar a:hover .submenu {
+        .navbar .menu-item:hover .submenu {
             display: block;
         }
 
@@ -88,6 +93,7 @@ st.markdown("""
             position: relative;
             padding: 10px 15px;
         }
+
         
         .welcome-text {
             color: black;
