@@ -54,6 +54,7 @@ st.markdown("""
             position: relative;
             z-index: 0;
         }
+        
         .welcome-text {
             color: black;
             text-align: right;
@@ -73,24 +74,7 @@ st.markdown("""
             margin-top: 100px;  /* Ajuste l'espace pour qu'elle soit sous la section de bienvenue */
             top: 0;
         }
-    
-        /* Désactiver le défilement */
-        body {
-            overflow: hidden;
-        }
-    
-        /* Section après la bannière avec fond uni */
-        .content-after-banner {
-            background-color: #F3F3F1;
-            padding: 20px;
-            margin-top: 100px;  /* Ajuste l'espace sous la bannière */
-            height: auto;  /* Contenu se positionne en dessous sans scroller */
-        }
-    
-        /* Désactive le défilement de la page */
-        .stApp {
-            overflow: hidden;
-        }
+
         .calculator-title {
             font-size: 24px;
             font-weight: bold;
@@ -175,13 +159,6 @@ st.markdown("""
                 <button class="start-button">Start</button>
             </a>
         </div>
-    </div>
-""", unsafe_allow_html=True)
-
-# Section après la bannière avec fond uni
-st.markdown("""
-    <div class="content-after-banner">
-        <p>Contenu supplémentaire après la bannière calculateur.</p>
     </div>
 """, unsafe_allow_html=True)
 
