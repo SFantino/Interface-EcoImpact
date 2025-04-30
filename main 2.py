@@ -68,11 +68,18 @@ st.markdown("""
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+            position: fixed;
+            top: 80px;  /* Espace pour la navbar */
+            left: 0;
+            z-index: 100;
+            text-align: center;
+        }
+        
+        /* Section avec fond uni après la bannière */
+        .content-after-banner {
+            background-color: #F3F3F1;
+            padding: 20px;
+            margin-top: 100px;
         }
         .calculator-title {
             font-size: 24px;
@@ -161,11 +168,10 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Appliquer un fond uni #F3F3F1 pour la section suivante
+# Section après la bannière avec fond uni
 st.markdown("""
-    <div style="background-color: #F3F3F1; padding: 20px;">
-        <!-- Vous pouvez ajouter ici le contenu que vous souhaitez afficher après la bannière -->
-        <p>Contenu supplémentaire ici...</p>
+    <div class="content-after-banner">
+        <p>Contenu supplémentaire après la bannière calculateur.</p>
     </div>
 """, unsafe_allow_html=True)
 
