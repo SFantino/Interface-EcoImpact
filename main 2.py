@@ -68,18 +68,28 @@ st.markdown("""
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: fixed;
-            top: 80px;  /* Espace pour la navbar */
-            left: 0;
-            z-index: 100;
-            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-top: 100px;  /* Ajuste l'espace pour qu'elle soit sous la section de bienvenue */
+            top: 0;
         }
-        
-        /* Section avec fond uni après la bannière */
+    
+        /* Désactiver le défilement */
+        body {
+            overflow: hidden;
+        }
+    
+        /* Section après la bannière avec fond uni */
         .content-after-banner {
             background-color: #F3F3F1;
             padding: 20px;
-            margin-top: 100px;
+            margin-top: 100px;  /* Ajuste l'espace sous la bannière */
+            height: auto;  /* Contenu se positionne en dessous sans scroller */
+        }
+    
+        /* Désactive le défilement de la page */
+        .stApp {
+            overflow: hidden;
         }
         .calculator-title {
             font-size: 24px;
