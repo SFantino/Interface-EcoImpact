@@ -54,18 +54,6 @@ st.markdown("""
             position: relative;
             z-index: 0;
         }
-
-                /* Fixer le logo et le texte "Bienvenue sur ÉcoImpact" en haut */
-        .welcome-text, .logo {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #F3F3F1;
-            padding: 15px 20px;
-            text-align: center;
-            z-index: 1001;
-        }
         
         .welcome-text {
             color: black;
