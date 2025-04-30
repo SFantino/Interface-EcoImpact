@@ -71,6 +71,33 @@ def load_css():
             header {
                 display: none !important;
             }
+            .footer-banner {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #23A95C;
+                padding: 10px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 1001;
+            }
+            .footer-banner a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            .footer-banner a:hover {
+                color: #F3F3F1;
+            }
+            .footer-banner img {
+                height: 40px;
+                margin-left: auto;
+            }
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
 
