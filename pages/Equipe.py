@@ -114,7 +114,7 @@ def equipe_content():
     st.markdown("""
         <p>Nous sommes une équipe de professionnels passionnés, travaillant ensemble pour réduire l'impact environnemental des produits alimentaires.
         Voici les membres clés de notre équipe :</p>
-        <ul>
+        <ul style="color: #000000;">
             <li><strong>Nom 1</strong> - Rôle</li>
             <li><strong>Nom 2</strong> - Rôle</li>
             <li><strong>Nom 3</strong> - Rôle</li>
