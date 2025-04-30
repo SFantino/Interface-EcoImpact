@@ -44,7 +44,14 @@ def load_css():
             h1, h2, h3 {
                 color: #000000 !important;
             }
-            
+
+            /* Masquer la sidebar, footer et header sur toutes les pages */
+            section[data-testid="stSidebar"],
+            footer,
+            header {
+                display: none !important;
+            }
+
             .footer-banner {
                 position: fixed;
                 bottom: 0;
@@ -74,6 +81,7 @@ def load_css():
             header {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
+
 
 # ========== COMPOSANTS ==========
 
