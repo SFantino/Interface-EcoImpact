@@ -11,6 +11,19 @@ st.set_page_config(
 # ========== CSS MODIFIÉ ==========
 st.markdown("""
     <style>
+        html, body, .stApp {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% 100%;
+        }
+
+        section[data-testid="stSidebar"], footer, header {
+            display: none !important;
+        }
+   
         /* Navbar horizontale fixe */
         .navbar {
             position: fixed;
