@@ -60,7 +60,6 @@ st.markdown("""
             color: black;
             text-align: right;
             font-size: 24px;
-            position : fixed;
             margin-right: 20px;
             margin-top: -13px;
         }
