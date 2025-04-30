@@ -10,20 +10,7 @@ st.set_page_config(
 
 # ========== CSS MODIFIÉ ==========
 st.markdown("""
-    <style>
-        html, body, .stApp {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% 100%;
-        }
-
-        section[data-testid="stSidebar"], footer, header {
-            display: none !important;
-        }
-   
+    <style>   
         /* Navbar horizontale fixe */
         .navbar {
             position: fixed;
@@ -51,22 +38,12 @@ st.markdown("""
         .navbar a:hover {
             color: #4CAF50 !important;
         }
-    
-        html, body {
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden; /* empêche le scroll */
-        }
-
         
         /* Espace pour la navbar fixe */
         .stApp {
             margin-top: 70px !important;
             background: #F3F3F1 url('https://images.unsplash.com/photo-1514995669114-6081e934b693?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat left top / 65% auto;
             min-height: calc(100vh - 70px);
-            overflow: hidden;
-            position: relative;
         }
         
         /* Cache l'ancienne navbar */
@@ -83,10 +60,8 @@ st.markdown("""
             text-align: right;
             font-size: 24px;
             margin-right: 20px;
-            position: absolute;
-            top: 0;
-            right: 0;
         }
+        
         .calculator-banner {
             background-color: white;
             padding: 25px;
@@ -95,10 +70,10 @@ st.markdown("""
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: absolute;
-            top: 90px;
-            height: auto;
+            position: fixed;
             z-index: 10;
+            margin-top: 100px;
+            top: 0;
         }
 
         .calculator-title {
