@@ -111,8 +111,9 @@ def equipe_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
     st.markdown("<h1 style='color:#000000;'>👥 L'Équipe</h1>", unsafe_allow_html=True)
+    
     st.markdown("""
-        <p>Nous sommes une équipe de professionnels passionnés, travaillant ensemble pour réduire l'impact environnemental des produits alimentaires.
+        <p style="color: #000000;">Nous sommes une équipe de professionnels passionnés, travaillant ensemble pour réduire l'impact environnemental des produits alimentaires.
         Voici les membres clés de notre équipe :</p>
         <ul style="color: #000000;">
             <li><strong>Nom 1</strong> - Rôle</li>
