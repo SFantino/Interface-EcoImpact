@@ -1,5 +1,13 @@
 import streamlit as st
 
+# ========== CONFIGURATION ==========
+st.set_page_config(
+    page_title="Méthodologie | EcoImpact",
+    layout="wide",
+    page_icon="📊",
+    initial_sidebar_state="collapsed"
+)
+
 # ========== STYLE CSS ==========
 def load_css():
     st.markdown("""
@@ -59,25 +67,33 @@ def load_css():
             header {
                 display: none !important;
             }
-
             .footer-banner {
-                text-align: center;
-                padding: 20px 0;
-                background-color: #f3f3f1;
-                margin-top: 20px;
-            }
-
-            .footer-banner a {
-                text-decoration: none;
-                color: black;
-                font-weight: bold;
-            }
-
-            .footer-banner img {
-                max-width: 200px;
-                margin-top: 10px;
-            }
-
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #23A95C;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1001;
+        }
+        .footer-banner a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .footer-banner a:hover {
+            color: #F3F3F1;
+        }
+        .footer-banner img {
+            height: 40px;
+            margin-left: auto;
+        }
+        footer {visibility: hidden;}
+        header {visibility: hidden;}
         </style>
     """, unsafe_allow_html=True)
 
@@ -92,13 +108,14 @@ def create_navbar():
         </div>
     """, unsafe_allow_html=True)
 
-def create_footer():
+def create_footer()
     st.markdown("""
         <div class="footer-banner">
             <a href="/A_propos" target="_self">À propos</a>
-            <img src="https://prepeersstorage.blob.core.windows.net/academic/1_400_logo_9f8797ed-c537-418c-9215-a420e600a540.png?sp=r&st=2025-01-30T23:00:00Z&se=2026-01-31T04:06:31Z&spr=https&sv=2022-11-02&sr=c&sig=Mm5p4fZa8%2F4%2BFA04dmK5p259BIm5Y9rzEDR8GPPJTWY%3D" alt="Logo UniLaSalle Beauvais">
+            <img src="https://prepeersstorage.blob.core.windows.net/academic/1_400_logo_9f8797ed-c537-418c-9215-a420e600a540.png?sp=r&st=2025-01-30T23:00:00Z&se=2026-01-31T04:06:31Z&spr=https&sv=2022-11-02&sr=c&sig=Mm5p4fZa8%2F4%2BFA04dmK5p259BIm5Y9rzEDR8GPPJTWY%3D">
         </div>
-    """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True) 
+
 
 # ========== CONTENU ==========
 def methodo_content():
@@ -106,14 +123,11 @@ def methodo_content():
     
     st.markdown("<h1 style='color:#000000;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
     
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ========== STRUCTURE ==========
-def main():
-    load_css()
-    create_navbar()
-    methodo_content()
-    create_footer()
-
-if __name__ == "__main__":
-    main()
+load_css()
+create_navbar()
+methodo_content()
+create_footer()
