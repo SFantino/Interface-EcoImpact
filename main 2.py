@@ -165,7 +165,7 @@ st.markdown("""
 st.markdown("""
     <div class="footer-banner">
         <a href="/A_propos" target="_self">À propos</a>
-        <img src="https://upload.wikimedia.org/wikipedia/fr/6/6f/UniLaSalle_logo.png" alt="Logo UniLaSalle Beauvais">
+        <img src="https://prepeersstorage.blob.core.windows.net/academic/1_400_logo_9f8797ed-c537-418c-9215-a420e600a540.png?sp=r&st=2025-01-30T23:00:00Z&se=2026-01-31T04:06:31Z&spr=https&sv=2022-11-02&sr=c&sig=Mm5p4fZa8%2F4%2BFA04dmK5p259BIm5Y9rzEDR8GPPJTWY%3D">
     </div>
 """, unsafe_allow_html=True)
 
