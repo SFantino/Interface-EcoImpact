@@ -92,7 +92,6 @@ def create_navbar():
             <a href="/Calculateur" target="_self">Calculateur</a>
             <a href="/Ressources" target="_self">Ressources</a>
             <a href="/Methodologie" target="_self">Méthodologie</a>
-            <a href="/Equipe" target="_self" style="color: #4CAF50 !important;">Equipe</a>
         </div>
     """, unsafe_allow_html=True)
 
