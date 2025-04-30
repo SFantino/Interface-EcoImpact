@@ -66,14 +66,15 @@ st.markdown("""
             background-color: white;
             padding: 25px;
             border-radius: 0;
-            width: 100%;
-            margin: 0;
+            width: 100vw;
+            margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             position: fixed;
-            z-index: 10;
-            margin-top: 40px;
-            top: 0;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
         }
 
         .calculator-title {
