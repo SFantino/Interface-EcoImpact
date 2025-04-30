@@ -51,6 +51,14 @@ st.markdown("""
         .navbar a:hover {
             color: #4CAF50 !important;
         }
+    
+        html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden; /* empêche le scroll */
+        }
+
         
         /* Espace pour la navbar fixe */
         .stApp {
@@ -73,6 +81,9 @@ st.markdown("""
             text-align: right;
             font-size: 24px;
             margin-right: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
         }
         .calculator-banner {
             background-color: white;
@@ -82,10 +93,10 @@ st.markdown("""
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: relative;
+            position: absolute;
+            top: 90px;
+            right: 0;
             z-index: 10;
-            margin-top: 100px;  /* Ajuste l'espace pour qu'elle soit sous la section de bienvenue */
-            top: 0;
         }
 
         .calculator-title {
@@ -108,7 +119,7 @@ st.markdown("""
             background-color: #1e8c4f;
         }
         .footer-banner {
-            position: fixed;
+            position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
