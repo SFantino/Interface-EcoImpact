@@ -121,7 +121,7 @@ st.markdown("""
             background-color: #1e8c4f;
         }
         .footer-banner {
-            position: absolute;
+            position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
@@ -130,8 +130,8 @@ st.markdown("""
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1;
-        }
+            z-index: 1001;
+            }
         .footer-banner a {
             color: white;
             text-decoration: none;
@@ -145,9 +145,9 @@ st.markdown("""
             height: 40px;
             margin-left: auto;
         }
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-    </style>
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+        </style>
 """, unsafe_allow_html=True)
 
 # ========== NAVBAR NATIVE STREAMLIT ==========
