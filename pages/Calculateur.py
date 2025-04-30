@@ -133,6 +133,8 @@ load_css()
 create_navbar()
 methodo_content()
 create_footer()
+
+
 # ========== CONTENU PRINCIPAL ==========
 # Appeler la fonction qui gère tout le panier
 gerer_panier()
