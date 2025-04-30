@@ -55,6 +55,39 @@ st.markdown("""
             position: relative;
             z-index: 0;
         }
+
+        /* Sous-menu */
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Items du sous-menu */
+        .submenu a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .submenu a:hover {
+            background-color: #ddd;
+        }
+
+        /* Affichage du sous-menu au survol */
+        .navbar a:hover .submenu {
+            display: block;
+        }
+
+        /* Styles spécifiques pour chaque sous-menu */
+        .menu-item {
+            position: relative;
+            padding: 10px 15px;
+        }
         
         .welcome-text {
             color: black;
@@ -132,10 +165,22 @@ st.markdown("""
 # ========== NAVBAR NATIVE STREAMLIT ==========
 st.markdown("""
     <div class="navbar">
-        <a href="/" target="_self">Accueil</a>
-        <a href="/Calculateur" target="_self">Calculateur</a>
-        <a href="/Ressources" target="_self">Ressources</a>
-        <a href="/Methodologie" target="_self">Méthodologie</a>
+        <div class="menu-item">
+            <a href="/">Accueil</a>
+        </div>
+        <div class="menu-item">
+            <a href="/Calculateur">Calculateur</a>
+        </div>
+        <div class="menu-item">
+            <a href="#">Ressources</a>
+            <div class="submenu">
+                <a href="/ACV">ACV</a>
+                <a href="/Agribalyse">Agribalyse</a>
+            </div>
+        </div>
+        <div class="menu-item">
+            <a href="/Methodologie">Méthodologie</a>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
