@@ -60,7 +60,6 @@ st.markdown("""
             text-align: right;
             font-size: 24px;
             margin-right: 20px;
-            position : fixed;
         }
         
         .calculator-banner {
