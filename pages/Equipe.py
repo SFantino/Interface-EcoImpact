@@ -111,12 +111,14 @@ def equipe_content():
     st.markdown("<h1 style='color:#000000;'>👥 L'Équipe</h1>", unsafe_allow_html=True)
     
     st.markdown("""
-        <p style="color: #000000;">Nous sommes une équipe de professionnels passionnés, travaillant ensemble pour réduire l'impact environnemental des produits alimentaires.
-        Voici les membres clés de notre équipe :</p>
-        <ul style="color: #000000;">
-            <li><strong>Nom 1</strong> - Rôle</li>
-            <li><strong>Nom 2</strong> - Rôle</li>
-            <li><strong>Nom 3</strong> - Rôle</li>
+        <p>Nous sommes un groupe d'étudiants en 4ème année d'ingénierie agroalimentaire à UniLaSalle Beauvais, engagés dans la réduction de l'impact environnemental des produits alimentaires. Notre équipe est composée de :</p>
+        <ul>
+            <li><strong>Yaël BALIABA</strong></li>
+            <li><strong>Grégoire BESSON</strong></li>
+            <li><strong>Samantha FANTINO</strong></li>
+            <li><strong>Quentin GRIZARD</strong></li>
+            <li><strong>François JONARD</strong></li>
+            <li><strong>Landry MACQUET</strong></li>
         </ul>
     """, unsafe_allow_html=True)
 
