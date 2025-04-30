@@ -161,6 +161,14 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# Appliquer un fond uni #F3F3F1 pour la section suivante
+st.markdown("""
+    <div style="background-color: #F3F3F1; padding: 20px;">
+        <!-- Vous pouvez ajouter ici le contenu que vous souhaitez afficher après la bannière -->
+        <p>Contenu supplémentaire ici...</p>
+    </div>
+""", unsafe_allow_html=True)
+
 # ========== FOOTER ==========
 st.markdown("""
     <div class="footer-banner">
