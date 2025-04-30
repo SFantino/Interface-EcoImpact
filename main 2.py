@@ -60,6 +60,7 @@ st.markdown("""
             text-align: right;
             font-size: 24px;
             margin-right: 20px;
+            position : fixed;
         }
         
         .calculator-banner {
@@ -75,7 +76,7 @@ st.markdown("""
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            margin-top: -10px;
+            margin-top: -13px;
         }
 
         .calculator-title {
