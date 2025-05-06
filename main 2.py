@@ -1,4 +1,4 @@
-erimport streamlit as st
+import streamlit as st
 from design import load_css, create_navbar, create_footer
 
 # Configuration de la page
