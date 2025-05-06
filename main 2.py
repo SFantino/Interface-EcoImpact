@@ -118,5 +118,3 @@ st.markdown("""
 
 load_css()
 create_navbar()
-equipe_content()
-create_footer()
