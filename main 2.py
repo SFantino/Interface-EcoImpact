@@ -29,7 +29,7 @@ st.markdown("""
             z-index: 0;
         }
         
-         /* Style de survol des liens */
+        /* Style de survol des liens */
         .navbar a:hover {
             color: #4CAF50 !important;
         }
@@ -42,6 +42,7 @@ st.markdown("""
             margin-top: -13px;
         }
         
+        /* Bannière calculateur avec positionnement fixe */
         .calculator-banner {
             background-color: white;
             padding: 25px;
@@ -55,8 +56,8 @@ st.markdown("""
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            margin-top: -30
-            px;
+            margin-top: -30px;
+            z-index: 10;
         }
 
         .calculator-title {
@@ -78,7 +79,16 @@ st.markdown("""
         .start-button:hover {
             background-color: #1e8c4f;
         }
-        </style>
+
+        /* Conteneur central pour gérer la position du calculateur */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh; /* Cela occupe toute la hauteur de la fenêtre */
+        }
+
+    </style>
 """, unsafe_allow_html=True)
 
 # ========== CONTENU PRINCIPAL ==========
@@ -97,9 +107,13 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Bannière calculateur
+# Bannière calculateur avec positionnement au centre entre le texte et le footer
 st.markdown("""
-    <div style="padding-bottom: 100px;">
+    <div class="center-container">
+        <div class="welcome-text">
+            <h1>Bienvenue sur EcoImpact</h1>
+            <p>Découvrez votre impact environnemental avec notre outil.</p>
+        </div>
         <div class="calculator-banner">
             <div class="calculator-title">Tester le calculateur</div>
             <a href="/Calculateur" target="_self">
