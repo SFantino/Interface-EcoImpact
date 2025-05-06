@@ -42,7 +42,6 @@ st.markdown("""
             margin-top: -13px;
         }
         
-        /* Bannière calculateur */
         .calculator-banner {
             background-color: white;
             padding: 25px;
@@ -56,8 +55,7 @@ st.markdown("""
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            margin-top: -50px;
-            z-index: 10;
+            margin-top: -7px;
         }
 
         .calculator-title {
@@ -66,7 +64,6 @@ st.markdown("""
             margin-bottom: 15px;
             color: #333;
         }
-
         .start-button {
             background-color: #23A95C;
             color: white;
@@ -100,16 +97,15 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Conteneur principal
-st.markdown('<div class="main-container">', unsafe_allow_html=True)
-
-# Bannière calculateur, maintenant dans un conteneur
+# Bannière calculateur
 st.markdown("""
-    <div class="calculator-banner">
-        <div class="calculator-title">Tester le calculateur</div>
-        <a href="/Calculateur" target="_self">
-            <button class="start-button">Start</button>
-        </a>
+    <div style="padding-bottom: 100px;">
+        <div class="calculator-banner">
+            <div class="calculator-title">Tester le calculateur</div>
+            <a href="/Calculateur" target="_self">
+                <button class="start-button">Start</button>
+            </a>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
