@@ -55,7 +55,7 @@ st.markdown("""
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            margin-top: -70px;
+            margin-top: -0px;
         }
 
         .calculator-title {
