@@ -90,8 +90,8 @@ def create_navbar():
         <div class="navbar">
             <a href="/" target="_self">Accueil</a>
             <a href="/Calculateur" target="_self">Calculateur</a>
-            <a href="/Ressources" target="_self">Ressources</a>
-            <a href="/Methodologie" target="_self">Méthodologie</a>
+            <a href="/Pourquoi_ce_projet" target="_self">Pourquoi ce projet ?</a>
+            <a href="/Comment_ca_marche" target="_self">Comment ça marche ?</a>
         </div>
     """, unsafe_allow_html=True)
 
