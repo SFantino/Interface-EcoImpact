@@ -47,10 +47,17 @@ st.markdown("""
             background-color: white;
             padding: 25px;
             border-radius: 0;
-            width: 100%;
+            width: 100vw;
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: fixed;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            margin-top: -30px;
+            z-index: 10;
         }
 
         .calculator-title {
@@ -82,6 +89,12 @@ st.markdown("""
             height: 100%;
             padding-top: 20px;
         }
+
+        .content-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
         /* Espace réservé pour footer */
         .footer-banner {
