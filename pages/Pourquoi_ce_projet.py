@@ -49,5 +49,5 @@ def pourquoi_ce_projet_content():
 # ========== STRUCTURE ==========
 load_css()
 create_navbar()
-ressources_content()
+pourquoi_ce_projet_content()
 create_footer()
