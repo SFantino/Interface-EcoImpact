@@ -1,4 +1,4 @@
-import streamlit as st
+erimport streamlit as st
 from design import load_css, create_navbar, create_footer
 
 # Configuration de la page
@@ -85,7 +85,7 @@ st.markdown("""
         .main-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             height: 100%;
             padding-top: 20px;
         }
