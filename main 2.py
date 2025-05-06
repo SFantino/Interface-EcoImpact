@@ -42,22 +42,15 @@ st.markdown("""
             margin-top: -13px;
         }
         
-        /* Bannière calculateur avec positionnement fixe */
+        /* Bannière calculateur */
         .calculator-banner {
             background-color: white;
             padding: 25px;
             border-radius: 0;
-            width: 100vw;
+            width: 100%;
             margin: 20px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            position: fixed;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            margin-top: -30px;
-            z-index: 10;
         }
 
         .calculator-title {
@@ -66,6 +59,7 @@ st.markdown("""
             margin-bottom: 15px;
             color: #333;
         }
+
         .start-button {
             background-color: #23A95C;
             color: white;
@@ -80,12 +74,18 @@ st.markdown("""
             background-color: #1e8c4f;
         }
 
-        /* Conteneur central pour gérer la position du calculateur */
-        .center-container {
+        /* Conteneur pour centrer et espacer les sections */
+        .main-container {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100vh; /* Cela occupe toute la hauteur de la fenêtre */
+            height: 100%;
+            padding-top: 20px;
+        }
+
+        /* Espace réservé pour footer */
+        .footer-banner {
+            margin-top: 50px;
         }
 
     </style>
@@ -107,29 +107,26 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Bannière calculateur avec positionnement au centre entre le texte et le footer
+# Conteneur principal
+st.markdown('<div class="main-container">', unsafe_allow_html=True)
+
+# Bannière calculateur, maintenant dans un conteneur
 st.markdown("""
-    <div class="center-container">
-        <div class="welcome-text">
-            <h1>Bienvenue sur EcoImpact</h1>
-            <p>Découvrez votre impact environnemental avec notre outil.</p>
-        </div>
-        <div class="calculator-banner">
-            <div class="calculator-title">Tester le calculateur</div>
-            <a href="/Calculateur" target="_self">
-                <button class="start-button">Start</button>
-            </a>
-        </div>
+    <div class="calculator-banner">
+        <div class="calculator-title">Tester le calculateur</div>
+        <a href="/Calculateur" target="_self">
+            <button class="start-button">Start</button>
+        </a>
     </div>
 """, unsafe_allow_html=True)
 
 # ========== FOOTER ==========
 st.markdown("""
-        <div class="footer-banner">
-            <a href="/Equipe" target="_self" style="color: white;">Equipe</a>  <!-- Remplacé "À propos" par "Equipe" -->
-            <img src="https://prepeersstorage.blob.core.windows.net/academic/1_400_logo_9f8797ed-c537-418c-9215-a420e600a540.png?sp=r&st=2025-01-30T23:00:00Z&se=2026-01-31T04:06:31Z&spr=https&sv=2022-11-02&sr=c&sig=Mm5p4fZa8%2F4%2BFA04dmK5p259BIm5Y9rzEDR8GPPJTWY%3D">
-        </div>
-    """, unsafe_allow_html=True)
+    <div class="footer-banner">
+        <a href="/Equipe" target="_self" style="color: white;">Equipe</a>  <!-- Remplacé "À propos" par "Equipe" -->
+        <img src="https://prepeersstorage.blob.core.windows.net/academic/1_400_logo_9f8797ed-c537-418c-9215-a420e600a540.png?sp=r&st=2025-01-30T23:00:00Z&se=2026-01-31T04:06:31Z&spr=https&sv=2022-11-02&sr=c&sig=Mm5p4fZa8%2F4%2BFA04dmK5p259BIm5Y9rzEDR8GPPJTWY%3D">
+    </div>
+""", unsafe_allow_html=True)
 
 load_css()
 create_navbar()
