@@ -56,7 +56,7 @@ st.markdown("""
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            margin-top: -30px;
+            margin-top: -50px;
             z-index: 10;
         }
 
@@ -80,27 +80,7 @@ st.markdown("""
         .start-button:hover {
             background-color: #1e8c4f;
         }
-
-        /* Conteneur pour centrer et espacer les sections */
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            height: 100%;
-            padding-top: 20px;
-        }
-
-        .content-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        /* Espace réservé pour footer */
-        .footer-banner {
-            margin-top: 50px;
-        }
-
+        
     </style>
 """, unsafe_allow_html=True)
 
