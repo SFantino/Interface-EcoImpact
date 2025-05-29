@@ -4,13 +4,6 @@ from calculateur.Score_panier import score_panier
 from calculateur.Variables import variables
 from calculateur.etapes_panier import etapes_panier
 
-# ========== CONFIGURATION ==========
-st.set_page_config(
-    page_title="Méthodologie | EcoImpact",
-    layout="wide",
-    page_icon="📊",
-    initial_sidebar_state="collapsed"
-)
 
 # ========== STYLE CSS ==========
 def load_css():
@@ -23,7 +16,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #F3F3F1 !important;
+                background-color: #FFFFFF !important;
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
