@@ -1,39 +1,9 @@
 import streamlit as st
-from design import load_css, create_navbar, create_footer
 from calculateur.Panier import gerer_panier
 from calculateur.Score_panier import score_panier
 from calculateur.Variables import variables
 from calculateur.etapes_panier import etapes_panier
-
-
-# ========== STYLE CSS ==========
-def load_css():
-    st.markdown("""
-        <style>
-            /* Identique à ressources.py */
-            .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 70px;
-                background-color: #FFFFFF !important;
-                padding: 15px 20px;
-                z-index: 1000;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-        </style>
-    """, unsafe_allow_html=True)
-
-
-# ========== STRUCTURE ==========
-load_css()
-create_navbar()
-methodo_content()
-create_footer()
+from design import load_css, create_navbar, create_footer
 
 
 # ========== CONTENU PRINCIPAL ==========
@@ -52,3 +22,11 @@ variables()
 
 # Appeler la fonction pour afficher les comparaison des étapes pour le panier
 etapes_panier()
+
+
+
+# ========== STRUCTURE ==========
+load_css()
+create_navbar()
+methodo_content()
+create_footer()
