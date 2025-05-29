@@ -5,6 +5,29 @@ from calculateur.Variables import variables
 from calculateur.etapes_panier import etapes_panier
 from design import load_css, create_navbar, create_footer
 
+# ========== STYLE CSS ========== 
+def load_css():
+    st.markdown("""
+        <style>
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                background-color: #FFFFFF !important;
+                padding: 15px 20px;
+                z-index: 1000;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        </style>
+    """, unsafe_allow_html=True)
+
+
+
+
 
 # ========== CONTENU PRINCIPAL ==========
 # Appeler la fonction qui gère tout le panier
