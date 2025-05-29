@@ -28,15 +28,15 @@ etapes_panier()
 
 # ========== STRUCTURE ==========
 load_css()
-st.markdown("""
-    <style>
-    html, body, .main {
-        background-color: white !important;
-        background: white !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
+st.markdown("""
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.body.style.background = "white";
+        document.querySelector(".stApp").style.background = "white";
+    });
+    </script>
+    """, unsafe_allow_html=True)
 
 create_navbar()
 create_footer()
