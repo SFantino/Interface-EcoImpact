@@ -28,9 +28,6 @@ etapes_panier()
 
 # ========== STRUCTURE ==========
 load_css()
-create_navbar()
-create_footer()
-
 st.markdown("""
     <style>
     .main {
@@ -38,3 +35,7 @@ st.markdown("""
     }
     </style>
     """, unsafe_allow_html=True)
+
+create_navbar()
+create_footer()
+
