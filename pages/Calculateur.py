@@ -29,15 +29,6 @@ def load_css():
     """, unsafe_allow_html=True)
 
 
-# ========== CONTENU ==========
-def methodo_content():
-    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
-    
-    st.markdown("<h1 style='color:#000000;'>📊 Méthodologie Scientifique</h1>", unsafe_allow_html=True)
-    
-
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # ========== STRUCTURE ==========
 load_css()
 create_navbar()
