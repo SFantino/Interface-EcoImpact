@@ -28,5 +28,5 @@ etapes_panier()
 # ========== STRUCTURE ==========
 load_css()
 create_navbar()
-methodo_content()
+calculateur_content()
 create_footer()
