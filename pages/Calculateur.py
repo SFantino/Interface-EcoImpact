@@ -30,11 +30,13 @@ etapes_panier()
 load_css()
 st.markdown("""
     <style>
-    .main {
+    html, body, .main {
         background-color: white !important;
+        background: white !important;
     }
     </style>
     """, unsafe_allow_html=True)
+
 
 create_navbar()
 create_footer()
