@@ -10,7 +10,7 @@ def load_css():
                 left: 0;
                 width: 100%;
                 height: 70px;
-                background-color: #F3F3F1 !important;
+                background-color: #F3F3F1;
                 padding: 15px 20px;
                 z-index: 1000;
                 display: flex;
