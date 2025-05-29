@@ -1,4 +1,5 @@
 import streamlit as st
+from design import load_css, create_navbar, create_footer
 from calculateur.Panier import gerer_panier
 from calculateur.Score_panier import score_panier
 from calculateur.Variables import variables
