@@ -89,7 +89,7 @@ def create_navbar():
     st.markdown("""
         <div class="navbar">
             <a href="/" target="_self">Accueil</a>
-            <a href="/Calculateur" target="_self">Calculateur</a>
+            <a href="/Calculateur" target="_self">calculateur</a>
             <a href="/Pourquoi_ce_projet" target="_self">Pourquoi ce projet ?</a>
             <a href="/Comment_ca_marche" target="_self">Comment ça marche ?</a>
         </div>
