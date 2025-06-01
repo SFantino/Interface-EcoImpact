@@ -129,22 +129,18 @@ def score_panier():
         st.markdown(barre_sous_groupes, unsafe_allow_html=True)
 
 
-    if "Score unique EF" in df_synthese_finale.columns:
-        score_col = "Score unique EF"
-        score_moyen = df_panier[score_col].mean()
-        scores_sg = df_synthese_finale.groupby("Sous-groupe d'aliment")[score_col].mean()
-        sg_panier = df_panier["Sous-groupe d'aliment"].unique()
-        score_moyen_sg = scores_sg.loc[sg_panier].mean()
+    if "Score EF unique" in df_synthese_finale.columns:
+        score_col_ef = "Score EF unique"
+        score_ef_moyen = df_panier[score_col_ef].mean()
+        classe_ef = obtenir_classe(score_ef_moyen)
 
         st.markdown(
-            f"**Score unique EF du panier :** {score_moyen:.2f}  \n"
+            f"**Score EF moyen du panier (non standardisé) :** {score_ef_moyen:.2f}  \n"
+            f"Classe EF : {classe_ef}"
         )
 
-        score_min = df_synthese_finale[score_col].min()
-        score_max = df_synthese_finale[score_col].max()
-
-        st.progress((score_moyen - score_min) / (score_max - score_min))
-        st.progress((score_moyen_sg - score_min) / (score_max - score_min))
+        barre_html_ef = construire_barre(score_ef_moyen)
+        st.markdown(barre_html_ef, unsafe_allow_html=True)
 
     if "note_y" in df_synthese_finale.columns:
         note_panier = df_panier["note_y"].mean()
