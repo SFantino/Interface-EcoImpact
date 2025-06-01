@@ -70,7 +70,7 @@ def score_panier():
         
         borne_totale = score_max - score_min
         segments = []
-        valeur_relative = (score_moyen_panier - score_min) / borne_totale
+        valeur_relative = (score_moyen - score_min) / borne_totale
         
         for i, (classe, couleur) in enumerate(classes):
             debut = i / len(classes)
