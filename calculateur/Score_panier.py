@@ -59,17 +59,43 @@ def score_panier():
                             f"Score moyen sous-groupes: {score_moyen_sg:.2f}  \n"
                             f"Classe sous-groupes: {classe_sg}")
         
-        valeur_relative = (score_moyen - score_min) / (score_max - score_min)
+        # Définir les bornes des classes et leurs couleurs associées
+        classes = [
+            ("A+", "#1a7f37"), ("A-", "#33a04f"),
+            ("B+", "#c4d82c"), ("B-", "#e6de26"),
+            ("C+", "#f4bc1c"), ("C-", "#f89f1b"),
+            ("D+", "#f36b1c"), ("D-", "#ea3223"),
+            ("E+", "#d32f2f"), ("E-", "#a10e0e")
+        ]
+        
+        borne_totale = score_max - score_min
+        segments = []
+        valeur_relative = (score_moyen_panier - score_min) / borne_totale
+        
+        for i, (classe, couleur) in enumerate(classes):
+            debut = i / len(classes)
+            fin = (i + 1) / len(classes)
+            if valeur_relative > fin:
+                segments.append(f'<div style="flex:1; background:{couleur}; height:100%;"></div>')
+            elif valeur_relative > debut:
+                largeur = (valeur_relative - debut) * len(classes)
+                segments.append(f'<div style="flex:{largeur}; background:{couleur}; height:100%;"></div>')
+                segments.append(f'<div style="flex:{1 - largeur}; background:#eee; height:100%;"></div>')
+                break
+            else:
+                segments.append(f'<div style="flex:1; background:#eee; height:100%;"></div>')
+        
         bar_html = f"""
-        <div style="position: relative; height: 30px; background: #eee; border-radius: 5px;">
-          <div style="width: {valeur_relative*100:.1f}%; height: 30px; background: #d32f2f; border-radius: 5px;"></div>
-          <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{score_min:.2f}</span>
-          <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
+        <div style="position: relative; height: 30px; border-radius: 5px; display: flex; overflow: hidden;">
+            {''.join(segments)}
+            <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{score_min:.2f}</span>
+            <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
         </div>
         """
+        
         st.markdown(bar_html, unsafe_allow_html=True)
 
-        st.progress((score_moyen_sg - score_min) / (score_max - score_min))
+        
 
     # Score unique EF
     if "Score unique EF" in df_synthese_finale.columns:
