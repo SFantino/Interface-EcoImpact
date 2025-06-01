@@ -106,17 +106,26 @@ def score_panier():
 
     st.subheader("📊 Résultats du panier")
 
-    # Score éco-impact moyen standardisé (global)
+    # Score éco-impact moyen standardisé (global) avec barre détaillée et classe
     if "Score Statistique Standardisé" in df_synthese_finale.columns:
         score_ecoimpact = df_panier["Score Statistique Standardisé"].mean()
-        afficher_score_avec_barre("Score éco-impact moyen du panier (Standardisé) :", score_ecoimpact, afficher_classe=True)
+        afficher_score_avec_barre(
+            "Score éco-impact moyen du panier (Standardisé) :", 
+            score_ecoimpact, 
+            afficher_classe=True
+        )
 
-    # Score éco-impact moyen des sous-groupes
+    # Score éco-impact moyen des sous-groupes avec barre simple (sans classe)
     if "Score Eco Impact Moyenne Sous Groupe" in df_synthese_finale.columns:
         score_sous_groupes = df_panier["Score Eco Impact Moyenne Sous Groupe"].mean()
-        afficher_score_avec_barre("Score éco-impact moyen des sous-groupes (référence) :", score_sous_groupes)
+        st.markdown(f"**Score éco-impact moyen des sous-groupes (référence) : {score_sous_groupes:.2f}**")
+        barre_html_sg = construire_barre(score_sous_groupes)
+        st.markdown(barre_html_sg, unsafe_allow_html=True)
 
-    # Score unique EF
+    # Score unique EF avec barre simple (sans classe)
     if "Score Unique EF" in df_synthese_finale.columns:
         score_unique_ef = df_panier["Score Unique EF"].mean()
-        afficher_score_avec_barre("Score unique EF :", score_unique_ef)
+        st.markdown(f"**Score unique EF : {score_unique_ef:.2f}**")
+        barre_html_ef = construire_barre(score_unique_ef)
+        st.markdown(barre_html_ef, unsafe_allow_html=True)
+
