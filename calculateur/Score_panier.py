@@ -137,7 +137,6 @@ def score_panier():
     
         score_ef_moyen_panier = df_panier[score_col_ef].mean()
     
-        st.subheader("🌍 Score Environnemental moyen du panier (EF brut)")
     
         st.markdown(f"**Score EF moyen :** {score_ef_moyen_panier:.2f}  \n"
                     f"(Min: {score_ef_min:.2f} - Max: {score_ef_max:.2f})")
@@ -147,14 +146,3 @@ def score_panier():
         st.progress(valeur_normalisee)
 
 
-
-    if "note_y" in df_synthese_finale.columns:
-        note_panier = df_panier["note_y"].mean()
-        notes_sg = df_synthese_finale.groupby("Sous-groupe d'aliment")["note_y"].mean()
-        sg_panier = df_panier["Sous-groupe d'aliment"].unique()
-        note_sg = notes_sg.loc[sg_panier].mean()
-
-        st.markdown(
-            f"**Note moyenne du panier:** {note_panier:.2f}  \n"
-            f"Note moyenne sous-groupes: {note_sg:.2f}"
-        )
