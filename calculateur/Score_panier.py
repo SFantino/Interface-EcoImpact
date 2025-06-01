@@ -107,6 +107,28 @@ def score_panier():
         barre_html = construire_barre(score_moyen)
         st.markdown(barre_html, unsafe_allow_html=True)
 
+            # Score moyen des sous-groupes présents dans le panier
+        scores_moyens_sous_groupes = df_synthese_finale.groupby("Sous-groupe d'aliment")[score_col].mean()
+        sous_groupes_panier = df_panier["Sous-groupe d'aliment"].unique()
+
+        # Vérification que les sous-groupes sont valides
+        sous_groupes_valides = [sg for sg in sous_groupes_panier if sg in scores_moyens_sous_groupes.index]
+        if not sous_groupes_valides:
+            st.warning("Aucun sous-groupe du panier trouvé dans les moyennes globales.")
+            return
+
+        score_moyen_sous_groupes = scores_moyens_sous_groupes[sous_groupes_valides].mean()
+        classe_sous_groupes = obtenir_classe(score_moyen_sous_groupes)
+
+        st.markdown(
+            f"**Score moyen des sous-groupes présents dans le panier :** {score_moyen_sous_groupes:.2f}  \n"
+            f"Classe moyenne de ces sous-groupes : {classe_sous_groupes}"
+        )
+
+        barre_sous_groupes = construire_barre(score_moyen_sous_groupes)
+        st.markdown(barre_sous_groupes, unsafe_allow_html=True)
+
+
     if "Score unique EF" in df_synthese_finale.columns:
         score_col = "Score unique EF"
         score_moyen = df_panier[score_col].mean()
@@ -115,8 +137,7 @@ def score_panier():
         score_moyen_sg = scores_sg.loc[sg_panier].mean()
 
         st.markdown(
-            f"**Score éco-impact moyen du panier (EF):** {score_moyen:.2f}  \n"
-            f"Score moyen sous-groupes EF: {score_moyen_sg:.2f}"
+            f"**Score unique EF du panier :** {score_moyen:.2f}  \n"
         )
 
         score_min = df_synthese_finale[score_col].min()
