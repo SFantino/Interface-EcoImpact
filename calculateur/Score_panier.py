@@ -18,6 +18,20 @@ def plot_score_bar(score_panier, score_sous_groupes, score_min, score_max):
         "E+": (5, 6),
         "E-": (6, np.inf)
     }
+    # Palette de couleurs du vert foncé au rouge foncé
+    couleurs = [
+        "#00441b",  # A+ vert foncé
+        "#006d2c",  # A-
+        "#238b45",  # B+
+        "#41ab5d",  # B-
+        "#74c476",  # C+
+        "#a1d99b",  # C-
+        "#fdae6b",  # D+
+        "#f16913",  # D-
+        "#d94801",  # E+
+        "#7f2704",  # E- rouge foncé
+    ]
+
     
     # Normaliser les bornes entre 0 et 1
     norm = lambda x: (x - score_min) / (score_max - score_min)
@@ -31,8 +45,13 @@ def plot_score_bar(score_panier, score_sous_groupes, score_min, score_max):
     for i, (classe, (low, high)) in enumerate(classes.items()):
         left = max(0, norm(low))
         right = min(1, norm(high))
-        ax.fill_between([left, right], 0.25, 0.75, color=f"C{i%10}", alpha=0.4)
-        ax.text((left + right) / 2, 0.8, classe, ha='center', va='center', fontsize=9)
+        ax.fill_between([left, right], 0.3, 0.7, color=couleurs[i], alpha=0.8)
+        ax.text((left + right) / 2, 0.75, classe, ha='center', va='center', fontsize=10, fontweight='bold', color='white')
+
+    # Ajouter les bornes -∞ et +∞ aux extrémités pour le score panier
+    ax.text(0, 0.15, "-∞", ha='center', va='center', fontsize=9, fontweight='bold')
+    ax.text(1, 0.15, "+∞", ha='center', va='center', fontsize=9, fontweight='bold')
+
     
     # Ajouter curseur score panier
     x_panier = np.clip(norm(score_panier), 0, 1)
