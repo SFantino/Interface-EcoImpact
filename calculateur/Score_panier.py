@@ -82,13 +82,18 @@ def construire_barre(score):
     '''
 
     barre_html = f'''
-    <div style="position: relative; height: 30px; border-radius: 5px; display: flex; overflow: hidden; border: 1px solid #ccc;">
-        {''.join(segments_html)}
+    <div style="position: relative; height: 30px; border-radius: 5px; overflow: hidden; border: 1px solid #ccc; margin-bottom: 20px;">
+        <div style="display: flex; height: 100%;">
+            {''.join(segments_html)}
+        </div>
         {curseur_html}
-        <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{borne_min:.2f}</span>
-        <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{borne_max:.2f}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 12px;">
+        <span>{borne_min:.2f}</span>
+        <span>{borne_max:.2f}</span>
     </div>
     '''
+
 
     return barre_html
 
