@@ -129,6 +129,7 @@ def score_panier():
         st.markdown(barre_sous_groupes, unsafe_allow_html=True)
 
 
+    # Score EF unique (non standardisé)
     if "Score EF unique" in df_synthese_finale.columns:
         score_col_ef = "Score EF unique"
         score_ef_moyen = df_panier[score_col_ef].mean()
@@ -141,6 +142,7 @@ def score_panier():
 
         barre_html_ef = construire_barre(score_ef_moyen)
         st.markdown(barre_html_ef, unsafe_allow_html=True)
+
 
     if "note_y" in df_synthese_finale.columns:
         note_panier = df_panier["note_y"].mean()
