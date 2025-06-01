@@ -129,19 +129,23 @@ def score_panier():
         st.markdown(barre_sous_groupes, unsafe_allow_html=True)
 
 
-    # Score EF unique (non standardisé)
-    if "Score EF unique" in df_synthese_finale.columns:
-        score_col_ef = "Score EF unique"
-        score_ef_moyen = df_panier[score_col_ef].mean()
-        classe_ef = obtenir_classe(score_ef_moyen)
+    if "Score unique EF" in df_synthese_finale.columns:
+        score_col_ef = "Score unique EF"
+    
+        score_ef_min = df_synthese_finale[score_col_ef].min()
+        score_ef_max = df_synthese_finale[score_col_ef].max()
+    
+        score_ef_moyen_panier = df_panier[score_col_ef].mean()
+    
+        st.subheader("🌍 Score Environnemental moyen du panier (EF brut)")
+    
+        st.markdown(f"**Score EF moyen :** {score_ef_moyen_panier:.2f}  \n"
+                    f"(Min: {score_ef_min:.2f} - Max: {score_ef_max:.2f})")
+    
+        # Normalisation pour barre de progression
+        valeur_normalisee = (score_ef_moyen_panier - score_ef_min) / (score_ef_max - score_ef_min)
+        st.progress(valeur_normalisee)
 
-        st.markdown(
-            f"**Score EF moyen du panier (non standardisé) :** {score_ef_moyen:.2f}  \n"
-            f"Classe EF : {classe_ef}"
-        )
-
-        barre_html_ef = construire_barre(score_ef_moyen)
-        st.markdown(barre_html_ef, unsafe_allow_html=True)
 
 
     if "note_y" in df_synthese_finale.columns:
