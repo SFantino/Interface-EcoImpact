@@ -59,7 +59,16 @@ def score_panier():
                     f"Score moyen sous-groupes: {score_moyen_sg:.2f}  \n"
                     f"Classe sous-groupes: {classe_sg}")
 
-        st.progress((score_moyen - score_min) / (score_max - score_min))
+        valeur_relative = (score_moyen_panier - score_min) / (score_max - score_min)
+        bar_html = f"""
+        <div style="position: relative; height: 30px; background: #eee; border-radius: 5px;">
+          <div style="width: {valeur_relative*100:.1f}%; height: 30px; background: #d32f2f; border-radius: 5px;"></div>
+          <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{score_min:.2f}</span>
+          <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
+        </div>
+        """
+        st.markdown(bar_html, unsafe_allow_html=True)
+
         st.progress((score_moyen_sg - score_min) / (score_max - score_min))
 
     # Score unique EF
