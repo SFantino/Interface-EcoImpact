@@ -1,6 +1,9 @@
+import streamlit as st
+import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import streamlit as st
+
+# Reprendre df_synthese_finale et obtenir_classe()
 
 def plot_score_bar(score_panier, score_sous_groupes, score_min, score_max):
     classes = {
@@ -15,49 +18,56 @@ def plot_score_bar(score_panier, score_sous_groupes, score_min, score_max):
         "E+": (5, 6),
         "E-": (6, np.inf)
     }
-
-    # Palette de couleurs du vert foncé au rouge foncé
-    couleurs = [
-        "#00441b",  # A+ vert foncé
-        "#006d2c",  # A-
-        "#238b45",  # B+
-        "#41ab5d",  # B-
-        "#74c476",  # C+
-        "#a1d99b",  # C-
-        "#fdae6b",  # D+
-        "#f16913",  # D-
-        "#d94801",  # E+
-        "#7f2704",  # E- rouge foncé
-    ]
-
-    # Normalisation entre score_min et score_max
+    
+    # Normaliser les bornes entre 0 et 1
     norm = lambda x: (x - score_min) / (score_max - score_min)
-
-    fig, ax = plt.subplots(figsize=(9, 1.8))
+    
+    fig, ax = plt.subplots(figsize=(8, 1.5))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis('off')
-
-    # Tracer les segments de classes colorés
+    
+    # Dessiner les segments de classes
     for i, (classe, (low, high)) in enumerate(classes.items()):
         left = max(0, norm(low))
         right = min(1, norm(high))
-        ax.fill_between([left, right], 0.3, 0.7, color=couleurs[i], alpha=0.8)
-        ax.text((left + right) / 2, 0.75, classe, ha='center', va='center', fontsize=10, fontweight='bold', color='white')
-
-    # Ajouter les bornes -∞ et +∞ aux extrémités pour le score panier
-    ax.text(0, 0.15, "-∞", ha='center', va='center', fontsize=9, fontweight='bold')
-    ax.text(1, 0.15, "+∞", ha='center', va='center', fontsize=9, fontweight='bold')
-
+        ax.fill_between([left, right], 0.25, 0.75, color=f"C{i%10}", alpha=0.4)
+        ax.text((left + right) / 2, 0.8, classe, ha='center', va='center', fontsize=9)
+    
     # Ajouter curseur score panier
     x_panier = np.clip(norm(score_panier), 0, 1)
-    ax.plot([x_panier, x_panier], [0.1, 0.9], color='black', linewidth=3, label="Score panier")
-    ax.text(x_panier, 0.95, f"Panier: {score_panier:.2f}", ha='center', fontsize=11, fontweight='bold')
-
+    ax.plot([x_panier, x_panier], [0.1, 0.9], color='black', linewidth=2, label="Score panier")
+    ax.text(x_panier, 0.95, f"Panier: {score_panier:.2f}", ha='center', fontsize=10, fontweight='bold')
+    
     # Ajouter curseur score moyen sous-groupes
     x_sous_groupes = np.clip(norm(score_sous_groupes), 0, 1)
-    ax.plot([x_sous_groupes, x_sous_groupes], [0.15, 0.85], color='red', linewidth=2, linestyle='--', label="Moyenne sous-groupes")
+    ax.plot([x_sous_groupes, x_sous_groupes], [0.1, 0.9], color='red', linewidth=2, linestyle='--', label="Moyenne sous-groupes")
     ax.text(x_sous_groupes, 0.05, f"Moyenne SG: {score_sous_groupes:.2f}", ha='center', fontsize=9, color='red')
 
-    ax.legend(loc='upper right', fontsize=9)
+    ax.legend(loc='upper right', fontsize=8)
     st.pyplot(fig)
+
+def score_panier():
+    if "panier" not in st.session_state or not st.session_state.panier:
+        st.info("Votre panier est vide.")
+        return
+
+    codes_ciqual_panier = [p["code_ciqual"] for p in st.session_state.panier]
+    df_panier = df_synthese_finale[df_synthese_finale["Code CIQUAL"].isin(codes_ciqual_panier)]
+
+    if df_panier.empty:
+        st.warning("Aucun produit du panier trouvé dans la base.")
+        return
+
+    sous_groupes_panier = df_panier["Sous-groupe d'aliment"].dropna().unique()
+
+    score_min = df_synthese_finale["Score Statistique Standardisé"].min()
+    score_max = df_synthese_finale["Score Statistique Standardisé"].max()
+
+    score_moyen_panier = df_panier["Score Statistique Standardisé"].mean()
+
+    scores_moyens_sous_groupes = df_synthese_finale.groupby("Sous-groupe d'aliment")["Score Statistique Standardisé"].mean()
+    score_moyen_sous_groupes = scores_moyens_sous_groupes.loc[sous_groupes_panier].mean()
+
+    st.subheader("Score moyen du panier vs score moyen des sous-groupes présents")
+    plot_score_bar(score_moyen_panier, score_moyen_sous_groupes, score_min, score_max)
