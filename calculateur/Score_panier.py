@@ -26,6 +26,7 @@ def obtenir_classe(score):
     else:
         return "E-"
 
+
 def score_panier():
     if "panier" not in st.session_state or not st.session_state.panier:
         st.info("Votre panier est vide.")
@@ -40,7 +41,6 @@ def score_panier():
 
     st.subheader("📊 Résultats du panier")
 
-    # Score Statistique Standardisé
     if "Score Statistique Standardisé" in df_synthese_finale.columns:
         score_col = "Score Statistique Standardisé"
         score_min = df_synthese_finale[score_col].min()
@@ -54,12 +54,13 @@ def score_panier():
         classe_panier = obtenir_classe(score_moyen)
         classe_sg = obtenir_classe(score_moyen_sg)
 
-        st.markdown(f"**Score moyen panier (Standardisé):** {score_moyen:.2f}  \n"
-                            f"Classe panier: {classe_panier}  \n"
-                            f"Score moyen sous-groupes: {score_moyen_sg:.2f}  \n"
-                            f"Classe sous-groupes: {classe_sg}")
-        
-        # Définir les bornes des classes et leurs couleurs associées
+        st.markdown(
+            f"**Score moyen panier (Standardisé):** {score_moyen:.2f}  \n"
+            f"Classe panier: {classe_panier}  \n"
+            f"Score moyen sous-groupes: {score_moyen_sg:.2f}  \n"
+            f"Classe sous-groupes: {classe_sg}"
+        )
+
         classes = [
             ("A+", "#1a7f37"), ("A-", "#33a04f"),
             ("B+", "#c4d82c"), ("B-", "#e6de26"),
@@ -67,12 +68,8 @@ def score_panier():
             ("D+", "#f36b1c"), ("D-", "#ea3223"),
             ("E+", "#d32f2f"), ("E-", "#a10e0e")
         ]
-        
-        borne_totale = score_max - score_min
-        segments = []
-        valeur_relative = (score_moyen - score_min) / borne_totale
-        
-       valeur_relative = (score_moyen - score_min) / (score_max - score_min)
+
+        valeur_relative = (score_moyen - score_min) / (score_max - score_min)
 
         segments = []
         for i, (classe, couleur) in enumerate(classes):
@@ -87,12 +84,12 @@ def score_panier():
                 break
             else:
                 segments.append(f'<div style="flex:1; background:#eee; height:100%;"></div>')
-        
+
         curseur_position = f"{valeur_relative * 100:.2f}%"
         curseur_html = f'''
         <div style="position: absolute; left: {curseur_position}; top: 0; bottom: 0; width: 2px; background: black;"></div>
         '''
-        
+
         bar_html = f'''
         <div style="position: relative; height: 30px; border-radius: 5px; display: flex; overflow: hidden;">
             {''.join(segments)}
@@ -101,7 +98,7 @@ def score_panier():
             <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
         </div>
         '''
-        
+
         st.markdown(bar_html, unsafe_allow_html=True)
 
 
