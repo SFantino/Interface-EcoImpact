@@ -1,6 +1,5 @@
-import streamlit as st
 import pandas as pd
-import streamlit.components.v1 as components  # Import nécessaire
+import streamlit as st
 
 # Charger la base de données
 df_synthese_finale = pd.read_csv("Synthese_finale.csv")
@@ -81,8 +80,17 @@ def construire_barre(score):
         <span>{borne_max:.2f}</span>
     </div>
     '''
-
     return barre_html
+
+def afficher_score_avec_barre(titre, score, afficher_classe=False):
+    st.markdown(f"**<span style='font-weight:700; font-size:18px;'>{titre}</span>**", unsafe_allow_html=True)
+    if afficher_classe:
+        classe = obtenir_classe(score)
+        st.markdown(f"**Score : {score:.2f}**  \nClasse : {classe}")
+    else:
+        st.markdown(f"**Score : {score:.2f}**")
+    barre_html = construire_barre(score)
+    st.markdown(barre_html, unsafe_allow_html=True)
 
 def score_panier():
     if "panier" not in st.session_state or not st.session_state.panier:
@@ -98,40 +106,17 @@ def score_panier():
 
     st.subheader("📊 Résultats du panier")
 
+    # Score éco-impact moyen standardisé (global)
     if "Score Statistique Standardisé" in df_synthese_finale.columns:
-        score_col = "Score Statistique Standardisé"
-        score_moyen = df_panier[score_col].mean()
-        classe_panier = obtenir_classe(score_moyen)
+        score_ecoimpact = df_panier["Score Statistique Standardisé"].mean()
+        afficher_score_avec_barre("Score éco-impact moyen du panier (Standardisé) :", score_ecoimpact, afficher_classe=True)
 
-        st.markdown(
-            f"**Score éco-impact moyen du panier (Standardisé):** {score_moyen:.2f}  \n"
-            f"Classe panier: {classe_panier}"
-        )
+    # Score éco-impact moyen des sous-groupes
+    if "Score Eco Impact Moyenne Sous Groupe" in df_synthese_finale.columns:
+        score_sous_groupes = df_panier["Score Eco Impact Moyenne Sous Groupe"].mean()
+        afficher_score_avec_barre("Score éco-impact moyen des sous-groupes (référence) :", score_sous_groupes)
 
-        barre_html = construire_barre(score_moyen)
-        st.markdown(barre_html, unsafe_allow_html=True)
-
-    if "Score unique EF" in df_synthese_finale.columns:
-        score_col = "Score unique EF"
-        score_min = df_synthese_finale[score_col].min()
-        score_max = df_synthese_finale[score_col].max()
-        score_moyen = df_panier[score_col].mean()
-
-        scores_sg = df_synthese_finale.groupby("Sous-groupe d'aliment")[score_col].mean()
-        sg_panier = df_panier["Sous-groupe d'aliment"].unique()
-        score_moyen_sg = scores_sg.loc[sg_panier].mean()
-
-        st.markdown(f"**Score environnemental moyen (EF):** {score_moyen:.2f}  \n"
-                    f"Score moyen sous-groupes EF: {score_moyen_sg:.2f}")
-
-        st.progress((score_moyen - score_min) / (score_max - score_min))
-        st.progress((score_moyen_sg - score_min) / (score_max - score_min))
-
-    if "note_y" in df_synthese_finale.columns:
-        note_panier = df_panier["note_y"].mean()
-        notes_sg = df_synthese_finale.groupby("Sous-groupe d'aliment")["note_y"].mean()
-        sg_panier = df_panier["Sous-groupe d'aliment"].unique()
-        note_sg = notes_sg.loc[sg_panier].mean()
-
-        st.markdown(f"**Note moyenne du panier:** {note_panier:.2f}  \n"
-                    f"Note moyenne sous-groupes: {note_sg:.2f}")
+    # Score unique EF
+    if "Score Unique EF" in df_synthese_finale.columns:
+        score_unique_ef = df_panier["Score Unique EF"].mean()
+        afficher_score_avec_barre("Score unique EF :", score_unique_ef)
