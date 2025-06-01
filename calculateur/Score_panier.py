@@ -54,11 +54,11 @@ def score_panier():
         classe_panier = obtenir_classe(score_moyen)
         classe_sg = obtenir_classe(score_moyen_sg)
 
-        st.markdown(f"**Score moyen panier (Standardisé):** {score_moyen:.2f}  \n"
+        st.markdown(f"**Score moyen panier (Standardisé):** {score_moyen_panier:.2f}  \n"
                     f"Classe panier: {classe_panier}  \n"
-                    f"Score moyen sous-groupes: {score_moyen_sg:.2f}  \n"
-                    f"Classe sous-groupes: {classe_sg}")
-
+                    f"Score moyen sous-groupes: {score_moyen_sous_groupes:.2f}  \n"
+                    f"Classe sous-groupes: {classe_moyenne}")
+        
         valeur_relative = (score_moyen_panier - score_min) / (score_max - score_min)
         bar_html = f"""
         <div style="position: relative; height: 30px; background: #eee; border-radius: 5px;">
@@ -68,6 +68,7 @@ def score_panier():
         </div>
         """
         st.markdown(bar_html, unsafe_allow_html=True)
+
 
         st.progress((score_moyen_sg - score_min) / (score_max - score_min))
 
