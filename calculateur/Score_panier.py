@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import streamlit.components.v1 as components  # Import nécessaire
 
 # Charger la base de données
 df_synthese_finale = pd.read_csv("Synthese_finale.csv")
@@ -99,11 +100,7 @@ def score_panier():
         </div>
         '''
 
-        st.markdown(bar_html, unsafe_allow_html=True)
-
-
-
-        
+        components.html(bar_html, height=50)  # Remplacement ici
 
     # Score unique EF
     if "Score unique EF" in df_synthese_finale.columns:
@@ -131,4 +128,3 @@ def score_panier():
 
         st.markdown(f"**Note moyenne panier:** {note_panier:.2f}  \n"
                     f"Note moyenne sous-groupes: {note_sg:.2f}")
-
