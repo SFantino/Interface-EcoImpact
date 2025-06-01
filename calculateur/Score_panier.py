@@ -28,10 +28,13 @@ def obtenir_classe(score):
 def construire_barre(score):
     borne_min = -0.4
     borne_max = 6
+
     score_clampe = min(max(score, borne_min), borne_max)
     largeur_totale = borne_max - borne_min
+
     segments_html = []
     position_curseur = (score_clampe - borne_min) / largeur_totale
+
     stop_color = False
 
     for i, (b_min, b_max, classe, couleur) in enumerate(classes_bornes):
@@ -39,6 +42,7 @@ def construire_barre(score):
         seg_max = min(b_max, borne_max)
         if seg_min >= seg_max:
             continue
+
         largeur_segment = seg_max - seg_min
         proportion_segment = largeur_segment / largeur_totale
 
@@ -109,18 +113,16 @@ def score_panier():
 
     if "Score unique EF" in df_synthese_finale.columns:
         score_col = "Score unique EF"
+        score_min = df_synthese_finale[score_col].min()
+        score_max = df_synthese_finale[score_col].max()
         score_moyen = df_panier[score_col].mean()
+
         scores_sg = df_synthese_finale.groupby("Sous-groupe d'aliment")[score_col].mean()
         sg_panier = df_panier["Sous-groupe d'aliment"].unique()
         score_moyen_sg = scores_sg.loc[sg_panier].mean()
 
-        st.markdown(
-            f"**Score éco-impact moyen du panier (EF):** {score_moyen:.2f}  \n"
-            f"Score moyen sous-groupes EF: {score_moyen_sg:.2f}"
-        )
-
-        score_min = df_synthese_finale[score_col].min()
-        score_max = df_synthese_finale[score_col].max()
+        st.markdown(f"**Score environnemental moyen (EF):** {score_moyen:.2f}  \n"
+                    f"Score moyen sous-groupes EF: {score_moyen_sg:.2f}")
 
         st.progress((score_moyen - score_min) / (score_max - score_min))
         st.progress((score_moyen_sg - score_min) / (score_max - score_min))
@@ -131,7 +133,5 @@ def score_panier():
         sg_panier = df_panier["Sous-groupe d'aliment"].unique()
         note_sg = notes_sg.loc[sg_panier].mean()
 
-        st.markdown(
-            f"**Note moyenne du panier:** {note_panier:.2f}  \n"
-            f"Note moyenne sous-groupes: {note_sg:.2f}"
-        )
+        st.markdown(f"**Note moyenne du panier:** {note_panier:.2f}  \n"
+                    f"Note moyenne sous-groupes: {note_sg:.2f}")
