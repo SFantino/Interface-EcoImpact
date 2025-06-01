@@ -85,13 +85,19 @@ def score_panier():
             else:
                 segments.append(f'<div style="flex:1; background:#eee; height:100%;"></div>')
         
-        bar_html = f"""
-        <div style="position: relative; height: 30px; border-radius: 5px; display: flex; overflow: hidden;">
-            {''.join(segments)}
-            <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{score_min:.2f}</span>
-            <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
-        </div>
-        """
+            curseur_position = f"{valeur_relative * 100:.2f}%"
+            curseur_html = f"""
+            <div style="position: absolute; left: {curseur_position}; top: 0; bottom: 0; width: 2px; background: black;"></div>
+            """
+            bar_html = f"""
+            <div style="position: relative; height: 30px; border-radius: 5px; display: flex; overflow: hidden;">
+                {''.join(segments)}
+                {curseur_html}
+                <span style="position: absolute; left: 0; top: 5px; font-weight: bold;">{score_min:.2f}</span>
+                <span style="position: absolute; right: 0; top: 5px; font-weight: bold;">{score_max:.2f}</span>
+            </div>
+            """
+
         
         st.markdown(bar_html, unsafe_allow_html=True)
 
