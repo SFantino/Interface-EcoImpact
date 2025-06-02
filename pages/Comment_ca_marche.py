@@ -15,94 +15,97 @@ def methodo_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
     st.markdown("<h1 style='color:#000000;'>📊 Comment ça marche ?</h1>", unsafe_allow_html=True)
-
     st.markdown("## 🧪 Méthodologie de calcul environnemental")
 
     st.markdown("""
-    Cette interface évalue l'impact environnemental d'un panier alimentaire sur la base de la méthode d’**Analyse de Cycle de Vie (ACV)**.  
-    L’outil s’appuie sur la base **Agribalyse 3.1**, qui fournit les résultats d’impact moyen de plus de 2000 produits.
+    Cette interface évalue l'impact environnemental d'un panier alimentaire selon la méthode d’**Analyse de Cycle de Vie (ACV)**.  
+    L’outil utilise la base **Agribalyse 3.1** qui fournit les impacts moyens de plus de 2 500 produits alimentaires.
 
-    Le calcul suit les étapes suivantes :
+    Le calcul suit plusieurs étapes successives, combinant normalisation, pondération, agrégation et classification.
     """)
 
-    st.markdown("### 1. Agrégation des données par portion")
+    st.markdown("### 1. Normalisation des indicateurs")
 
     st.markdown("""
-    Les données Agribalyse sont exprimées pour 1 kg de produit.  
-    On les ramène à la portion alimentaire renseignée en multipliant chaque indicateur par la masse en kg.
+    Chaque indicateur environnemental (par exemple émissions de CO₂, consommation d’eau, pollution des sols) est normalisé par rapport à une valeur de référence nationale issue de la base **Base Empreinte (ADEME)**.  
+    Cette normalisation permet d'exprimer chaque impact sur une échelle comparable, sans unité.
 
-    Exemple : pour une portion de 125 g de yaourt, tous les impacts sont multipliés par 0,125.
+    Formellement, pour un indicateur \( i \) et un produit \( p \) :
+
+    $$
+    I_{norm}(p,i) = \\frac{I(p,i)}{I_{ref}(i)}
+    $$
+
+    où \( I(p,i) \) est l’impact du produit \( p \) sur l’indicateur \( i \), et \( I_{ref}(i) \) la valeur de référence annuelle pour la France.
     """)
 
-    st.markdown("### 2. Normalisation par rapport à l’empreinte moyenne annuelle d’un Français")
+    st.markdown("### 2. Agrégation par pondération ReCiPe")
 
     st.markdown("""
-    Chaque indicateur est normalisé selon la **méthode ReCiPe Endpoint (H)** en le divisant par la **valeur annuelle moyenne française** extraite de la base de données Base Empreinte.
+    Chaque indicateur normalisé est multiplié par un facteur de pondération issu de la méthode **ReCiPe 2016 Endpoint H / World**, qui reflète l’importance relative des impacts sur trois catégories de dommages : santé humaine, qualité des écosystèmes et ressources naturelles.
 
-    La formule appliquée est :
+    La pondération \( w_i \) est fixée selon ReCiPe et ne peut pas être modifiée par l’utilisateur.
+
+    Le score pondéré pour chaque indicateur est calculé ainsi :
 
     $$
-    \\text{Impact normalisé} = \\frac{\\text{Impact absolu (portion)}}{\\text{Valeur de normalisation (France, 1 an)}}
+    S_i(p) = I_{norm}(p,i) \\times w_i
     $$
 
-    Cela permet de comparer les indicateurs entre eux malgré des unités différentes (kg CO₂, kg P eq, MJ, etc.).
+    Ces pondérations sont des coefficients scalaires basés sur des modèles d’évaluation d’impacts environnementaux.
     """)
 
-    st.markdown("### 3. Pondération des indicateurs")
+    st.markdown("### 3. Somme des scores pondérés")
 
     st.markdown("""
-    Une pondération est appliquée à chaque indicateur normalisé selon la **méthode ReCiPe Endpoint (H, World, 2016)**.  
-    Ces poids traduisent l’importance relative des impacts sur trois catégories de dommage : santé humaine, qualité des écosystèmes, ressources.
+    Le score environnemental global d’un produit \( p \) est obtenu par la somme des scores pondérés de ses indicateurs :
 
     $$
-    \\text{Score pondéré} = \\text{Impact normalisé} \\times \\text{Facteur de pondération}
+    S_{global}(p) = \\sum_{i=1}^{16} S_i(p) = \\sum_{i=1}^{16} I_{norm}(p,i) \\times w_i
     $$
 
-    Les pondérations sont fixées et issues directement de la méthode ReCiPe. Elles ne sont pas modifiables par l’utilisateur.
+    Ce score est sans unité et sert uniquement à comparer les impacts relatifs des produits.
     """)
 
-    st.markdown("### 4. Agrégation des scores")
+    st.markdown("### 4. Classification en score de A à E")
 
     st.markdown("""
-    Les 16 scores pondérés sont **sommés** pour obtenir un score global pour chaque produit (ou chaque panier).
+    Pour faciliter la compréhension, ce score est converti en une note qualitative de **A à E**, basée sur la distribution des scores de 2 497 produits de la base Agribalyse.  
+    Cette classification utilise les quintiles de la distribution :
 
-    $$
-    \\text{Score final} = \\sum_{i=1}^{16} \\text{Score pondéré}_{i}
-    $$
+    - **A** : 20 % des produits les moins impactants  
+    - **B** : 20 % suivants  
+    - **C** : 20 % suivants  
+    - **D** : 20 % suivants  
+    - **E** : 20 % des plus impactants  
 
-    Ce score n’a pas d’unité mais permet une comparaison relative entre produits.
+    Cela crée un label similaire au Nutri-Score nutritionnel, mais pour l’impact environnemental.
     """)
 
-    st.markdown("### 5. Attribution d’un score A à E")
+    st.markdown("### 5. Traitement des paniers alimentaires")
 
     st.markdown("""
-    Pour donner une lisibilité au score, une classification est effectuée **par quintiles**, à partir de la distribution des scores de 2497 produits Agribalyse.
+    Pour un panier contenant plusieurs produits, la méthode se déroule en deux phases :
 
-    Répartition :
-    - A = 20 % des produits les moins impactants
-    - E = 20 % les plus impactants
+    1. Calcul des impacts environnementaux pour chaque produit individuellement.  
+    2. Agrégation des impacts du panier par addition des valeurs pondérées indicateur par indicateur :
 
-    Cela permet une lecture intuitive, comparable à un Nutri-Score environnemental.
-    """)
+    $$
+    S_i(panier) = \\sum_{p \\in panier} S_i(p)
+    $$
 
-    st.markdown("### 6. Fonctionnement pour un panier alimentaire")
-
-    st.markdown("""
-    Lorsqu’un panier est composé de plusieurs produits, la méthode est strictement la même.  
-    Les impacts environnementaux sont d’abord calculés **produit par produit**, puis **additionnés** pour chaque indicateur.
-
-    La normalisation, pondération et classification s’effectuent ensuite sur le total du panier, comme s’il s’agissait d’un unique produit virtuel.
+    La normalisation, pondération et classification s’appliquent ensuite au score total du panier, considéré comme un produit unique virtuel.
     """)
 
     st.markdown("## 📚 Sources méthodologiques")
 
     st.markdown("""
-    - Base de données **Agribalyse v3.1** (ADEME)  
-    - **Base Empreinte** (ADEME) : valeurs de normalisation annuelles pour la France  
-    - Méthode **ReCiPe 2016 Endpoint H / World** : facteurs de pondération  
-    - Méthodologie inspirée du projet de recherche [Darmon et al., 2021] et du cadre de l’ACV alimentaire
-
-    Les coefficients, formules et pondérations sont intégrés en dur dans le calcul et peuvent être modifiés dans les fichiers `ponderations.json` et `normalisation.csv` pour tests ou scénarios alternatifs.
+    - Base de données **Agribalyse v3.1** (ADEME) : données ACV et impacts moyens des produits  
+    - **Base Empreinte** (ADEME) : données de normalisation environnementale nationale  
+    - Méthode **ReCiPe 2016 Endpoint H / World** : pour les facteurs de pondération des indicateurs  
+    - Modèles et méthodologies ACV validés selon ISO 14040-14044  
+    - Inspiré du projet de recherche [Darmon et al., 2021] sur l’évaluation environnementale alimentaire  
+    - Les coefficients, pondérations et normalisations sont intégrés dans les fichiers `ponderations.json` et `normalisation.csv` pour adaptations ou scénarios alternatifs.
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
