@@ -11,9 +11,10 @@ st.set_page_config(
 )
 
 # ========== CONTENU ==========
-def afficher_comment_ca_marche():
-    st.title("Comment ça marche ?")
-
+def methodo_content():
+    st.markdown('<div class="content-behind">', unsafe_allow_html=True)
+    
+    st.markdown("<h1 style='color:#000000;'>📊 Comment ça marche ?</h1>", unsafe_allow_html=True)
     st.markdown("## 🌱 Analyse du cycle de vie (ACV)")
     st.markdown("""
     Notre outil repose sur **l'Analyse de Cycle de Vie (ACV)**, une méthode normalisée (ISO 14040/44) qui quantifie les impacts environnementaux d’un produit **de sa production à sa fin de vie**.
@@ -75,6 +76,7 @@ def afficher_comment_ca_marche():
     - **Méthodologie ReCiPe 2016**
     - **Normes ISO 14040 / 14044**
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # ========== STRUCTURE ==========
 load_css()
