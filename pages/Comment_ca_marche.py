@@ -15,66 +15,92 @@ def methodo_content():
     st.markdown('<div class="content-behind">', unsafe_allow_html=True)
     
     st.markdown("<h1 style='color:#000000;'>📊 Comment ça marche ?</h1>", unsafe_allow_html=True)
-    st.markdown("## 🌱 Analyse du cycle de vie (ACV)")
+    st.markdown("## 🔍 Fondements scientifiques")
+
     st.markdown("""
-    Notre outil repose sur **l'Analyse de Cycle de Vie (ACV)**, une méthode normalisée (ISO 14040/44) qui quantifie les impacts environnementaux d’un produit **de sa production à sa fin de vie**.
+    L’outil repose sur l’**Analyse du Cycle de Vie (ACV)**, conformément aux normes ISO 14040 et 14044.  
+    Les données d’entrée proviennent de la base **Agribalyse v3.1**, développée par l’ADEME, qui fournit pour chaque produit un profil environnemental complet **en analyse moyenne de marché**.
 
-    Pour un aliment, cela comprend :
-    - la culture ou l’élevage
-    - la transformation
-    - l’emballage
-    - le transport
-    - la distribution
-    - la consommation
-    - la gestion des déchets
-
-    Les données utilisées proviennent de la base **Agribalyse** de l’ADEME, qui fournit des indicateurs pour plus de 2 500 produits alimentaires représentatifs de la consommation en France.
+    Chaque fiche produit contient les **quantités unitaires d’impact environnemental** pour 16 indicateurs, exprimées par kilogramme de produit.
     """)
 
-    st.markdown("## 🔬 Indicateurs environnementaux")
+    st.markdown("## 🧮 Étapes du calcul du score")
+
     st.markdown("""
-    Nous utilisons les **16 indicateurs ACV** définis par Agribalyse. Les principaux affichés dans notre outil sont :
+    ### 1. **Conversion en impacts absolus par portion**
+    Pour chaque produit sélectionné, les données ACV sont multipliées par la **masse (en kg) correspondant à la portion renseignée par l’utilisateur.**
 
-    - **Changement climatique** (kg CO₂ éq.)
-    - **Utilisation de l’eau** (m³ monde éq. privation)
-    - **Eutrophisation** (eau douce et marine)
-    - **Particules fines** (impact santé)
-    - **Épuisement des ressources fossiles** (MJ)
-    - **Occupation des sols**
+    Exemple :  
+    Un yaourt de 125 g → tous les impacts sont multipliés par 0,125.
 
-    Ces indicateurs sont **pondérés, normalisés et agrégés** pour construire un score unique.
+    ### 2. **Normalisation par rapport à l’empreinte annuelle moyenne d’un Français**
+    Les 16 indicateurs sont **normalisés** en divisant les valeurs par les valeurs de référence annuelles fournies par l’ADEME (cf. fichier *basefootprint.csv*).
+
+    Formule :  
+    \\[
+    I_{norm,i} = \\frac{I_i}{N_i}
+    \\]  
+    où :
+    - \\( I_i \\) = impact brut de l’indicateur \\( i \\) pour le produit (exprimé par portion)  
+    - \\( N_i \\) = valeur de référence annuelle française pour l’indicateur \\( i \\)
+
+    Résultat : un **vecteur de scores sans unité**, comparable entre indicateurs.
+
+    ### 3. **Pondération selon ReCiPe 2016 Endpoint**
+    Chaque indicateur est multiplié par un **poids spécifique** issu de la méthode ReCiPe 2016 Endpoint (version Hiérarchiste, moyenne mondiale, midpoints → endpoints).
+
+    Formule :  
+    \\[
+    I_{pondéré,i} = I_{norm,i} \\times w_i
+    \\]  
+    où :
+    - \\( w_i \\) = facteur de pondération de l’indicateur \\( i \\)
+
+    Ces coefficients traduisent le **poids relatif** de chaque indicateur dans l’impact global (santé humaine, écosystèmes, ressources).
+
+    ### 4. **Agrégation en score unique**
+    La somme pondérée des indicateurs donne un **score environnemental global** pour le produit ou le panier.
+
+    Formule :  
+    \\[
+    Score = \\sum_{i=1}^{16} I_{pondéré,i}
+    \\]
+
+    Le résultat est un **nombre adimensionné** qui permet la comparaison inter-produits et intra-panier.
+
+    ### 5. **Classification sur une échelle A à E**
+    Le score est ensuite **classé en quintiles** sur la base de la distribution des scores de 2 497 produits alimentaires de la base Agribalyse.  
+    Cette classification suit une logique **statistique de rang**, non normative.
+
+    Répartition :
+    - **A** = 20 % des produits les moins impactants
+    - **E** = 20 % les plus impactants
+
+    Cela permet une **interprétation simple et comparative**, tout en conservant la rigueur des données sous-jacentes.
     """)
 
-    st.markdown("## 🧮 Méthodologie de calcul")
+    st.markdown("## 🧺 Fonctionnement pour un panier")
+
     st.markdown("""
-    Chaque produit est évalué à partir de ses impacts unitaires (par kg) selon Agribalyse, **ajustés à la portion sélectionnée**. Le score global est obtenu en :
+    Lorsqu’un utilisateur compose un panier, les impacts sont **sommés produit par produit**, en suivant les mêmes étapes (portion → normalisation → pondération → agrégation).
 
-    1. **Normalisant** les impacts par rapport à une base annuelle moyenne d’un Français
-    2. **Pondérant** les indicateurs selon leur gravité environnementale (selon ReCiPe 2016)
-    3. **Agrégant** le tout en un indice synthétique
+    Le score total du panier est ensuite **classé** selon la même grille de répartition A–E.
 
-    Le score final est **ramené sur une échelle de type A à E** pour faciliter la lecture :
-    - **A** = faible impact
-    - **E** = impact élevé
+    Cela permet de :
+    - quantifier les conséquences d’un choix alimentaire complet
+    - identifier les aliments les plus déterminants
+    - comparer plusieurs régimes simulés
     """)
 
-    st.markdown("## 🧺 Fonctionnement du panier")
+    st.markdown("## 📂 Données utilisées")
+
     st.markdown("""
-    Vous pouvez composer un panier alimentaire et visualiser son **impact cumulé**. Chaque produit ajouté est converti en impacts environnementaux, puis agrégé à l’échelle du panier total.
+    - **Agribalyse v3.1** : profils ACV moyens (ADEME)
+    - **Base Empreinte** : valeurs de normalisation annuelles par indicateur
+    - **ReCiPe 2016 Endpoint** : pondérations environnementales
+    - **Distribution Agribalyse** : pour le classement statistique
 
-    Cela permet :
-    - d’**évaluer l’empreinte d’un repas** ou d’une journée type
-    - de **comparer plusieurs scénarios alimentaires**
-    - de **simuler l’effet d’un changement d’aliment**
-
-    C’est un outil d’aide à la décision pour **réduire son impact environnemental**, basé sur des données scientifiques.
-    """)
-
-    st.markdown("## 📚 Sources")
-    st.markdown("""
-    - **Agribalyse 3.1**, ADEME (https://agribalyse.ademe.fr)
-    - **Méthodologie ReCiPe 2016**
-    - **Normes ISO 14040 / 14044**
+    Tous les calculs sont reproductibles, transparents et modifiables si vous souhaitez tester d'autres hypothèses (régionales, pondérations alternatives, etc.).
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
